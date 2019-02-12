@@ -19,8 +19,10 @@ public class Splash extends AppCompatActivity {
                 Intent mainIntent = new Intent(Splash.this,MainActivity.class);
                 Splash.this.startActivity(mainIntent);
                 Splash.this.finish();
+                //time it takes to finsh the splash screen
             }
         }, 1000);
+
     }
 
 }
