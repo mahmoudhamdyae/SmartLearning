@@ -15,7 +15,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         login=findViewById(R.id.login);
-        Toast.makeText(this, "Login", Toast.LENGTH_SHORT).show();
         signup=findViewById(R.id.signup);
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
