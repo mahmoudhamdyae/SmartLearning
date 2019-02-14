@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">Smart Learning</string>
+
+    <!-- Login Activity -->
+    <string name="login_email_edit_text_hint">E-mail</string>
+    <string name="login_password_edit_text_hint">Password</string>
+    <string name="login_login_button">Login</string>
+    <string name="login_sign_up_button">Sign Up</string>
+
+    <string name="login_empty_edit_text_toast">Some information are not completed</string>
+    <string name="login_choose_another_user_name_toast">Choose a different user name</string>
+
+    <!-- Sign Up Activity -->
+    <string name="sign_up_user_name_edit_text_hint">User Name</string>
+    <string name="sign_up_email_edit_text_hint">E-mail</string>
+    <string name="sign_up_password_edit_text_hint">Password</string>
+    <string name="sign_up_teacher_radio_button">Teacher</string>
+    <string name="sign_up_student_radio_button">Student</string>
+    <string name="sign_up_sign_up_button">Sign Up</string>
+
+    <string name="sign_up_empty_edit_text_toast">Some information are not completed</string>
+
+    <!-- Main Activity -->
+    <string name="action_sign_out">Sign Out</string>
+
 </resources>

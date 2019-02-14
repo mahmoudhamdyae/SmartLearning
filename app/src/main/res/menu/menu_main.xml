@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Options menu for MainActivity -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/sign_out_item"
+        android:title="@string/action_sign_out" />
+
+</menu>

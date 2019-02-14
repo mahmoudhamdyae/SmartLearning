@@ -4,18 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignupActivity">
+    tools:context=".SignUpActivity">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="32dp"
         android:layout_marginRight="20dp"
-        android:ems="10"
+        android:drawableStart="@drawable/ic_account_circle_black_24dp"
         android:drawableLeft="@drawable/ic_account_circle_black_24dp"
-        android:hint="Enter UserName"
+        android:ems="10"
+        android:hint="@string/sign_up_user_name_edit_text_hint"
         android:inputType="textPersonName"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,45 +24,47 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText2"
-        android:layout_height="wrap_content"
+        android:id="@+id/email"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="32dp"
         android:layout_marginRight="20dp"
-        android:ems="10"
+        android:drawableStart="@drawable/ic_email_black_24dp"
         android:drawableLeft="@drawable/ic_email_black_24dp"
-        android:hint="Enter email"
-        android:inputType="textPersonName"
+        android:ems="10"
+        android:hint="@string/sign_up_email_edit_text_hint"
+        android:inputType="textEmailAddress"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/user_name" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="32dp"
         android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:ems="10"
+        android:drawableStart="@drawable/ic_lock_outline_black_24dp"
         android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
-        android:hint="Enter PassWord"
+        android:ems="10"
+        android:hint="@string/sign_up_password_edit_text_hint"
         android:inputType="textPassword"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="48dp"
-        android:text="Signup"
+        android:text="@string/sign_up_sign_up_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,25 +79,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText3">
+        app:layout_constraintTop_toBottomOf="@+id/password">
 
         <RadioButton
             android:id="@+id/teacherrb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="20dp"
-            android:text="Teacher"
-            android:textAlignment="center" />
+            android:text="@string/sign_up_teacher_radio_button"
+            android:textAlignment="center"
+            android:textSize="20sp" />
 
         <RadioButton
             android:id="@+id/studentrb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
             android:layout_weight="1"
-            android:text="Student"
-            android:textAlignment="center" />
+            android:text="@string/sign_up_student_radio_button"
+            android:textAlignment="center"
+            android:textSize="20sp" />
     </RadioGroup>
 
 </android.support.constraint.ConstraintLayout>
