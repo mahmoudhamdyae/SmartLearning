@@ -29,6 +29,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
+
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
 
