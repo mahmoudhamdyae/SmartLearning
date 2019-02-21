@@ -18,7 +18,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text=""
-        android:hint="Enter Course Name"
+        android:hint="@string/course_dialog_name_edit_text_hint"
         android:layout_margin="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +31,7 @@
         android:layout_marginTop="76dp"
         android:layout_marginEnd="4dp"
         android:layout_marginRight="4dp"
-        android:text="Save"
+        android:text="@string/course_dialog_save_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/year" />
 
@@ -42,7 +42,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
         android:layout_marginTop="80dp"
-        android:text="Cancel"
+        android:text="@string/course_dialog_cancel_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/year" />
 
@@ -58,7 +58,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text=""
-        android:hint="Enter Course Year"
+        android:hint="@string/course_dialog_year_edit_text_hint"
         android:layout_margin="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

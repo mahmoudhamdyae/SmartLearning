@@ -66,7 +66,7 @@ public class SignUpActivity extends AppCompatActivity {
                 final String email = emailEditText.getText().toString().trim();
                 final String password = passwordEditText.getText().toString().trim();
                 if (!TextUtils.isEmpty(userName) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(type)) {
-                    // For uniqe user name
+                    // For unique user name
                     Query userNameQuery = FirebaseDatabase.getInstance().getReference().child("Users")
                             .orderByChild("userName").equalTo(userName);
                     userNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {

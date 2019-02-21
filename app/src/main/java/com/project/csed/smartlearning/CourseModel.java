@@ -1,17 +1,16 @@
 package com.project.csed.smartlearning;
 
 public class CourseModel {
-    private String CourseName,StudentNo,YearDate;
+    private String CourseName, StudentNo, YearDate, teacherName;
 
-    public CourseModel(String courseName,String studentNo, String yearDate) {
+    public CourseModel(String courseName, String studentNo, String yearDate, String teacherName) {
         this.CourseName= courseName;
         this.StudentNo = studentNo;
         this.YearDate = yearDate;
-
+        this.teacherName = teacherName;
     }
 
     public CourseModel() {
-
     }
 
     public String getCourseName() {
@@ -36,5 +35,13 @@ public class CourseModel {
 
     public void setYearDate(String yearDate) {
         YearDate = yearDate;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
     }
 }
