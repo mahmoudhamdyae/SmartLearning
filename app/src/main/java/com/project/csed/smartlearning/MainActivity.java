@@ -10,8 +10,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import android.support.v7.app.AlertDialog;
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button Addbutton;
     RecyclerView recyclerView;
+    public String year = "1";
 
     private DatabaseReference mCourseDatabaseReference;
     private ChildEventListener mChildEventListener;
@@ -65,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                         teacherActivity(user);
                     } else if (user.getType().equals("Student")) {
                         Toast.makeText(MainActivity.this, "This is Student Main Activity", Toast.LENGTH_SHORT).show();
-                        // todo this is a  student activity
+                        studentActivity(user);
                     }
                 }
                 @Override
@@ -134,15 +138,19 @@ public class MainActivity extends AppCompatActivity {
                 Button savebtn = popupInputDialogView.findViewById(R.id.savebtn);
                 Button cancelbtn = popupInputDialogView.findViewById(R.id.cancelbtn);
                 final EditText coursename = popupInputDialogView.findViewById(R.id.coursename);
-                final EditText courseyear = popupInputDialogView.findViewById(R.id.year);
+                final Spinner courseyear = popupInputDialogView.findViewById(R.id.year);
+                List<String> spinnerList = new ArrayList<>();
+                spinnerList.add("1");
+                spinnerList.add("2");
+                spinnerList.add("3");
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_dropdown_item, spinnerList);
+                courseyear.setAdapter(adapter);
                 savebtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final String name, year;
-                        name = coursename.getText().toString();
-                        year = courseyear.getText().toString();
-
-                        if (name != "" && !name.isEmpty() && year != "" && !year.isEmpty()) {
+                        final String name = coursename.getText().toString();
+                        final String year = courseyear.getSelectedItem().toString();
+                        if (!name.isEmpty()) {
 
                             // Write course information on database
                             Thread mainThread = new Thread(new Runnable() {
@@ -184,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                             mainThread.start();
 
                         } else {
-                            Toast.makeText(MainActivity.this, R.string.main_activity_empty_course_name_or_year_toast, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, R.string.main_activity_empty_course_name_toast, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -198,7 +206,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void studentActivity(){
+    private void studentActivity(User user){
+        // todo this is a  student activity
     }
 
     @Override

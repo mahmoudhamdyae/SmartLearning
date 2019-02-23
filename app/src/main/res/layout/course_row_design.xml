@@ -4,8 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:background="#F0F0F0"
-    android:orientation="vertical" >
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:paddingLeft="5dp"
+    android:paddingTop="5dp"
+    android:paddingRight="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,46 +20,48 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingLeft="5dp"
-            android:paddingStart="5dp"
-            android:textSize="25sp"
             android:gravity="start"
+            android:text="Course Name"
             android:textAlignment="gravity"
             android:textColor="#000"
-            android:text="Course Name" />
+            android:textSize="25sp" />
 
         <ImageView
             android:id="@+id/deletebun"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_delete_black_24dp"
-             />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_delete_black_24dp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingTop="5dp">
 
         <TextView
             android:id="@+id/studentNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:paddingLeft="5dp"
-            android:textSize="15sp"
-            android:text="NO.Of Students : 0" />
+            android:text="NO.Of Students : 0"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
             android:layout_weight="1"
             android:text="Year"
-            android:paddingRight="5dp"
-            android:textSize="15dp"
-            android:layout_gravity="end"
-            android:textAlignment="viewEnd"/>
+            android:textAlignment="viewEnd"
+            android:textSize="15sp" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/colorAccent" />
 </LinearLayout>

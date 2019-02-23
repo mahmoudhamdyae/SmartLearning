@@ -23,13 +23,16 @@
     <!-- Main Activity -->
     <string name="action_sign_out">Sign Out</string>
     <string name="main_activity_course_created_successfully_toast">Course Created Successfully</string>
-    <string name="main_activity_empty_course_name_or_year_toast">Write the Course name and Course year</string>
+    <string name="main_activity_empty_course_name_toast">Write the Course name</string>
     <string name="main_activity_choose_another_course_name_toast">Choose a different course name</string>
 
     <!-- Course Dialog -->
     <string name="course_dialog_name_edit_text_hint">Enter Course Name</string>
-    <string name="course_dialog_year_edit_text_hint">Enter Course Year</string>
+    <string name="course_dialog_year_text_view">Course Year</string>
     <string name="course_dialog_save_button">Save</string>
     <string name="course_dialog_cancel_button">Cancel</string>
+    <string name="course_delete_dialog_msg">Are you sure you want to delete this course ?</string>
+    <string name="course_delete_dialog_delete">Delete</string>
+    <string name="course_delete_dialog_cancel">Cancel</string>
 
 </resources>

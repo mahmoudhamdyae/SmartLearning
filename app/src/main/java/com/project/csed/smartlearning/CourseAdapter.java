@@ -1,6 +1,8 @@
 package com.project.csed.smartlearning;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -79,7 +81,27 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
             deletebutton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    delete(getAdapterPosition());
+                    // Create an AlertDialog.Builder and set the message, and click listeners
+                    // for the positive and negative buttons on the dialog.
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage(R.string.course_delete_dialog_msg);
+                    builder.setPositiveButton(R.string.course_delete_dialog_delete, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User clicked the "Delete" button, so delete the Course.
+                            delete(getAdapterPosition());
+                        }
+                    });
+                    builder.setNegativeButton(R.string.course_delete_dialog_cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User clicked the "Cancel" button, so dismiss the dialog
+                            if (dialog != null) {
+                                dialog.dismiss();
+                            }
+                        }
+                    });
+                    // Create and show the AlertDialog
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
                 }
             });
         }
