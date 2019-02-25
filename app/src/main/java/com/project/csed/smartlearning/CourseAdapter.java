@@ -3,6 +3,7 @@ package com.project.csed.smartlearning;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -36,14 +37,17 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
 
     @Override
     public void onBindViewHolder(@NonNull CourseHolder courseHolder, int i) {
-        CourseModel courseModel=courseAdapterList.get(i);
+        final CourseModel courseModel = courseAdapterList.get(i);
         courseHolder.courseName.setText(courseModel.getCourseName());
         courseHolder.studentNo.setText(courseModel.getStudentNo());
         courseHolder.year.setText(courseModel.getYearDate());
         courseHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // todo open course activity
+                // Launch Course Activity
+                Intent intent = new Intent(context, CourseActivity.class);
+                intent.putExtra("name", courseModel.getCourseName());
+                context.startActivity(intent);
             }
         });
     }
