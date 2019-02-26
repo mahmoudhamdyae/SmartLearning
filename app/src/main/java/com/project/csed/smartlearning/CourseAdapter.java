@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -67,6 +69,11 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
         // Remove the row from database
         DatabaseReference mCourseDatabaseReference = FirebaseDatabase.getInstance().getReference().getRoot().child("Courses").child(courseModel.getCourseName());
         mCourseDatabaseReference.setValue(null);
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String userkey = currentUser.getUid();
+        DatabaseReference usersDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userkey).child("Courses").child(courseModel.getCourseName());
+        usersDatabaseReference.setValue(null);
     }
 
     public class  CourseHolder extends RecyclerView.ViewHolder{

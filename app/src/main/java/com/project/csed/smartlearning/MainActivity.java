@@ -22,6 +22,7 @@ import android.support.v7.app.AlertDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     public String year = "1";
 
     private DatabaseReference mCourseDatabaseReference;
+    private DatabaseReference usersReference;
     private ChildEventListener mChildEventListener;
 
     @Override
@@ -59,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
             mCourseDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Courses");
+            usersReference = FirebaseDatabase.getInstance().getReference().child("Users");
             // Reading Data Once
             databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -176,11 +179,15 @@ public class MainActivity extends AppCompatActivity {
                                                         if (task.isSuccessful()){
                                                             alertDialog.dismiss();
                                                             Toast.makeText(MainActivity.this, R.string.main_activity_course_created_successfully_toast, Toast.LENGTH_SHORT).show();
+                                                            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                                                            String userkey = currentUser.getUid();
+                                                            usersReference.child(userkey).child("Courses").child(name).setValue(courseModel);
                                                         }
                                                         else
                                                             Toast.makeText(MainActivity.this, "Error : " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                                     }
                                                 });
+
                                             }
                                         }
                                         @Override

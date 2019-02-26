@@ -26,7 +26,6 @@ import com.google.firebase.database.ValueEventListener;
 public class SignUpActivity extends AppCompatActivity {
     private EditText userNameEditText, emailEditText, passwordEditText;
     private String type;
-
     private ProgressDialog progressDialog;
 
 
@@ -40,7 +39,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
         mAuth = FirebaseAuth.getInstance();
-
         userNameEditText = findViewById(R.id.user_name);
         emailEditText = findViewById(R.id.email);
         passwordEditText = findViewById(R.id.password);
