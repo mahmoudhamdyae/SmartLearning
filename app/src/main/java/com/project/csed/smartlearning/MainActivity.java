@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         courseModel2.setStudentNo("StudentNo");
         courseModel2.setYearDate("YearDate");
         courseModelList.add(courseModel2);
-
+//
         // Read courses from database
         mChildEventListener = new ChildEventListener() {
             @Override
