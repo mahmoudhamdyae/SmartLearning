@@ -1,5 +1,6 @@
 package com.project.csed.smartlearning;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mCourseDatabaseReference;
     private DatabaseReference usersReference;
     private ChildEventListener mChildEventListener;
+
+    List<courserForStudentPOJO> coursesOfStudent=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,6 +218,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void studentActivity(User user){
         // todo this is a  student activity
+        courserForStudentPOJO myfirstcourse = new courserForStudentPOJO("amr","al course al 7lw");
+
+
+
+        coursesOfStudent.add(myfirstcourse);
+
+
+
+        Context context2;
+
+        CourseAdapterForStudent courseAdapterForStudent=new CourseAdapterForStudent(coursesOfStudent,this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        recyclerView.setAdapter(courseAdapterForStudent);
     }
 
     @Override
