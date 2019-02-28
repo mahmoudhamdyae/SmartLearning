@@ -9,15 +9,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddStudentAdapter extends RecyclerView.Adapter<AddStudentAdapter.AddStudentHolder> {
     private List<User> StudentList;
     private Context context;
-
+    ArrayList<User> CheckStudentList =new ArrayList<>();
     public AddStudentAdapter(List<User> StudentList, Context context) {
         this.StudentList = StudentList;
         this.context = context;
+
     }
 
     @NonNull
@@ -33,22 +36,32 @@ public class AddStudentAdapter extends RecyclerView.Adapter<AddStudentAdapter.Ad
         final User user = StudentList.get(i);
         studentHolder.StudentName.setText(user.getUserName());
         studentHolder.emailAddress.setText(user.getEmail());
-        studentHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
+
+
+        studentHolder.setItemClickListener(new ItemClickListener() {
             @Override
-            public void onClick(View v) {
-            if(studentHolder.SelectStudent.isChecked()){ studentHolder.SelectStudent.setChecked(false); }
-            else { studentHolder.SelectStudent.setChecked(true); }
+            public void onItemClick(View v, int pos) {
+                final CheckBox chk = (CheckBox) v;
+                if(chk.isChecked())
+                {
+                    CheckStudentList.add(StudentList.get(pos));
+                }
+                else
+                {
+                    CheckStudentList.remove(StudentList.get(pos));
+                }
             }
         });
     }
 
     @Override
     public int getItemCount() { return StudentList.size();}
-    public class AddStudentHolder extends RecyclerView.ViewHolder
+    public class AddStudentHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
         TextView StudentName,emailAddress;
         CheckBox SelectStudent;
         LinearLayout linearLayout;
+        ItemClickListener itemClickListener;
 
         public AddStudentHolder(@NonNull View itemView) {
             super(itemView);
@@ -56,7 +69,16 @@ public class AddStudentAdapter extends RecyclerView.Adapter<AddStudentAdapter.Ad
             emailAddress = itemView.findViewById(R.id.emailAddress);
             SelectStudent = itemView.findViewById(R.id.SelectStudent);
             linearLayout = itemView.findViewById(R.id.AddStudentrow);
-
+            SelectStudent.setOnClickListener(this);
+        }
+        public void setItemClickListener(ItemClickListener ic)
+        {
+            this.itemClickListener= ic;
+        }
+        @Override
+        public void onClick(View v)
+        {
+        this.itemClickListener.onItemClick(v,getLayoutPosition());
         }
     }
 }

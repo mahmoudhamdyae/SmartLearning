@@ -45,5 +45,6 @@
     <string name="action_students">Students</string>
     <string name="action_course_details">Course details</string>
     <string name="search_studentname">Search by student name or email...</string>
+    <string name="AddStudent_activity_Student_Added_Toast">Selected students added to the course</string>
 
 </resources>
