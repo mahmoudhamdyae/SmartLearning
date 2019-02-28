@@ -1,6 +1,5 @@
 package com.project.csed.smartlearning;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,13 +37,12 @@ public class MainActivity extends AppCompatActivity {
 
     Button Addbutton;
     RecyclerView recyclerView;
-    public String year = "1";
 
     private DatabaseReference mCourseDatabaseReference;
     private DatabaseReference usersReference;
     private ChildEventListener mChildEventListener;
 
-    List<courserForStudentPOJO> coursesOfStudent=new ArrayList<>();
+    List<CourseModel> courseList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,9 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void teacherActivity (final User user){
         // RecyclerView
-
-        final List<CourseModel> courseModelList = new ArrayList<>();
-        final CourseAdapter courseAdapter = new CourseAdapter(courseModelList, MainActivity.this);
+        final CourseAdapter courseAdapter = new CourseAdapter(courseList, MainActivity.this);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         recyclerView.setAdapter(courseAdapter);
 
@@ -99,15 +94,15 @@ public class MainActivity extends AppCompatActivity {
         courseModel2.setCourseName("MathCourse");
         courseModel2.setStudentNo("StudentNo");
         courseModel2.setYearDate("YearDate");
-        courseModelList.add(courseModel2);
-////
+        courseList.add(courseModel2);
+
         // Read courses from database
         mChildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                 CourseModel course = dataSnapshot.getValue(CourseModel.class);
                 if (user.getUserName().equals(course.getTeacherName())){
-                    courseModelList.add(course);
+                    courseList.add(course);
                     courseAdapter.notifyDataSetChanged();
                 }
             }
@@ -217,20 +212,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void studentActivity(User user){
-        // todo this is a  student activity
-        courserForStudentPOJO myfirstcourse = new courserForStudentPOJO("amr","al course al 7lw");
+        CourseModel myfirstcourse = new CourseModel("amr","al course al 7lw");
 
+        courseList.add(myfirstcourse);
 
-
-        coursesOfStudent.add(myfirstcourse);
-
-
-
-        Context context2;
-
-        CourseAdapterForStudent courseAdapterForStudent=new CourseAdapterForStudent(coursesOfStudent,this);
+        CourseAdapterForStudent courseAdapterForStudent = new CourseAdapterForStudent(courseList,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         recyclerView.setAdapter(courseAdapterForStudent);
+
+        // Add Button OnClick
+        Addbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CourseSearchActivity.class));
+            }
+        });
     }
 
     @Override

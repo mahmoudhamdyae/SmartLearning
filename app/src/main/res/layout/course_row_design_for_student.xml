@@ -34,22 +34,14 @@
             android:src="@drawable/ic_delete_black_24dp" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/teacherName"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="5dp">
+        android:paddingTop="5dp"
+        android:text="Teacher name"
+        android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/teacherName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Teacher name"
-            android:textSize="15sp" />
-
-
-    </LinearLayout>
 
     <View
         android:layout_width="match_parent"

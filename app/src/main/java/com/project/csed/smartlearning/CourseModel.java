@@ -10,6 +10,11 @@ public class CourseModel {
         this.teacherName = teacherName;
     }
 
+    public CourseModel(String courseName, String teacherName){
+        this.CourseName = courseName;
+        this.teacherName = teacherName;
+    }
+
     public CourseModel() {
     }
 

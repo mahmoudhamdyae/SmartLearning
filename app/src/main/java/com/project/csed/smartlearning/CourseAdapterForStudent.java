@@ -12,10 +12,10 @@ import java.util.List;
 
 public class CourseAdapterForStudent extends RecyclerView.Adapter<CourseAdapterForStudent.StudentCourseHolder>
 {
-private List<courserForStudentPOJO>  courserForStudentList;
-private Context context;
+    private List<CourseModel>  courserForStudentList;
+    private Context context;
 
-    public CourseAdapterForStudent(List<courserForStudentPOJO> courserForStudentList, Context context) {
+    public CourseAdapterForStudent(List<CourseModel> courserForStudentList, Context context) {
         this.courserForStudentList = courserForStudentList;
         this.context = context;
     }
@@ -23,26 +23,26 @@ private Context context;
     @NonNull
     @Override
     public StudentCourseHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-      View roww =LayoutInflater.from(parent.getContext()).inflate(R.layout.course_row_design_for_student,parent,false);
-      StudentCourseHolder studentCourseHolder=new StudentCourseHolder(roww);
+        View row =LayoutInflater.from(parent.getContext()).inflate(R.layout.course_row_design_for_student,parent,false);
+        StudentCourseHolder studentCourseHolder=new StudentCourseHolder(row);
         return studentCourseHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull StudentCourseHolder studentCourseHolder, int i) {
-        courserForStudentPOJO exampleCourse= courserForStudentList.get(i);
+        CourseModel exampleCourse= courserForStudentList.get(i);
         studentCourseHolder.courseName.setText(exampleCourse.getCourseName());
         studentCourseHolder.teacherName.setText(exampleCourse.getTeacherName());
     }
 
     @Override
     public int getItemCount() {
-         return courserForStudentList.size() ;
+        return courserForStudentList.size() ;
     }
 
     public  class StudentCourseHolder extends RecyclerView.ViewHolder
     {
-    TextView teacherName , courseName;
+        TextView teacherName , courseName;
 
 
         public StudentCourseHolder(@NonNull View itemView) {

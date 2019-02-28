@@ -34,7 +34,7 @@
     <string name="course_delete_dialog_msg">Are you sure you want to delete this course ?</string>
     <string name="course_delete_dialog_delete">Delete</string>
     <string name="course_delete_dialog_cancel">Cancel</string>
-    
+
     <!-- Course Activity -->
     <string name="course_quizzes">Quizzes</string>
     <string name="course_add_student">Add Student</string>
@@ -44,5 +44,12 @@
     <string name="action_delete">Delete</string>
     <string name="action_students">Students</string>
     <string name="action_course_details">Course details</string>
+
+    <!-- Course Search Activity -->
+    <string name="course_search">Search</string>
+    <string name="course_search_not_found_toast">No Match found</string>
+    <string name="course_search_dialog_confirm_msg">Are you sure you want to enroll this course ?</string>
+    <string name="course_search_dialog_enroll_button">Enroll</string>
+    <string name="course_search_dialog_cancel_button">Cancel</string>
 
 </resources>
