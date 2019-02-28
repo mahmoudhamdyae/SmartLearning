@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".CourseSearchActivity"></activity>
-        <activity android:name=".CourseActivity" />
+        <activity android:name=".AddStudentActivity"></activity>
+        <activity android:name=".CourseActivity"></activity>
         <activity android:name=".MainActivity" />
         <activity
             android:name=".Splash"

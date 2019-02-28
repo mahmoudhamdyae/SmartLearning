@@ -9,7 +9,7 @@ import android.support.v7.widget.CardView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
+import android.content.Intent;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -45,6 +45,9 @@ public class CourseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // todo Open add student activity
+                Intent activ = new Intent(CourseActivity.this,AddStudentActivity.class);
+                activ.putExtra("name", courseName);
+                startActivity(activ);
             }
         });
 

@@ -44,6 +44,7 @@
     <string name="action_delete">Delete</string>
     <string name="action_students">Students</string>
     <string name="action_course_details">Course details</string>
+    <string name="search_studentname">Search by student name or email...</string>
 
     <!-- Course Search Activity -->
     <string name="course_search">Search</string>
