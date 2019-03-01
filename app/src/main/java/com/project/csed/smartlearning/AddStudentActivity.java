@@ -26,15 +26,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddStudentActivity extends AppCompatActivity {
-    CheckBox StudentCheck;
+
     EditText StudentNameSearch;
-    //TextView StudentName;
     RecyclerView recycler;
     AddStudentAdapter adapter;
     List<User> StudentList;
     private DatabaseReference mStudentDB,mCourseDB;
     String courseName;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +42,7 @@ public class AddStudentActivity extends AppCompatActivity {
         courseName = activ.getStringExtra("name");
         setTitle(courseName);
         StudentList = new ArrayList<>();
+
 
         StudentNameSearch = findViewById(R.id.searchstudent);
         recycler = findViewById(R.id.AddrecyclerView);
@@ -71,10 +70,30 @@ public class AddStudentActivity extends AppCompatActivity {
     }
 
 
-    public void AddButton(View view) {
-        //todo add checked students to courses (child:Students)
-    }
 
+    public void AddButton(View view) {
+        //TODO add courses under student user
+        /*String year = mCourseDB.child("yearDate").getKey();
+        String teacher = mCourseDB.child("teacherName").getKey();
+       final CourseModel courseModel1 = new CourseModel(courseName,"StudentNo", year, teacher);*/
+
+        for(final User user : adapter.CheckStudentList)
+        {
+            Query queryCourse = mCourseDB.child("Students").orderByChild("userName").equalTo(user.getUserName());
+            queryCourse.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    String mGroupId = mStudentDB.child(user.getUserName()).getKey();
+                        mCourseDB.child("Students").child(user.getUserName()).child("userName").setValue(user.getUserName());
+                        mCourseDB.child("Students").child(user.getUserName()).child("email").setValue(user.getEmail());
+
+                        Toast.makeText(AddStudentActivity.this, R.string.AddStudent_activity_Student_Added_Toast
+                                , Toast.LENGTH_SHORT).show();
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) { }});
+        }
+    }
     public void SearchButton(View view) {
 
         String Sname = StudentNameSearch.getText().toString();
