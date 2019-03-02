@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class AddStudentActivity extends AppCompatActivity {
 
     EditText StudentNameSearch;
@@ -38,16 +39,15 @@ public class AddStudentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_student);
-
         Intent activ = getIntent();
         courseName = activ.getStringExtra("name");
         setTitle(courseName);
+
         StudentList = new ArrayList<>();
-
-
         StudentNameSearch = findViewById(R.id.searchstudent);
         recycler = findViewById(R.id.AddrecyclerView);
         adapter = new AddStudentAdapter(StudentList,this);
+
         mCourseDB = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseName);
         //add student users to the list
         mStudentDB = FirebaseDatabase.getInstance().getReference().child("Users");
