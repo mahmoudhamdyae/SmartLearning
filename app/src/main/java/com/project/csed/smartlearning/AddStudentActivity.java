@@ -32,7 +32,8 @@ public class AddStudentActivity extends AppCompatActivity {
     AddStudentAdapter adapter;
     List<User> StudentList;
     private DatabaseReference mStudentDB,mCourseDB;
-    String courseName;
+    String courseName,year,teacher,studentNo;
+    CourseModel courseModel1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +48,8 @@ public class AddStudentActivity extends AppCompatActivity {
         StudentNameSearch = findViewById(R.id.searchstudent);
         recycler = findViewById(R.id.AddrecyclerView);
         adapter = new AddStudentAdapter(StudentList,this);
-
         mCourseDB = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseName);
+        //add student users to the list
         mStudentDB = FirebaseDatabase.getInstance().getReference().child("Users");
         mStudentDB.addValueEventListener(new ValueEventListener() {
             @Override
@@ -61,37 +62,61 @@ public class AddStudentActivity extends AppCompatActivity {
                         StudentList.add(student);
                     }
                 }
-                recycler.setLayoutManager(new LinearLayoutManager(AddStudentActivity.this));
-                recycler.setAdapter(adapter);
             }
             @Override
-            public void onCancelled(DatabaseError databaseError) { }
-        });
+            public void onCancelled(DatabaseError databaseError) { }});
+            recycler.setLayoutManager(new LinearLayoutManager(AddStudentActivity.this));
+            recycler.setAdapter(adapter);
     }
 
 
 
     public void AddButton(View view) {
-        //TODO add courses under student user
-        /*String year = mCourseDB.child("yearDate").getKey();
-        String teacher = mCourseDB.child("teacherName").getKey();
-       final CourseModel courseModel1 = new CourseModel(courseName,"StudentNo", year, teacher);*/
+        // get the course details.
+        mCourseDB.orderByChild("courseName").equalTo(courseName).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot details: dataSnapshot.child(courseName).getChildren())
+                {
+                    year = details.child("yearDate").getValue().toString();
+                    teacher = details.child("teacherName").getValue().toString();
+                    studentNo = details.child("studentNo").getValue().toString();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }});
 
+        courseModel1 = new CourseModel(courseName,studentNo,year,teacher);
         for(final User user : adapter.CheckStudentList)
         {
+            // add checked student users to course
             Query queryCourse = mCourseDB.child("Students").orderByChild("userName").equalTo(user.getUserName());
             queryCourse.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    String mGroupId = mStudentDB.child(user.getUserName()).getKey();
+
                         mCourseDB.child("Students").child(user.getUserName()).child("userName").setValue(user.getUserName());
                         mCourseDB.child("Students").child(user.getUserName()).child("email").setValue(user.getEmail());
 
                         Toast.makeText(AddStudentActivity.this, R.string.AddStudent_activity_Student_Added_Toast
                                 , Toast.LENGTH_SHORT).show();
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) { }});
+            // add courses under student users
+                mStudentDB.orderByChild("userName").equalTo(user.getUserName()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot data: dataSnapshot.getChildren())
+                    {
+                        String userkey = data.getKey();
+                        mStudentDB.child(userkey).child("Courses").child(courseName).setValue(courseModel1);
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) { }});
+
         }
     }
     public void SearchButton(View view) {
