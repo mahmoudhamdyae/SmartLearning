@@ -52,22 +52,24 @@ public class MainActivity extends AppCompatActivity {
 
         Addbutton = findViewById(R.id.addbtn);
         recyclerView = findViewById(R.id.recyclerView);
-        ///
+        //Hide the add button and the action bar on scrolling
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 switch (newState) {
                     case RecyclerView.SCROLL_STATE_IDLE:
                         Addbutton.setVisibility(View.VISIBLE);
+                        getSupportActionBar().show();
                         break;
                     default:
                         Addbutton.setVisibility(View.GONE);
+                        getSupportActionBar().hide();
                         break;
                 }
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
-        ///
+
         final FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
         if (mAuth.getCurrentUser() == null) {

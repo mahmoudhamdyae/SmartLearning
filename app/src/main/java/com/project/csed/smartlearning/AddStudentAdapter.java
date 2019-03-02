@@ -37,7 +37,22 @@ public class AddStudentAdapter extends RecyclerView.Adapter<AddStudentAdapter.Ad
         studentHolder.StudentName.setText(user.getUserName());
         studentHolder.emailAddress.setText(user.getEmail());
 
+        studentHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                if(studentHolder.SelectStudent.isChecked())
+                {
+                    CheckStudentList.remove(user);
+                    studentHolder.SelectStudent.setChecked(false);
+                }
+                else
+                {
+                    CheckStudentList.add(user);
+                    studentHolder.SelectStudent.setChecked(true);
+                }
+            }
+        });
         studentHolder.setItemClickListener(new ItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
