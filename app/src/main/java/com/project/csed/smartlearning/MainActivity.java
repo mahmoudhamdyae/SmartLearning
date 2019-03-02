@@ -56,19 +56,31 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         //Hide the add button and the action bar on scrolling
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            int mLastFirstVisibleItem = 0;
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+
                 switch (newState) {
                     case RecyclerView.SCROLL_STATE_IDLE:
                         Addbutton.setVisibility(View.VISIBLE);
-                        getSupportActionBar().show();
                         break;
                     default:
                         Addbutton.setVisibility(View.GONE);
-                        getSupportActionBar().hide();
                         break;
                 }
                 super.onScrollStateChanged(recyclerView, newState);
+            }
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                final int currentFirstVisibleItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+                super.onScrolled(recyclerView, dx, dy);
+                if (currentFirstVisibleItem > this.mLastFirstVisibleItem) {
+                    MainActivity.this.getSupportActionBar().hide();
+                } else if (currentFirstVisibleItem < this.mLastFirstVisibleItem) {
+                    MainActivity.this.getSupportActionBar().show();
+                }
+
+                this.mLastFirstVisibleItem = currentFirstVisibleItem;
             }
         });
 
