@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button Addbutton;
     RecyclerView recyclerView;
+    View emptyView;
 
     private DatabaseReference mCourseDatabaseReference;
     private DatabaseReference usersReference;
@@ -48,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
 
         Addbutton = findViewById(R.id.addbtn);
         recyclerView = findViewById(R.id.recyclerView);
+
+        // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
+        emptyView = findViewById(R.id.empty_view);
+
         // Hide the add button and the action bar on scrolling
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             int mLastFirstVisibleItem = 0;
@@ -119,6 +124,16 @@ public class MainActivity extends AppCompatActivity {
                     final CourseModel courseModel = dataSnapshot1.getValue(CourseModel.class);
                     courseList.add(courseModel);
                     courseAdapter.notifyDataSetChanged();
+
+                    // If there is no course set empty view
+                    if (courseAdapter.getItemCount() == 0){
+                        recyclerView.setVisibility(View.GONE);
+                        emptyView.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        recyclerView.setVisibility(View.VISIBLE);
+                        emptyView.setVisibility(View.GONE);
+                    }
                 }
             }
             @Override
@@ -239,6 +254,16 @@ public class MainActivity extends AppCompatActivity {
                     final CourseModel courseModel = dataSnapshot1.getValue(CourseModel.class);
                     courseList.add(courseModel);
                     courseAdapterForStudent.notifyDataSetChanged();
+
+                    // If there is no course set empty view
+                    if (courseAdapterForStudent.getItemCount() == 0){
+                        recyclerView.setVisibility(View.GONE);
+                        emptyView.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        recyclerView.setVisibility(View.VISIBLE);
+                        emptyView.setVisibility(View.GONE);
+                    }
                 }
             }
             @Override

@@ -25,6 +25,8 @@
     <string name="main_activity_course_created_successfully_toast">Course Created Successfully</string>
     <string name="main_activity_empty_course_name_toast">Write the Course name</string>
     <string name="main_activity_choose_another_course_name_toast">Choose a different course name</string>
+    <string name="empty_notes_title">You don\'t have any courses yet</string>
+    <string name="empty_notes_subtitle">Add your course from + button</string>
 
     <!-- Course Dialog -->
     <string name="course_dialog_name_edit_text_hint">Enter Course Name</string>
