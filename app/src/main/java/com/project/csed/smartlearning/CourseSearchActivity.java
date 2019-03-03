@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -21,13 +20,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CourseSearchActivity extends AppCompatActivity {
     ListView listView;
     SearchView searchView;
-    ArrayAdapter<String> adapter;
-    List<String> list;
+    CourseSearchAdapter adapter;
+    ArrayList<CourseModel> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +42,7 @@ public class CourseSearchActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                 CourseModel courseModel = dataSnapshot.getValue(CourseModel.class);
-                list.add(courseModel.getCourseName());
+                list.add(courseModel);
             }
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {}
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {}
@@ -53,7 +51,7 @@ public class CourseSearchActivity extends AppCompatActivity {
         };
         mCourseDatabaseReference.addChildEventListener(mChildEventListener);
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
+        adapter = new CourseSearchAdapter(this, list);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -76,7 +74,7 @@ public class CourseSearchActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final String courseName = adapter.getItem(position);
+                final CourseModel courseModel = adapter.getItem(position);
                 // Create an AlertDialog.Builder and set the message, and click listeners
                 // for the positive and negative buttons on the dialog.
                 AlertDialog.Builder builder = new AlertDialog.Builder(CourseSearchActivity.this);
@@ -86,7 +84,7 @@ public class CourseSearchActivity extends AppCompatActivity {
                         // User clicked the "Enroll" button, so enroll the Course.
                         final String userKey = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         // Write in courses table
-                        final DatabaseReference courseReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseName).child("Students");
+                        final DatabaseReference courseReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseModel.getCourseName()).child("Students");
                         DatabaseReference userReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userKey);
                         userReference.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -99,22 +97,11 @@ public class CourseSearchActivity extends AppCompatActivity {
                             }
                         });
 
-                        // Read course information
-                        DatabaseReference coursesReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseName);
-                        coursesReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                CourseModel courseModel = dataSnapshot.getValue(CourseModel.class);
-                                // Write in users table
-                                DatabaseReference userReference1 = FirebaseDatabase.getInstance().getReference()
-                                        .child("Users").child(userKey).child("Courses");
-                                userReference1.child(courseName).setValue(courseModel);
-                                finish();
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                            }
-                        });
+                        // Write in users table
+                        DatabaseReference userReference1 = FirebaseDatabase.getInstance().getReference()
+                                .child("Users").child(userKey).child("Courses");
+                        userReference1.child(courseModel.getCourseName()).setValue(courseModel);
+                        finish();
                     }
                 });
                 builder.setNegativeButton(R.string.course_search_dialog_cancel_button, new DialogInterface.OnClickListener() {
