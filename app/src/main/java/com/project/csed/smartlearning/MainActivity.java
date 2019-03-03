@@ -233,9 +233,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void studentActivity(){
-        // TEST
-        CourseModel myfirstcourse = new CourseModel("amr","al course al 7lw");
-        courseList.add(myfirstcourse);
 
         // RecyclerView
         final CourseAdapterForStudent courseAdapterForStudent = new CourseAdapterForStudent(courseList,this);
@@ -244,6 +241,7 @@ public class MainActivity extends AppCompatActivity {
         usersReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                courseList.clear();
                 for (DataSnapshot dataSnapshot1: dataSnapshot.child("Courses").getChildren()) {
                     final CourseModel courseModel = dataSnapshot1.getValue(CourseModel.class);
                     courseList.add(courseModel);
