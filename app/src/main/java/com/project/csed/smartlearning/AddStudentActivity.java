@@ -48,6 +48,7 @@ public class AddStudentActivity extends AppCompatActivity {
         mStudentDB.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                StudentList.clear();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     final User student = postSnapshot.getValue(User.class);
 
@@ -64,8 +65,7 @@ public class AddStudentActivity extends AppCompatActivity {
     }
 
     public void AddButton(View view) {
-
-
+        
         for(final User user : adapter.CheckStudentList)
         {
             // add checked student users to course
@@ -105,8 +105,6 @@ public class AddStudentActivity extends AppCompatActivity {
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                 }
             });
-
-
         }
     }
 
