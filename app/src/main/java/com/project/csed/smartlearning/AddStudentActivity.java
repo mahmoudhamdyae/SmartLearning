@@ -28,8 +28,7 @@ public class AddStudentActivity extends AppCompatActivity {
     AddStudentAdapter adapter;
     List<User> StudentList;
     private DatabaseReference mStudentDB,mCourseDB;
-    String courseName,year,teacher,studentNo;
-    CourseModel courseModel1;
+    String courseName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,21 +64,8 @@ public class AddStudentActivity extends AppCompatActivity {
     }
 
     public void AddButton(View view) {
-        // get the course details.
-        mCourseDB.orderByChild("courseName").equalTo(courseName).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot details: dataSnapshot.child(courseName).getChildren())
-                {
-                    year = details.child("yearDate").getValue().toString();
-                    teacher = details.child("teacherName").getValue().toString();
-                    studentNo = details.child("studentNo").getValue().toString();
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }});
 
-        courseModel1 = new CourseModel(courseName,studentNo,year,teacher);
+
         for(final User user : adapter.CheckStudentList)
         {
             // add checked student users to course
@@ -97,18 +83,29 @@ public class AddStudentActivity extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) { }});
-            // add courses under student users
-            mStudentDB.orderByChild("userName").equalTo(user.getUserName()).addValueEventListener(new ValueEventListener() {
+            // get the course details.
+            mCourseDB.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot data: dataSnapshot.getChildren())
-                    {
-                        String userkey = data.getKey();
-                        mStudentDB.child(userkey).child("Courses").child(courseName).setValue(courseModel1);
-                    }
+                   final CourseModel courseModel1 = dataSnapshot.getValue(CourseModel.class);
+                    // add courses under student users
+                    mStudentDB.orderByChild("userName").equalTo(user.getUserName()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot data: dataSnapshot.getChildren())
+                            {
+                                String userkey = data.getKey();
+                                mStudentDB.child(userkey).child("Courses").child(courseName).setValue(courseModel1);
+                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) { }});
                 }
                 @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) { }});
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
+
 
         }
     }
