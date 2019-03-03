@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:attr/selectableItemBackground"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/course_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Name"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textColor="#2B3D4D" />
+
+    <TextView
+        android:id="@+id/course_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="2dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Year"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textColor="#2B3D4D" />
+
+    <TextView
+        android:id="@+id/teacher_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/course_name"
+        android:layout_margin="2dp"
+        android:fontFamily="sans-serif"
+        android:text="Teacher Name"
+        android:textAppearance="?android:textAppearanceSmall"
+        android:textColor="#AEB6BD" />
+
+</RelativeLayout>

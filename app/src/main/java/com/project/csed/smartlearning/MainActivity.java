@@ -110,18 +110,11 @@ public class MainActivity extends AppCompatActivity {
         // RecyclerView
         final CourseAdapter courseAdapter = new CourseAdapter(courseList, MainActivity.this);
 
-        //todo delete this 5 lines when we finish
-        //this is the first row in the teacher RecyclerView --test--
-        CourseModel courseModel2 = new CourseModel();
-        courseModel2.setCourseName("MathCourse");
-        courseModel2.setStudentNo("StudentNo");
-        courseModel2.setYearDate("YearDate");
-        courseList.add(courseModel2);
-
         // Read courses from database
         usersReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                courseList.clear();
                 for (DataSnapshot dataSnapshot1: dataSnapshot.child("Courses").getChildren()) {
                     final CourseModel courseModel = dataSnapshot1.getValue(CourseModel.class);
                     courseList.add(courseModel);
