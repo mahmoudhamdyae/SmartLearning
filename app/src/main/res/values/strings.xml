@@ -44,7 +44,9 @@
     <string name="action_delete">Delete</string>
     <string name="action_students">Students</string>
     <string name="action_course_details">Course details</string>
-    <string name="search_studentname">Search by student name or email...</string>
+
+    <!-- AddStudentActivity -->
+    <string name="search_studentname">Search by student name or email&#8230;</string>
     <string name="AddStudent_activity_Student_Added_Toast">Selected students added to the course</string>
 
     <!-- Course Search Activity -->
@@ -53,5 +55,10 @@
     <string name="course_search_dialog_confirm_msg">Are you sure you want to enroll this course ?</string>
     <string name="course_search_dialog_enroll_button">Enroll</string>
     <string name="course_search_dialog_cancel_button">Cancel</string>
+
+    <!-- Course Search Adapter -->
+    <string name="course_deleted_successfully_toast">Course deleted successfully</string>
+    <string name="course_removed_successfully_toast">Course removed successfully</string>
+    <string name="course_remove_dialog_msg">Are you sure you want to remove this course ?</string>
 
 </resources>

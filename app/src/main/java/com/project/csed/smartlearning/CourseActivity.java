@@ -15,7 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class CourseActivity extends AppCompatActivity {
     CardView quizzes, addStudent, materials, chat;
-    String courseName;
+    String courseName, userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +25,8 @@ public class CourseActivity extends AppCompatActivity {
         // Examine the intent that was used to launch this activity,
         // in order to get course name.
         Intent intent = getIntent();
-        courseName = intent.getStringExtra("name");
+        courseName = intent.getStringExtra("course_name");
+
         // Change the app bar to show course name
         setTitle(courseName);
 
@@ -33,6 +34,11 @@ public class CourseActivity extends AppCompatActivity {
         addStudent = findViewById(R.id.add_student);
         materials = findViewById(R.id.materials);
         chat = findViewById(R.id.chat);
+
+        userType = intent.getStringExtra("user_type");
+        if (userType.equals("Student")){
+            addStudent.setVisibility(View.GONE);
+        }
 
         quizzes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +75,17 @@ public class CourseActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_course, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        // If the user is student, hide the "Delete" menu item.
+        if (userType.equals("Student")) {
+            MenuItem menuItem = menu.findItem(R.id.delete);
+            menuItem.setVisible(false);
+        }
         return true;
     }
 

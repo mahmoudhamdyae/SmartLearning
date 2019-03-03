@@ -21,8 +21,6 @@ import android.support.v7.app.AlertDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
     private DatabaseReference mCourseDatabaseReference;
     private DatabaseReference usersReference;
-    private ChildEventListener mChildEventListener;
 
     List<CourseModel> courseList = new ArrayList<>();
 
@@ -49,10 +46,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         Addbutton = findViewById(R.id.addbtn);
         recyclerView = findViewById(R.id.recyclerView);
-        //Hide the add button and the action bar on scrolling
+        // Hide the add button and the action bar on scrolling
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             int mLastFirstVisibleItem = 0;
             @Override
@@ -69,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 super.onScrollStateChanged(recyclerView, newState);
             }
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 final int currentFirstVisibleItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
                 super.onScrolled(recyclerView, dx, dy);
                 if (currentFirstVisibleItem > this.mLastFirstVisibleItem) {
@@ -88,11 +84,10 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
         } else {
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
+            usersReference = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
             mCourseDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Courses");
-            usersReference = FirebaseDatabase.getInstance().getReference().child("Users");
             // Reading Data Once
-            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            usersReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     User user = dataSnapshot.getValue(User.class);
@@ -101,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                         teacherActivity(user);
                     } else if (user.getType().equals("Student")) {
                         Toast.makeText(MainActivity.this, "This is Student Main Activity", Toast.LENGTH_SHORT).show();
-                        studentActivity(user);
+                        studentActivity();
                     }
                 }
                 @Override
@@ -114,8 +109,6 @@ public class MainActivity extends AppCompatActivity {
     private void teacherActivity (final User user){
         // RecyclerView
         final CourseAdapter courseAdapter = new CourseAdapter(courseList, MainActivity.this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        recyclerView.setAdapter(courseAdapter);
 
         //todo delete this 5 lines when we finish
         //this is the first row in the teacher RecyclerView --test--
@@ -126,21 +119,19 @@ public class MainActivity extends AppCompatActivity {
         courseList.add(courseModel2);
 
         // Read courses from database
-        mChildEventListener = new ChildEventListener() {
+        usersReference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
-                CourseModel course = dataSnapshot.getValue(CourseModel.class);
-                if (user.getUserName().equals(course.getTeacherName())){
-                    courseList.add(course);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1: dataSnapshot.child("Courses").getChildren()) {
+                    final CourseModel courseModel = dataSnapshot1.getValue(CourseModel.class);
+                    courseList.add(courseModel);
                     courseAdapter.notifyDataSetChanged();
                 }
             }
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {}
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {}
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String s) {}
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
-        };
-        mCourseDatabaseReference.addChildEventListener(mChildEventListener);
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
 
         // Add Button OnClick
         Addbutton.setOnClickListener(new View.OnClickListener() {
@@ -173,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                 spinnerList.add("1");
                 spinnerList.add("2");
                 spinnerList.add("3");
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_dropdown_item, spinnerList);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_spinner_dropdown_item, spinnerList);
                 courseyear.setAdapter(adapter);
                 savebtn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -206,9 +197,7 @@ public class MainActivity extends AppCompatActivity {
                                                         if (task.isSuccessful()){
                                                             alertDialog.dismiss();
                                                             Toast.makeText(MainActivity.this, R.string.main_activity_course_created_successfully_toast, Toast.LENGTH_SHORT).show();
-                                                            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                                                            String userkey = currentUser.getUid();
-                                                            usersReference.child(userkey).child("Courses").child(name).setValue(courseModel);
+                                                            usersReference.child("Courses").child(name).setValue(courseModel);
                                                         }
                                                         else
                                                             Toast.makeText(MainActivity.this, "Error : " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -238,16 +227,33 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        recyclerView.setAdapter(courseAdapter);
     }
 
-    private void studentActivity(User user){
+    private void studentActivity(){
+        // TEST
         CourseModel myfirstcourse = new CourseModel("amr","al course al 7lw");
-
         courseList.add(myfirstcourse);
 
-        CourseAdapterForStudent courseAdapterForStudent = new CourseAdapterForStudent(courseList,this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        recyclerView.setAdapter(courseAdapterForStudent);
+        // RecyclerView
+        final CourseAdapterForStudent courseAdapterForStudent = new CourseAdapterForStudent(courseList,this);
+
+        // Read courses from database
+        usersReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1: dataSnapshot.child("Courses").getChildren()) {
+                    final CourseModel courseModel = dataSnapshot1.getValue(CourseModel.class);
+                    courseList.add(courseModel);
+                    courseAdapterForStudent.notifyDataSetChanged();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
 
         // Add Button OnClick
         Addbutton.setOnClickListener(new View.OnClickListener() {
@@ -256,6 +262,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, CourseSearchActivity.class));
             }
         });
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        recyclerView.setAdapter(courseAdapterForStudent);
     }
 
     @Override

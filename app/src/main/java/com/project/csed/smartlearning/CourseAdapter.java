@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -48,7 +49,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
             public void onClick(View v) {
                 // Launch Course Activity
                 Intent intent = new Intent(context, CourseActivity.class);
-                intent.putExtra("name", courseModel.getCourseName());
+                intent.putExtra("course_name", courseModel.getCourseName());
+                intent.putExtra("user_type", "Teacher");
                 context.startActivity(intent);
             }
         });
@@ -74,6 +76,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
         String userkey = currentUser.getUid();
         DatabaseReference usersDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userkey).child("Courses").child(courseModel.getCourseName());
         usersDatabaseReference.setValue(null);
+        Toast.makeText(context, R.string.course_deleted_successfully_toast, Toast.LENGTH_SHORT).show();
     }
 
     public class  CourseHolder extends RecyclerView.ViewHolder{

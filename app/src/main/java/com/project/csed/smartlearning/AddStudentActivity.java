@@ -2,19 +2,14 @@ package com.project.csed.smartlearning;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.KeyEvent;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.CheckBox;
 import android.widget.Toast;
 import android.widget.EditText;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -53,7 +48,7 @@ public class AddStudentActivity extends AppCompatActivity {
         mStudentDB = FirebaseDatabase.getInstance().getReference().child("Users");
         mStudentDB.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     final User student = postSnapshot.getValue(User.class);
 
@@ -64,12 +59,10 @@ public class AddStudentActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onCancelled(DatabaseError databaseError) { }});
-            recycler.setLayoutManager(new LinearLayoutManager(AddStudentActivity.this));
-            recycler.setAdapter(adapter);
+            public void onCancelled(@NonNull DatabaseError databaseError) { }});
+        recycler.setLayoutManager(new LinearLayoutManager(AddStudentActivity.this));
+        recycler.setAdapter(adapter);
     }
-
-
 
     public void AddButton(View view) {
         // get the course details.
@@ -95,17 +88,17 @@ public class AddStudentActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        mCourseDB.child("Students").child(user.getUserName()).child("userName").setValue(user.getUserName());
-                        mCourseDB.child("Students").child(user.getUserName()).child("email").setValue(user.getEmail());
+                    mCourseDB.child("Students").child(user.getUserName()).child("userName").setValue(user.getUserName());
+                    mCourseDB.child("Students").child(user.getUserName()).child("email").setValue(user.getEmail());
 
-                        Toast.makeText(AddStudentActivity.this, R.string.AddStudent_activity_Student_Added_Toast
-                                , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddStudentActivity.this, R.string.AddStudent_activity_Student_Added_Toast
+                            , Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) { }});
             // add courses under student users
-                mStudentDB.orderByChild("userName").equalTo(user.getUserName()).addValueEventListener(new ValueEventListener() {
+            mStudentDB.orderByChild("userName").equalTo(user.getUserName()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for (DataSnapshot data: dataSnapshot.getChildren())
@@ -119,6 +112,7 @@ public class AddStudentActivity extends AppCompatActivity {
 
         }
     }
+
     public void SearchButton(View view) {
 
         String Sname = StudentNameSearch.getText().toString();
