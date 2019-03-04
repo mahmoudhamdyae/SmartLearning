@@ -11,5 +11,14 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+    
+    <style name="TextLabel" parent="TextAppearance.AppCompat">
+        <item name="android:textColorHint">#274D49</item>
+        <item name="colorAccent">#274D49</item>
+        <item name="colorControlNormal">#000</item>
+        <item name="colorControlActivated">#274D49</item>
+        <item name="android:textColorHighlight">#679</item>
+        <item name="android:textColorLink">#9E9E9E</item>
+    </style>
 
 </resources>

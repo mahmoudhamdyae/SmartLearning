@@ -5,7 +5,7 @@
     <string name="login_email_edit_text_hint">E-mail</string>
     <string name="login_password_edit_text_hint">Password</string>
     <string name="login_login_button">Login</string>
-    <string name="login_sign_up_button">Sign Up</string>
+    <string name="login_sign_up_button">No Account Yet? Sign Up Now</string>
 
     <string name="login_empty_edit_text_toast">Some information are not completed</string>
     <string name="login_choose_another_user_name_toast">Choose a different user name</string>
@@ -63,5 +63,9 @@
     <string name="course_removed_successfully_toast">Course removed successfully</string>
     <string name="course_remove_dialog_msg">Are you sure you want to remove this course ?</string>
     <string name="year">Year </string>
+    <string name="under_appname_intro_loginscreen">Easy and Smart Learning, Welcome!</string>
+    <string name="sign_up_teacher_or_student">Please select account type... Teacher or Student?</string>
+    <string name="under_appname_intro_signupscreen">Sign Up Here!</string>
+    <string name="fillhere_signuplogin_error">Fill Here Please</string>
 
 </resources>

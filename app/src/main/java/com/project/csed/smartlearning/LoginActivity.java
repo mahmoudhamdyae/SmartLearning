@@ -3,6 +3,7 @@ package com.project.csed.smartlearning;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,7 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
-    EditText emailTextView, passwordTextView;
+    TextInputEditText emailTextView, passwordTextView;
 
     private FirebaseAuth mAuth;
 
@@ -43,6 +44,17 @@ public class LoginActivity extends AppCompatActivity {
                     logIn(email, password);
                 else
                     Toast.makeText(LoginActivity.this, R.string.login_empty_edit_text_toast, Toast.LENGTH_SHORT).show();
+                String fillhere = getResources().getString(R.string.fillhere_signuplogin_error);
+                if(email.isEmpty()||email.equals(" "))
+                {
+                    emailTextView.setError(fillhere);
+                    return;
+                }
+                if(password.isEmpty()||password.equals(" "))
+                {
+                    passwordTextView.setError(fillhere);
+                    return;
+                }
             }
         });
 
