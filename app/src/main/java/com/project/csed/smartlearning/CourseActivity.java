@@ -1,7 +1,5 @@
 package com.project.csed.smartlearning;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,9 +7,6 @@ import android.support.v7.widget.CardView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.content.Intent;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class CourseActivity extends AppCompatActivity {
     CardView quizzes, addStudent, materials, chat;
@@ -79,22 +74,8 @@ public class CourseActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-        // If the user is student, hide the "Delete" menu item.
-        if (userType.equals("Student")) {
-            MenuItem menuItem = menu.findItem(R.id.delete);
-            menuItem.setVisible(false);
-        }
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.delete:
-                deleteCourse();
-                return true;
             case R.id.students:
                 // todo open students activity
                 return true;
@@ -103,32 +84,5 @@ public class CourseActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void deleteCourse(){
-        // Create an AlertDialog.Builder and set the message, and click listeners
-        // for the positive and negative buttons on the dialog.
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.course_delete_dialog_msg);
-        builder.setPositiveButton(R.string.course_delete_dialog_delete, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User clicked the "Delete" button, so delete the Course.
-                DatabaseReference mCourseDatabaseReference = FirebaseDatabase.getInstance().getReference().getRoot().child("Courses").child(courseName);
-                mCourseDatabaseReference.setValue(null);
-                // todo remove course from recyclerView
-                finish();
-            }
-        });
-        builder.setNegativeButton(R.string.course_delete_dialog_cancel, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                // User clicked the "Cancel" button, so dismiss the dialog
-                if (dialog != null) {
-                    dialog.dismiss();
-                }
-            }
-        });
-        // Create and show the AlertDialog
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
     }
 }

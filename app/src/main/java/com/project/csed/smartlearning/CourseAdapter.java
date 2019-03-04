@@ -68,14 +68,19 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
         CourseModel courseModel = courseAdapterList.get(position);
         courseAdapterList.remove(position);
         notifyItemRemoved(position);
-        // Remove the row from database
+        // Remove the course from database
+        // Remove from courses table
         DatabaseReference mCourseDatabaseReference = FirebaseDatabase.getInstance().getReference().getRoot().child("Courses").child(courseModel.getCourseName());
         mCourseDatabaseReference.setValue(null);
 
+        // Remove from users table (teacher)
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         String userkey = currentUser.getUid();
         DatabaseReference usersDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userkey).child("Courses").child(courseModel.getCourseName());
         usersDatabaseReference.setValue(null);
+
+        // Remove from users table (students)
+
         Toast.makeText(context, R.string.course_deleted_successfully_toast, Toast.LENGTH_SHORT).show();
     }
 
