@@ -3,13 +3,11 @@ package com.project.csed.smartlearning;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,7 +16,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
-    TextInputEditText emailTextView, passwordTextView;
+    TextInputLayout emailTextView, passwordTextView;
 
     private FirebaseAuth mAuth;
 
@@ -38,23 +36,16 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = emailTextView.getText().toString().trim();
-                String password = passwordTextView.getText().toString().trim();
-                if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password))
-                    logIn(email, password);
-                else
-                    Toast.makeText(LoginActivity.this, R.string.login_empty_edit_text_toast, Toast.LENGTH_SHORT).show();
+                String email = emailTextView.getEditText().getText().toString().trim();
+                String password = passwordTextView.getEditText().getText().toString().trim();
+
                 String fillhere = getResources().getString(R.string.fillhere_signuplogin_error);
                 if(email.isEmpty()||email.equals(" "))
-                {
                     emailTextView.setError(fillhere);
-                    return;
-                }
-                if(password.isEmpty()||password.equals(" "))
-                {
+                else if(password.isEmpty()||password.equals(" "))
                     passwordTextView.setError(fillhere);
-                    return;
-                }
+                else
+                    logIn(email, password);
             }
         });
 

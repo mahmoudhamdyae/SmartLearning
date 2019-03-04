@@ -3,13 +3,12 @@ package com.project.csed.smartlearning;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -25,7 +24,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class SignUpActivity extends AppCompatActivity {
-    private TextInputEditText userNameEditText, emailEditText, passwordEditText;
+    private TextInputLayout userNameEditText, emailEditText, passwordEditText;
     private String type;
     private ProgressDialog progressDialog;
 
@@ -61,45 +60,37 @@ public class SignUpActivity extends AppCompatActivity {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String userName = userNameEditText.getText().toString().trim();
-                final String email = emailEditText.getText().toString().trim();
-                final String password = passwordEditText.getText().toString().trim();
-                if (!TextUtils.isEmpty(userName) && !TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(type)) {
+                final String userName = userNameEditText.getEditText().getText().toString().trim();
+                final String email = emailEditText.getEditText().getText().toString().trim();
+                final String password = passwordEditText.getEditText().getText().toString().trim();
+
+                String fillhere = getResources().getString((R.string.fillhere_signuplogin_error));
+                if (userName.isEmpty() || userName.equals(" "))
+                    userNameEditText.setError(fillhere);
+                else if (email.isEmpty() || email.equals(" "))
+                    emailEditText.setError(fillhere);
+                else if(password.isEmpty()||password.equals(" "))
+                    passwordEditText.setError(fillhere);
+                else if (TextUtils.isEmpty(type))
+                    Toast.makeText(SignUpActivity.this, R.string.sign_up_type_not_choosed_text_toast, Toast.LENGTH_SHORT).show();
+                else {
                     // For unique user name
                     Query userNameQuery = FirebaseDatabase.getInstance().getReference().child("Users")
                             .orderByChild("userName").equalTo(userName);
                     userNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if(dataSnapshot.getChildrenCount() > 0)
+                            if (dataSnapshot.getChildrenCount() > 0)
                                 Toast.makeText(SignUpActivity.this, R.string.login_choose_another_user_name_toast
                                         , Toast.LENGTH_SHORT).show();
                             else
                                 newUserSignUp(userName, email, password, type);
                         }
+
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
-
                         }
                     });
-                }
-                else
-                    Toast.makeText(SignUpActivity.this, R.string.sign_up_empty_edit_text_toast, Toast.LENGTH_SHORT).show();
-                String fillhere = getResources().getString((R.string.fillhere_signuplogin_error));
-                if(userName.isEmpty()||userName.equals(" "))
-                {
-                    userNameEditText.setError(fillhere);
-                    return;
-                }
-                if(password.isEmpty()||password.equals(" "))
-                {
-                    passwordEditText.setError(fillhere);
-                    return;
-                }
-                if(email.isEmpty()||email.equals(" "))
-                {
-                    emailEditText.setError(fillhere);
-                    return;
                 }
             }
         });
