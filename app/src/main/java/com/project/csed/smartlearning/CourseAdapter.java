@@ -16,8 +16,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -65,21 +68,47 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
 
     public void delete(int position) {
         //removes the row from UI
-        CourseModel courseModel = courseAdapterList.get(position);
+        final CourseModel courseModel = courseAdapterList.get(position);
         courseAdapterList.remove(position);
         notifyItemRemoved(position);
         // Remove the course from database
         // Remove from courses table
         DatabaseReference mCourseDatabaseReference = FirebaseDatabase.getInstance().getReference().getRoot().child("Courses").child(courseModel.getCourseName());
-        mCourseDatabaseReference.setValue(null);
+        mCourseDatabaseReference.removeValue();
 
         // Remove from users table (teacher)
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         String userkey = currentUser.getUid();
-        DatabaseReference usersDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userkey).child("Courses").child(courseModel.getCourseName());
+        final DatabaseReference usersDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(userkey).child("Courses").child(courseModel.getCourseName());
         usersDatabaseReference.setValue(null);
 
+
         // Remove from users table (students)
+        DatabaseReference getCourseStudent = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseModel.getCourseName()).child("Students");
+        final DatabaseReference mStudentDB = FirebaseDatabase.getInstance().getReference().child("Users");
+        getCourseStudent.addValueEventListener(new ValueEventListener() {
+           @Override
+           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            for(final DataSnapshot snapshot1 : dataSnapshot.getChildren())
+            {
+                final User student = snapshot1.getValue(User.class);
+                mStudentDB.orderByChild("userName").equalTo(student.getUserName()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot data: dataSnapshot.getChildren())
+                        {
+                            String stuserkey = data.getKey();
+                            mStudentDB.child(stuserkey).child("Courses").child(courseModel.getCourseName()).removeValue();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) { }});
+            }
+           }
+           @Override
+           public void onCancelled(@NonNull DatabaseError databaseError) { }});
+        //END
+
 
         Toast.makeText(context, R.string.course_deleted_successfully_toast, Toast.LENGTH_SHORT).show();
     }
