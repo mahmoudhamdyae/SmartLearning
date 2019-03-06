@@ -5,14 +5,16 @@ public class User {
     private String email;
     private String password;
     private String type;
+    private String userId;
 
     public User(){}
 
-    public User(String userName, String email, String password, String type){
+    public User(String userName, String email, String password, String type, String userId){
         this.userName = userName;
         this.email = email;
         this.password = password;
         this.type = type;
+        this.userId = userId;
     }
 
     public String getUserName() {
@@ -46,4 +48,8 @@ public class User {
     public void setType(String type) {
         this.type = type;
     }
+
+    public String getUserId(){return userId;}
+
+    public void setUserId(String userId){ this.userId = userId;}
 }

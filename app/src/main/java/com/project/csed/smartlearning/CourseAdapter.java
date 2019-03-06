@@ -76,23 +76,13 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
 
         // Remove from users table (students)
         DatabaseReference mCourseDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseModel.getCourseName());
-        final DatabaseReference mStudentDB = FirebaseDatabase.getInstance().getReference().child("Users");
         mCourseDatabaseReference.child("Students").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(final DataSnapshot snapshot1 : dataSnapshot.getChildren()){
-                    final User student = snapshot1.getValue(User.class);
-                    mStudentDB.orderByChild("userName").equalTo(student.getUserName()).addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for (DataSnapshot data: dataSnapshot.getChildren())
-                            {
-                                String stuserkey = data.getKey();
-                                mStudentDB.child(stuserkey).child("Courses").child(courseModel.getCourseName()).removeValue();
-                            }
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) { }});
+                    User stuser = snapshot1.getValue(User.class);
+                    DatabaseReference mStudentDB = FirebaseDatabase.getInstance().getReference().child("Users").child(stuser.getUserId()).child("Courses").child(courseModel.getCourseName());
+                    mStudentDB.setValue(null);
                 }
             }
             @Override

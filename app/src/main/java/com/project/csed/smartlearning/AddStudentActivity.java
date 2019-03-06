@@ -69,20 +69,18 @@ public class AddStudentActivity extends AppCompatActivity {
         for(final User user : adapter.CheckStudentList)
         {
             // add checked student users to course
-            Query queryCourse = mCourseDB.child("Students").orderByChild("userName").equalTo(user.getUserName());
-            queryCourse.addValueEventListener(new ValueEventListener() {
+            mCourseDB.child("Students").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    mCourseDB.child("Students").child(user.getUserName()).child("userName").setValue(user.getUserName());
-                    mCourseDB.child("Students").child(user.getUserName()).child("email").setValue(user.getEmail());
+                    mCourseDB.child("Students").child(user.getUserName()).setValue(user);
 
                     Toast.makeText(AddStudentActivity.this, R.string.AddStudent_activity_Student_Added_Toast
                             , Toast.LENGTH_SHORT).show();
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) { }});
+
             // get the course details.
             mCourseDB.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override

@@ -108,7 +108,8 @@ public class SignUpActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     // Sign in success
-                                    User user = new User(userName, email, password, type);
+                                    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                    User user = new User(userName, email, password, type, userId);
                                     databaseReference.child(mAuth.getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
