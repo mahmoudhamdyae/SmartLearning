@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
-            android:text="@string/empty_coursess_title"
+            android:text="@string/empty_quizzes_title"
             android:textAppearance="?android:textAppearanceMedium" />
 
         <TextView
@@ -47,7 +47,7 @@
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif"
             android:paddingTop="8dp"
-            android:text="@string/empty_courses_subtitle"
+            android:text="@string/empty_quizzes_subtitle"
             android:textAppearance="?android:textAppearanceSmall"
             android:textColor="#A2AAB0" />
     </RelativeLayout>

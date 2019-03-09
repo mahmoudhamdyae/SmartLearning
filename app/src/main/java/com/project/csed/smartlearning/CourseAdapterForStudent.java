@@ -28,7 +28,7 @@ public class CourseAdapterForStudent extends RecyclerView.Adapter<CourseAdapterF
 {
     private List<CourseModel> courseForStudentList;
     private Context context;
-    private String userName = "aaa";
+    private String userName;
 
     public CourseAdapterForStudent(List<CourseModel> courserForStudentList, Context context) {
         this.courseForStudentList = courserForStudentList;

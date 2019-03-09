@@ -29,8 +29,8 @@
     <string name="main_activity_course_created_successfully_toast">Course Created Successfully</string>
     <string name="main_activity_empty_course_name_toast">Write the Course name</string>
     <string name="main_activity_choose_another_course_name_toast">Choose a different course name</string>
-    <string name="empty_notes_title">You don\'t have any courses yet</string>
-    <string name="empty_notes_subtitle">Add your course from + button</string>
+    <string name="empty_coursess_title">You don\'t have any courses yet</string>
+    <string name="empty_courses_subtitle">Add your course from + button</string>
 
     <!-- Course Dialog -->
     <string name="course_dialog_name_edit_text_hint">Enter Course Name</string>
@@ -67,5 +67,22 @@
     <string name="course_removed_successfully_toast">Course removed successfully</string>
     <string name="course_remove_dialog_msg">Are you sure you want to remove this course ?</string>
     <string name="year">Year </string>
+
+    <!-- Quiz Activity -->
+    <string name="empty_quizzes_title">This Course doesn\'t have any quizzes yet</string>
+    <string name="empty_quizzes_subtitle">Add a quiz from + button</string>
+
+    <!-- Add Quiz Activity -->
+    <string name="add_quiz_question_number_text_view">Question number: </string>
+    <string name="add_quiz_question_hint">Question</string>
+    <string name="add_quiz_option_1_hint">Option 1</string>
+    <string name="add_quiz_option_2_hint">Option 2</string>
+    <string name="add_quiz_option_3_hint">Option 3</string>
+    <string name="add_quiz_option_4_hint">Option 4</string>
+    <string name="add_quiz_add_another_question_button">Add another question</string>
+    <string name="add_quiz_finish_button">Finish</string>
+    <string name="add_quiz_right_answer">Choose the right answer</string>
+
+    <string name="add_quiz_empty_fields_toast">Please, fill all fields</string>
 
 </resources>

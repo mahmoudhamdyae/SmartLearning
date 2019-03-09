@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="8dp"
+    tools:context=".AddQuizActivity">
+
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_quiz_question_number_text_view" />
+
+    <TextView
+        android:id="@+id/question_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/text_view"
+        android:layout_toRightOf="@+id/text_view" />
+
+    <EditText
+        android:id="@+id/question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/question_number"
+        android:hint="@string/add_quiz_question_hint"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/option1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/question"
+        android:hint="@string/add_quiz_option_1_hint"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/option2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/option1"
+        android:hint="@string/add_quiz_option_2_hint"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/option3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/option2"
+        android:hint="@string/add_quiz_option_3_hint"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/option4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/option3"
+        android:hint="@string/add_quiz_option_4_hint"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/right_answer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_below="@id/option4"
+        android:text="@string/add_quiz_right_answer" />
+
+    <RadioGroup
+        android:layout_below="@id/right_answer"
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/option1_radio_button"
+            android:text="@string/add_quiz_option_1_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:id="@+id/option2_radio_button"
+            android:text="@string/add_quiz_option_2_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:id="@+id/option3_radio_button"
+            android:text="@string/add_quiz_option_3_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <RadioButton
+            android:id="@+id/option4_radio_button"
+            android:text="@string/add_quiz_option_4_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/add_another_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/add_quiz_add_another_question_button" />
+
+    <Button
+        android:id="@+id/finish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:text="@string/add_quiz_finish_button" />
+
+</RelativeLayout>

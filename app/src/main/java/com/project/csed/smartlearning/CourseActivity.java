@@ -31,21 +31,24 @@ public class CourseActivity extends AppCompatActivity {
         chat = findViewById(R.id.chat);
 
         userType = intent.getStringExtra("user_type");
-        if (userType.equals("Student")){
+        if (userType.equals("Student"))
             addStudent.setVisibility(View.GONE);
-        }
 
         quizzes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // todo Open quizzes activity
+                // Open Quiz Activity
+                Intent intent = new Intent(CourseActivity.this, QuizActivity.class);
+                intent.putExtra("course_name", courseName);
+                intent.putExtra("userType", userType);
+                startActivity(intent);
             }
         });
 
         addStudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // todo Open add student activity
+                // Open add student activity
                 Intent activ = new Intent(CourseActivity.this,AddStudentActivity.class);
                 activ.putExtra("name", courseName);
                 startActivity(activ);
