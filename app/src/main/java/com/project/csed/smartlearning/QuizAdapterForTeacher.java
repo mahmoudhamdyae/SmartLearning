@@ -32,7 +32,7 @@ public class QuizAdapterForTeacher extends RecyclerView.Adapter<QuizAdapterForTe
     @Override
     public void onBindViewHolder(@NonNull QuizAdapterForTeacher.QuizHolder quizHolder, int i) {
         final Quiz quiz = quizList.get(i);
-        quizHolder.quizName.setText(quiz.getName());
+        quizHolder.quizName.setText(String.valueOf(quiz.getNumber()));
         quizHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

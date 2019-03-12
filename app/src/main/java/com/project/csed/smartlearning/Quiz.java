@@ -2,17 +2,27 @@ package com.project.csed.smartlearning;
 
 public class Quiz {
 
-    private String name;
+    private int number;
+    private String date;
 
-    public Quiz(String name) {
-        this.name = name;
+    public Quiz(int number, String date) {
+        this.number = number;
+        this.date = date;
     }
 
-    public String getName() {
-        return name;
+    public int getNumber() {
+        return number;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

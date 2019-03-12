@@ -60,7 +60,7 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(QuizActivity.this, AddQuizActivity.class);
-                intent.putExtra("course_name", /*courseName*/"c");
+                intent.putExtra("course_name", courseName);
                 startActivity(intent);
             }
         });
@@ -71,7 +71,7 @@ public class QuizActivity extends AppCompatActivity {
 
         // todo Read Quizzes from database
 
-        Quiz quiz = new Quiz("quiz1");
+        Quiz quiz = new Quiz(1, "date");
         quizList.add(quiz);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
@@ -83,7 +83,7 @@ public class QuizActivity extends AppCompatActivity {
 
         // todo Read Quizzes from database
 
-        Quiz quiz = new Quiz("quiz2");
+        Quiz quiz = new Quiz(1, "date");
         quizList.add(quiz);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(QuizActivity.this));

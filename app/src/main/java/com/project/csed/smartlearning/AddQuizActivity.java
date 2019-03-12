@@ -1,6 +1,7 @@
 package com.project.csed.smartlearning;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,8 +12,15 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class AddQuizActivity extends AppCompatActivity {
 
@@ -23,7 +31,10 @@ public class AddQuizActivity extends AppCompatActivity {
     String question, option1, option2, option3, option4, answer;
     int answerInt = 0;
     int questionNumber = 1;
-    String courseName;
+    long quizNumber = 9;
+    String courseName, dateString;
+
+    DatabaseReference quizReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +42,34 @@ public class AddQuizActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_quiz);
 
         // Examine the intent that was used to launch this activity,
-        // in order to get course name.
+        // in order to get course name and quiz number.
         Intent intent = getIntent();
         // todo The same problem here
         courseName = intent.getStringExtra("courseName");
 
         // Change the app bar to show course name
         setTitle(courseName);
+
+        // Get Quizzes number
+        // todo Change course1
+        quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(/*courseName*/"course1").child("Quizzes");
+        quizReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                quizNumber = dataSnapshot.getChildrenCount();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+        // Add Quiz number quizNumber to Database
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // 2019-03-16 12:08:43
+        Date date = new Date();
+        dateString = String.valueOf(date);
+        // todo problem here - quizNumber is always the default value
+        Quiz quiz = new Quiz((int) (quizNumber), dateString);
+        quizReference.child(dateString).setValue(quiz);
 
         addAnotherQuestion = findViewById(R.id.add_another_question);
         finish = findViewById(R.id.finish);
@@ -127,9 +159,7 @@ public class AddQuizActivity extends AppCompatActivity {
 
     private void addQuestion(){
         Question question1 = new Question(question, option1, option2, option3, option4, answer);
-        DatabaseReference quizReference = FirebaseDatabase.getInstance().getReference().child("Courses")
-                .child(/*courseName*/"course1").child("Quizzes");
-        quizReference.child("quiz1").child(String.valueOf(questionNumber)).setValue(question1);
+        quizReference.child(dateString).child("Questions").child(String.valueOf(questionNumber)).setValue(question1);
         questionNumber++;
         answerInt = 0;
     }
