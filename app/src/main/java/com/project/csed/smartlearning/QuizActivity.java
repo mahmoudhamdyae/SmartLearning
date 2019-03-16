@@ -1,6 +1,7 @@
 package com.project.csed.smartlearning;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +30,8 @@ public class QuizActivity extends AppCompatActivity {
     String courseName, userType;
 
     List<Quiz> quizList = new ArrayList<>();
+    QuizAdapterForTeacher quizAdapterForTeacher;
+    QuizAdapterForStudent quizAdapterForStudent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,26 +76,69 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void teacherActivity(){
-        final QuizAdapterForTeacher quizAdapterForTeacher = new QuizAdapterForTeacher(quizList, this);
+        readQuizzes();
 
-        // todo Read Quizzes from database
-
-        Quiz quiz = new Quiz(1, "date");
-        quizList.add(quiz);
-
+        quizAdapterForTeacher = new QuizAdapterForTeacher(quizList, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
         recyclerView.setAdapter(quizAdapterForTeacher);
     }
 
     private void studentActivity(){
-        final QuizAdapterForStudent quizAdapterForStudent = new QuizAdapterForStudent(quizList, this);
+        readQuizzes();
 
-        // todo Read Quizzes from database
-
-        Quiz quiz = new Quiz(1, "date");
-        quizList.add(quiz);
-
+        quizAdapterForStudent = new QuizAdapterForStudent(quizList, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
         recyclerView.setAdapter(quizAdapterForStudent);
+    }
+
+    // Read Quizzes from database
+    private void readQuizzes (){
+        // todo change course1
+        DatabaseReference quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(/*courseName*/"course1").child("Quizzes");
+        quizReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                quizList.clear();
+                for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()) {
+                    Quiz quiz = dataSnapshot1.getValue(Quiz.class);
+                    quizList.add(quiz);
+
+                    // Notify changes to the adapters
+                    try {
+                        quizAdapterForTeacher.notifyDataSetChanged();
+                    } catch (Exception ex){}
+
+                    try {
+                        quizAdapterForStudent.notifyDataSetChanged();
+                    } catch (Exception ex){}
+
+                    // Get number of quizzes
+                    int numberOfQuizzesForTeacher, numberOfQuizzesForStudent;
+                    try {
+                        numberOfQuizzesForTeacher = quizAdapterForTeacher.getItemCount();
+                    }
+                    catch (Exception ex){
+                        numberOfQuizzesForTeacher = 0;
+                    }
+                    try {
+                        numberOfQuizzesForStudent = quizAdapterForStudent.getItemCount();
+                    }
+                    catch (Exception ex){
+                        numberOfQuizzesForStudent = 0;
+                    }
+
+                    // If there is no quiz set empty view
+                    if (numberOfQuizzesForTeacher == 0 && numberOfQuizzesForStudent == 0){
+                        recyclerView.setVisibility(View.GONE);
+                        emptyView.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        recyclerView.setVisibility(View.VISIBLE);
+                        emptyView.setVisibility(View.GONE);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }});
     }
 }

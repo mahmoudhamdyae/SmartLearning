@@ -33,6 +33,7 @@ public class QuizAdapterForStudent extends RecyclerView.Adapter<QuizAdapterForSt
     public void onBindViewHolder(@NonNull QuizHolder quizHolder, int i) {
         final Quiz quiz = quizList.get(i);
         quizHolder.quizNumber.setText(String.valueOf(quiz.getNumber()));
+        quizHolder.quizDate.setText(quiz.getDate());
         quizHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,12 +48,13 @@ public class QuizAdapterForStudent extends RecyclerView.Adapter<QuizAdapterForSt
     }
 
     public class  QuizHolder extends RecyclerView.ViewHolder{
-        TextView quizNumber;
+        TextView quizNumber, quizDate;
         LinearLayout linearLayout;
 
         public QuizHolder(@NonNull View itemView) {
             super(itemView);
             quizNumber = itemView.findViewById(R.id.quiz_name);
+            quizDate = itemView.findViewById(R.id.quiz_date);
             linearLayout = itemView.findViewById(R.id.linearLayout);
         }
     }

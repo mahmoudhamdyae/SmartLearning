@@ -3,12 +3,53 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?android:attr/selectableItemBackground">
+    android:layout_margin="10dp"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:paddingLeft="5dp"
+    android:paddingTop="5dp"
+    android:paddingRight="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:text="@string/quiz_activity_quiz_number"
+            android:textAlignment="gravity"
+            android:textColor="#000"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/quiz_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:paddingStart="5dp"
+            android:paddingLeft="5dp"
+            android:text="Quiz Name"
+            android:textAlignment="gravity"
+            android:textColor="#000"
+            android:textSize="25sp" />
+
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/quiz_name"
+        android:id="@+id/quiz_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Quiz Name" />
+        android:text="Tue Mar 12 16:46:37 GMT+02:00 2019"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/colorAccent" />
 
 </LinearLayout>

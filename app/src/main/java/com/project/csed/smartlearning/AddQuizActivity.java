@@ -18,8 +18,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AddQuizActivity extends AppCompatActivity {
@@ -31,7 +29,7 @@ public class AddQuizActivity extends AppCompatActivity {
     String question, option1, option2, option3, option4, answer;
     int answerInt = 0;
     int questionNumber = 1;
-    long quizNumber = 9;
+    long quizNumber;
     String courseName, dateString;
 
     DatabaseReference quizReference;
@@ -64,11 +62,10 @@ public class AddQuizActivity extends AppCompatActivity {
         });
 
         // Add Quiz number quizNumber to Database
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // 2019-03-16 12:08:43
         Date date = new Date();
         dateString = String.valueOf(date);
         // todo problem here - quizNumber is always the default value
-        Quiz quiz = new Quiz((int) (quizNumber), dateString);
+        Quiz quiz = new Quiz((int) (quizNumber) + 1, dateString);
         quizReference.child(dateString).setValue(quiz);
 
         addAnotherQuestion = findViewById(R.id.add_another_question);
