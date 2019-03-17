@@ -28,6 +28,7 @@ public class QuizActivity extends AppCompatActivity {
     TextView subtitle;
 
     String courseName, userType;
+    boolean isTeacher = false;
 
     List<Quiz> quizList = new ArrayList<>();
     QuizAdapterForTeacher quizAdapterForTeacher;
@@ -76,6 +77,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void teacherActivity(){
+        isTeacher = true;
         readQuizzes();
 
         quizAdapterForTeacher = new QuizAdapterForTeacher(quizList, this);
@@ -84,6 +86,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void studentActivity(){
+        isTeacher = false;
         readQuizzes();
 
         quizAdapterForStudent = new QuizAdapterForStudent(quizList, this);
@@ -103,28 +106,17 @@ public class QuizActivity extends AppCompatActivity {
                     Quiz quiz = dataSnapshot1.getValue(Quiz.class);
                     quizList.add(quiz);
 
-                    // Notify changes to the adapters
-                    try {
-                        quizAdapterForTeacher.notifyDataSetChanged();
-                    } catch (Exception ex){}
-
-                    try {
-                        quizAdapterForStudent.notifyDataSetChanged();
-                    } catch (Exception ex){}
-
                     // Get number of quizzes
-                    int numberOfQuizzesForTeacher, numberOfQuizzesForStudent;
-                    try {
+                    int numberOfQuizzesForTeacher = 0, numberOfQuizzesForStudent = 0;
+
+                    // Notify changes to the adapters and set number of quizzes
+                    if (isTeacher) {
+                        quizAdapterForTeacher.notifyDataSetChanged();
                         numberOfQuizzesForTeacher = quizAdapterForTeacher.getItemCount();
                     }
-                    catch (Exception ex){
-                        numberOfQuizzesForTeacher = 0;
-                    }
-                    try {
+                    else {
+                        quizAdapterForStudent.notifyDataSetChanged();
                         numberOfQuizzesForStudent = quizAdapterForStudent.getItemCount();
-                    }
-                    catch (Exception ex){
-                        numberOfQuizzesForStudent = 0;
                     }
 
                     // If there is no quiz set empty view
