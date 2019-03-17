@@ -155,7 +155,7 @@ public class AddQuizActivity extends AppCompatActivity {
     }
 
     private void addQuestion(){
-        Question question1 = new Question(question, option1, option2, option3, option4, answer);
+        Question question1 = new Question(questionNumber, question, option1, option2, option3, option4, answer);
         quizReference.child(dateString).child("Questions").child(String.valueOf(questionNumber)).setValue(question1);
         questionNumber++;
         answerInt = 0;

@@ -91,4 +91,10 @@
 
     <string name="add_quiz_empty_fields_toast">Please, fill all fields</string>
 
+    <!-- Quiz Details Activity -->
+    <string name="quiz_details_modify_quiz_button">Modify quiz</string>
+
+    <!-- Quiz Modify Activity -->
+    <string name="quiz_modify_next_question_button">Next question</string>
+
 </resources>

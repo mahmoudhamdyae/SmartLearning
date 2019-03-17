@@ -3,6 +3,7 @@ package com.project.csed.smartlearning;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -43,7 +44,10 @@ public class QuizAdapterForTeacher extends RecyclerView.Adapter<QuizAdapterForTe
         quizHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // todo launch quiz details activity or modify questions
+                // Open quiz details activity
+                Intent intent = new Intent(context, QuizDetailsActivity.class);
+                intent.putExtra("quizDate", quiz.getDate());
+                context.startActivity(intent);
             }
         });
     }

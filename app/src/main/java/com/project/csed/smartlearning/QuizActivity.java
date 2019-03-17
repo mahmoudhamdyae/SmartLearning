@@ -28,7 +28,6 @@ public class QuizActivity extends AppCompatActivity {
     TextView subtitle;
 
     String courseName, userType;
-    boolean isTeacher = false;
 
     List<Quiz> quizList = new ArrayList<>();
     QuizAdapterForTeacher quizAdapterForTeacher;
@@ -77,7 +76,6 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void teacherActivity(){
-        isTeacher = true;
         readQuizzes();
 
         quizAdapterForTeacher = new QuizAdapterForTeacher(quizList, this);
@@ -86,7 +84,6 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void studentActivity(){
-        isTeacher = false;
         readQuizzes();
 
         quizAdapterForStudent = new QuizAdapterForStudent(quizList, this);
@@ -110,7 +107,7 @@ public class QuizActivity extends AppCompatActivity {
                     int numberOfQuizzesForTeacher = 0, numberOfQuizzesForStudent = 0;
 
                     // Notify changes to the adapters and set number of quizzes
-                    if (isTeacher) {
+                    if (userType.equals("Teacher")) {
                         quizAdapterForTeacher.notifyDataSetChanged();
                         numberOfQuizzesForTeacher = quizAdapterForTeacher.getItemCount();
                     }
