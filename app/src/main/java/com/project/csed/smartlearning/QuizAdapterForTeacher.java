@@ -12,7 +12,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -106,6 +109,11 @@ public class QuizAdapterForTeacher extends RecyclerView.Adapter<QuizAdapterForTe
         // Remove the quiz from database
         // todo change course1
         final DatabaseReference quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(/*courseName*/"course1").child("Quizzes").child(quiz.getDate());
-        quizReference.setValue(null);
+        quizReference.setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(context, R.string.quiz_deleted_successfully_toast, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
