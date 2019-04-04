@@ -1,6 +1,7 @@
 package com.project.csed.smartlearning;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -37,7 +38,9 @@ public class QuizAdapterForStudent extends RecyclerView.Adapter<QuizAdapterForSt
         quizHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // todo launch quiz questions to answer or view previous answers
+                Intent intent = new Intent(context, QuizAnswerActivity.class);
+                intent.putExtra("quizDate", quiz.getDate());
+                context.startActivity(intent);
             }
         });
     }
