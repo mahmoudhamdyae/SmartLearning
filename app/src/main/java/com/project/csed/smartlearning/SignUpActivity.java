@@ -2,7 +2,9 @@ package com.project.csed.smartlearning;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,26 +24,50 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SignUpActivity extends AppCompatActivity {
+    private static final int PICK_IMAGE = 1;
     private TextInputLayout userNameEditText, emailEditText, passwordEditText;
+    private CircleImageView profileImage;
     private String type;
     private ProgressDialog progressDialog;
+    private Uri imageUri;
 
 
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
+    private StorageReference mStorageRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        imageUri = null;
+
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
         mAuth = FirebaseAuth.getInstance();
+        mStorageRef = FirebaseStorage.getInstance().getReference().child("images");
         userNameEditText = findViewById(R.id.user_name);
         emailEditText = findViewById(R.id.email);
         passwordEditText = findViewById(R.id.password);
+
+        profileImage = findViewById(R.id.profile_image);
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+            }
+        });
+
         RadioGroup radioGroup = findViewById(R.id.radioGroup);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -108,20 +134,51 @@ public class SignUpActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     // Sign in success
-                                    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                    User user = new User(userName, email, password, type, userId);
-                                    databaseReference.child(mAuth.getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            progressDialog.dismiss();
-                                            if (task.isSuccessful()){
-                                                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                                                startActivity(intent);
-                                                finish();
-                                            }else
-                                                Toast.makeText(SignUpActivity.this, "Error : " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+                                    final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                                    if (imageUri != null){
+                                        // Upload profile image
+                                        StorageReference userProfile = mStorageRef.child(userId + ".jpg");
+                                        userProfile.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> uploadTask) {
+                                                if (uploadTask.isSuccessful()){
+                                                    String downloadUrl = mStorageRef.getDownloadUrl().toString();
+
+                                                    User user = new User(userName, email, password, type, userId, downloadUrl);
+                                                    databaseReference.child(mAuth.getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            progressDialog.dismiss();
+                                                            if (task.isSuccessful()){
+                                                                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                                                startActivity(intent);
+                                                                finish();
+                                                            }else
+                                                                Toast.makeText(SignUpActivity.this, "Error : " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    });
+                                                }
+                                                else
+                                                    Toast.makeText(SignUpActivity.this, "Error : " + uploadTask.getException(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                    else {
+                                        User user = new User(userName, email, password, type, userId);
+                                        databaseReference.child(mAuth.getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                progressDialog.dismiss();
+                                                if (task.isSuccessful()){
+                                                    Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }else
+                                                    Toast.makeText(SignUpActivity.this, "Error : " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
                                 } else {
                                     progressDialog.dismiss();
                                     // If sign in fails, display a message to the user.
@@ -129,5 +186,14 @@ public class SignUpActivity extends AppCompatActivity {
                                 }
                             }
                         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE){
+            imageUri = data.getData();
+            profileImage.setImageURI(imageUri);
+        }
     }
 }

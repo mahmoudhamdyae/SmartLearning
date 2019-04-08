@@ -19,6 +19,7 @@
     <string name="sign_up_sign_up_button">Sign Up</string>
     <string name="sign_up_teacher_or_student">Please select account type&#8230; Teacher or Student?</string>
     <string name="under_appname_intro_signupscreen">Sign Up Here!</string>
+    <string name="sign_up_choose_profile_image">Choose your profile image</string>
 
     <string name="sign_up_type_not_choosed_text_toast">Please, choose your account type</string>
 
