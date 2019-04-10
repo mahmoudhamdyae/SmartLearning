@@ -66,7 +66,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
 
 
     public void delete(int position) {
-        //removes the row from UI
+        // Remove the row from UI
         final CourseModel courseModel = courseAdapterList.get(position);
         courseAdapterList.remove(position);
         notifyItemRemoved(position);

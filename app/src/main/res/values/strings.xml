@@ -19,6 +19,7 @@
     <string name="sign_up_sign_up_button">Sign Up</string>
     <string name="sign_up_teacher_or_student">Please select account type&#8230; Teacher or Student?</string>
     <string name="under_appname_intro_signupscreen">Sign Up Here!</string>
+    <string name="sign_up_choose_profile_image">Choose your profile image</string>
 
     <string name="sign_up_type_not_choosed_text_toast">Please, choose your account type</string>
 
@@ -69,8 +70,15 @@
     <string name="year">Year </string>
 
     <!-- Quiz Activity -->
+    <string name="quiz_activity_quiz_number">Quiz Number : </string>
     <string name="empty_quizzes_title">This Course doesn\'t have any quizzes yet</string>
     <string name="empty_quizzes_subtitle">Add a quiz from + button</string>
+
+    <!-- Quiz Adapter For Teacher -->
+    <string name="quiz_delete_dialog_msg">Are you sure you want to delete this quiz</string>
+    <string name="quiz_delete_dialog_delete">Delete</string>
+    <string name="quiz_delete_dialog_cancel">Cancel</string>
+    <string name="quiz_deleted_successfully_toast">Quiz deleted successfully</string>
 
     <!-- Add Quiz Activity -->
     <string name="add_quiz_question_number_text_view">Question number: </string>
@@ -84,5 +92,12 @@
     <string name="add_quiz_right_answer">Choose the right answer</string>
 
     <string name="add_quiz_empty_fields_toast">Please, fill all fields</string>
+
+    <!-- Quiz Details Activity -->
+    <string name="quiz_details_modify_quiz_button">Modify quiz</string>
+
+    <!-- Quiz Modify Activity -->
+    <string name="quiz_modify_next_question_button">Next question</string>
+    <string name="quiz_modify_no_more_questions_toast">There is no more questions</string>
 
 </resources>

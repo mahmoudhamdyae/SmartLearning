@@ -10,6 +10,9 @@ public class Quiz {
         this.date = date;
     }
 
+    public Quiz() {
+    }
+
     public int getNumber() {
         return number;
     }

@@ -1,6 +1,7 @@
 package com.project.csed.smartlearning;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,8 +11,17 @@ import android.widget.TextView;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AddStudentAdapter extends RecyclerView.Adapter<AddStudentAdapter.AddStudentHolder> {
     private List<User> StudentList;
@@ -32,10 +42,27 @@ public class AddStudentAdapter extends RecyclerView.Adapter<AddStudentAdapter.Ad
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final AddStudentHolder studentHolder, int i) {
-        final User user = StudentList.get(i);
+    public void onBindViewHolder(@NonNull final AddStudentHolder studentHolder, int position) {
+        final User user = StudentList.get(position);
         studentHolder.StudentName.setText(user.getUserName());
         studentHolder.emailAddress.setText(user.getEmail());
+
+        String userId = user.getUserId();
+        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference()
+                .child("images/" + userId + ".jpg");
+        mStorageRef.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        RequestOptions placeholderOption = new RequestOptions();
+                        placeholderOption.placeholder(R.drawable.default_image);
+                        Glide.with(context).setDefaultRequestOptions(placeholderOption).load(uri).into(studentHolder.profileImage);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+            }
+        });
 
         studentHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,6 +104,7 @@ public class AddStudentAdapter extends RecyclerView.Adapter<AddStudentAdapter.Ad
         CheckBox SelectStudent;
         LinearLayout linearLayout;
         ItemClickListener itemClickListener;
+        CircleImageView profileImage;
 
         public AddStudentHolder(@NonNull View itemView) {
             super(itemView);
@@ -84,6 +112,7 @@ public class AddStudentAdapter extends RecyclerView.Adapter<AddStudentAdapter.Ad
             emailAddress = itemView.findViewById(R.id.emailAddress);
             SelectStudent = itemView.findViewById(R.id.SelectStudent);
             linearLayout = itemView.findViewById(R.id.AddStudentrow);
+            profileImage = itemView.findViewById(R.id.profile_image);
             SelectStudent.setOnClickListener(this);
         }
         public void setItemClickListener(ItemClickListener ic)
