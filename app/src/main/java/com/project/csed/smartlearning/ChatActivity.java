@@ -31,7 +31,7 @@ public class ChatActivity extends AppCompatActivity {
     DatabaseReference myRef;
     LinearLayoutManager mLinearLayoutManager;
     EditText input;
-    String userType, name, Coursename;
+    String userType, name, Coursename,inputmessage;
     RelativeLayout message;
 
 
@@ -74,15 +74,21 @@ public class ChatActivity extends AppCompatActivity {
 
                 // Read the input field and push a new instance
                 // of ChatMessage to the Firebase database
-                myRef   .push()
-                        .setValue(new ChatMessage(input.getText().toString(), name
+                inputmessage = input.getText().toString();
+                if (inputmessage.isEmpty() || inputmessage.equals(" ") )
+                {
+                    //done Nothing
+                }else {
+                    myRef.push()
+                            .setValue(new ChatMessage(input.getText().toString(), name
 //                                FirebaseAuth.getInstance()
 //                                        .getCurrentUser()
 //                                        .getDisplayName())
-                        ));
-                // Clear the input
-                input.setText("");
+                            ));
+                    // Clear the input
+                    input.setText("");
 
+                }
                 int friendlyMessageCount = mFirebaseUsersAdapter.getItemCount();
                 messagelist.scrollToPosition(friendlyMessageCount - 1);
             }
@@ -126,25 +132,29 @@ public class ChatActivity extends AppCompatActivity {
 
 
 
+                viewHolder.userName.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
 
-                if (userType.contains("Teacher")) {
-                    viewHolder.userName.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
+                if (userType.equals("Teacher")) {
+                    viewHolder.userName.setTextColor(getResources().getColor(android.R.color.holo_purple));
+                }
+                else {
+                    viewHolder.userName.setTextColor(getResources().getColor(android.R.color.holo_red_light));
                 }
 
-                if (chatMessage.getMessageUser() == name) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                        viewHolder.userName.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-                        viewHolder.message_text.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-                        viewHolder.message_time.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
-                    }
-                    viewHolder.relativeLayout.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
-                } else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                        viewHolder.userName.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
-                        viewHolder.message_text.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
-                        viewHolder.message_time.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-                    }
-                }
+//                if (chatMessage.getMessageUser() == name) {
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+//                        viewHolder.userName.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+//                        viewHolder.message_text.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+//                        viewHolder.message_time.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+//                    }
+//                    viewHolder.relativeLayout.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
+//                } else {
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+//                        viewHolder.userName.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+//                        viewHolder.message_text.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
+//                        viewHolder.message_time.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+//                    }
+//                }
 
             }
         };

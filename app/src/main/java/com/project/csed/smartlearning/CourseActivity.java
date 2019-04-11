@@ -22,7 +22,7 @@ public class CourseActivity extends AppCompatActivity {
     String courseName, userType;
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
-    User user = null;
+    User user ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
