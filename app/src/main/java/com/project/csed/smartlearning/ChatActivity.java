@@ -32,7 +32,7 @@ public class ChatActivity extends AppCompatActivity {
     LinearLayoutManager mLinearLayoutManager;
     EditText input;
     String userType, name, Coursename,inputmessage;
-    RelativeLayout message;
+    public static String usernamefromfirebase;
 
 
 
@@ -52,15 +52,12 @@ public class ChatActivity extends AppCompatActivity {
         name = getIntent().getStringExtra("name");
         Coursename = getIntent().getStringExtra("coursename");
          userType = getIntent().getStringExtra("userType");
-//         message=findViewById(R.id.messageid);
         //Set title
         setTitle(Coursename);
-
         // Firebase stuff
         FirebaseApp.initializeApp(this);
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Rooms").child(Coursename);
-
 
         // to get the user name
         Toast.makeText(this, "Hello " + name, Toast.LENGTH_SHORT).show();
@@ -94,13 +91,14 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        usernamefromfirebase=name;
         // call the Method that will diplayMessages
         displayChatMessages();
 
     }
 
     private void displayChatMessages() {
-        SnapshotParser<ChatMessage> parser = new SnapshotParser<ChatMessage>() {
+        final SnapshotParser<ChatMessage> parser = new SnapshotParser<ChatMessage>() {
             @Override
             public ChatMessage parseSnapshot(DataSnapshot dataSnapshot) {
                 ChatMessage usersList = dataSnapshot.getValue(ChatMessage.class);
@@ -126,35 +124,29 @@ public class ChatActivity extends AppCompatActivity {
             protected void onBindViewHolder(final ChatMessagesViewHolder viewHolder,
                                             int position,
                                             final ChatMessage chatMessage) {
+
+                // ده بيعرض الناس التانيه
                 viewHolder.userName.setText(chatMessage.getMessageUser());
                 viewHolder.message_text.setText(chatMessage.getMessageText());
                 viewHolder.message_time.setText(chatMessage.getMessageTime() + "");
 
+                // this for me
+                viewHolder.userNamesender.setText(chatMessage.getMessageUser());
+                viewHolder.message_textsender.setText(chatMessage.getMessageText());
+                viewHolder.message_timesender.setText(chatMessage.getMessageTime() + "");
 
-
-                viewHolder.userName.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
-
-                if (userType.equals("Teacher")) {
-                    viewHolder.userName.setTextColor(getResources().getColor(android.R.color.holo_purple));
+                // if iam the one who send the message take this View
+                if (chatMessage.getMessageUser().endsWith(name)) {
+                    viewHolder.userNamesender.setTextColor(getResources().getColor(android.R.color.holo_purple));
+                    viewHolder.relativeLayout.setVisibility(View.GONE);
+                    viewHolder.relativeLayoutsender.setVisibility(View.VISIBLE);
                 }
+                // if iam not the one who sent the message take this View
                 else {
                     viewHolder.userName.setTextColor(getResources().getColor(android.R.color.holo_red_light));
+                    viewHolder.relativeLayoutsender.setVisibility(View.GONE);
+                    viewHolder.relativeLayout.setVisibility(View.VISIBLE);
                 }
-
-//                if (chatMessage.getMessageUser() == name) {
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-//                        viewHolder.userName.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-//                        viewHolder.message_text.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-//                        viewHolder.message_time.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
-//                    }
-//                    viewHolder.relativeLayout.setBackgroundColor(getResources().getColor(android.R.color.holo_blue_light));
-//                } else {
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-//                        viewHolder.userName.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
-//                        viewHolder.message_text.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_END);
-//                        viewHolder.message_time.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-//                    }
-//                }
 
             }
         };
