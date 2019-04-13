@@ -16,10 +16,12 @@ public class QuizAdapterForStudent extends RecyclerView.Adapter<QuizAdapterForSt
 
     private List<Quiz> quizList;
     private Context context;
+    private String courseName;
 
-    public QuizAdapterForStudent(List<Quiz> quizList, Context context) {
+    public QuizAdapterForStudent(List<Quiz> quizList, Context context, String courseName) {
         this.quizList = quizList;
         this.context = context;
+        this.courseName = courseName;
     }
 
     @NonNull
@@ -40,6 +42,7 @@ public class QuizAdapterForStudent extends RecyclerView.Adapter<QuizAdapterForSt
             public void onClick(View v) {
                 Intent intent = new Intent(context, QuizAnswerActivity.class);
                 intent.putExtra("quizDate", quiz.getDate());
+                intent.putExtra("courseName", courseName);
                 context.startActivity(intent);
             }
         });

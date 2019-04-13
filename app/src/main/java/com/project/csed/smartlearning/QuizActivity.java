@@ -23,7 +23,6 @@ public class QuizActivity extends AppCompatActivity {
 
     Button addButton;
     RecyclerView recyclerView;
-    // todo set empty view
     View emptyView;
     TextView subtitle;
 
@@ -48,7 +47,6 @@ public class QuizActivity extends AppCompatActivity {
         // Examine the intent that was used to launch this activity,
         // in order to get course name.
         Intent intent = getIntent();
-        // todo There is a problem here, it does not get course name
         courseName = intent.getStringExtra("course_name");
 
         // Change the app bar to show course name
@@ -78,7 +76,7 @@ public class QuizActivity extends AppCompatActivity {
     private void teacherActivity(){
         readQuizzes();
 
-        quizAdapterForTeacher = new QuizAdapterForTeacher(quizList, this);
+        quizAdapterForTeacher = new QuizAdapterForTeacher(quizList, this, courseName);
         recyclerView.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
         recyclerView.setAdapter(quizAdapterForTeacher);
     }
@@ -86,15 +84,14 @@ public class QuizActivity extends AppCompatActivity {
     private void studentActivity(){
         readQuizzes();
 
-        quizAdapterForStudent = new QuizAdapterForStudent(quizList, this);
+        quizAdapterForStudent = new QuizAdapterForStudent(quizList, this, courseName);
         recyclerView.setLayoutManager(new LinearLayoutManager(QuizActivity.this));
         recyclerView.setAdapter(quizAdapterForStudent);
     }
 
     // Read Quizzes from database
     private void readQuizzes (){
-        // todo change course1
-        DatabaseReference quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(/*courseName*/"course1").child("Quizzes");
+        DatabaseReference quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseName).child("Quizzes");
         quizReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
