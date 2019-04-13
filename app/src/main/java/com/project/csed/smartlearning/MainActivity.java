@@ -198,6 +198,21 @@ public class MainActivity extends AppCompatActivity {
                                             else{
                                                 // The course name does not exist
                                                 //todo we should put here the student number when we finish
+//                                                final long[] StudentNumber = {0};
+//                                                final FirebaseDatabase databasecount=FirebaseDatabase.getInstance();
+//                                                DatabaseReference mystudentRef=databasecount.getReference().child("Courses").child(name).child("Students");
+//                                                mystudentRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//                                                    @Override
+//                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                                                        StudentNumber[0] = dataSnapshot.getChildrenCount();
+//                                                    }
+//
+//                                                    @Override
+//                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                                                    }
+//                                                });
                                                 final CourseModel courseModel = new CourseModel(name,"StudentNo", year, user.getUserName());
                                                 mCourseDatabaseReference.child(name).setValue(courseModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override

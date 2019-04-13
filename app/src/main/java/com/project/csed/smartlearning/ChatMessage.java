@@ -17,7 +17,7 @@ public class ChatMessage {
 
         // Initialize to current time
 
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY hh:mm");
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm");
         messageTime = dateFormat.format(new Date());
 
 

@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,12 +77,15 @@ public class ChatActivity extends AppCompatActivity {
                 {
                     //done Nothing
                 }else {
-                    myRef.push()
-                            .setValue(new ChatMessage(input.getText().toString(), name
-//                                FirebaseAuth.getInstance()
-//                                        .getCurrentUser()
-//                                        .getDisplayName())
-                            ));
+                    try {
+                        myRef.push().setValue(new ChatMessage(input.getText().toString(), name));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.d("my tag" ,e.getMessage());
+                        Toast.makeText(ChatActivity.this, "error :" +e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+
                     // Clear the input
                     input.setText("");
 
