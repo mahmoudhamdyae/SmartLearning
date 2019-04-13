@@ -16,9 +16,9 @@ import com.google.firebase.database.ValueEventListener;
 public class QuizAnswerActivity extends AppCompatActivity {
     private TextView questionNumberText, questionText, option1Text, option2Text, option3Text, option4Text;
 
-    String quizDate, answer;
+    String quizDate, answer, courseName;
     int questionNumber = 1, sum = 0;
-//    long numberOfQuestions = 0;
+//    int numberOfQuestions = 0;
 
     DatabaseReference quizReference;
 
@@ -31,10 +31,10 @@ public class QuizAnswerActivity extends AppCompatActivity {
         // in order to get quiz number.
         Intent intent = getIntent();
         quizDate = intent.getStringExtra("quizDate");
+        courseName = intent.getStringExtra("courseName");
 
         // Change the app bar to show quiz number
-        // todo change course1
-        quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child("course1").child("Quizzes").child(quizDate);
+        quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseName).child("Quizzes").child(quizDate);
         quizReference.child("number").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -57,13 +57,14 @@ public class QuizAnswerActivity extends AppCompatActivity {
 //        quizReference.child("Questions").child(String.valueOf(questionNumber)).addListenerForSingleValueEvent(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                numberOfQuestions = dataSnapshot.getChildrenCount();
+//                numberOfQuestions = (int) dataSnapshot.getChildrenCount();
 //            }
 //            @Override
 //            public void onCancelled(@NonNull DatabaseError databaseError) {
 //            }
 //        });
 
+//        Toast.makeText(this, String.valueOf(numberOfQuestions), Toast.LENGTH_SHORT).show();
         readQuestions();
 
         option1Text.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +105,7 @@ public class QuizAnswerActivity extends AppCompatActivity {
     }
 
     private void readQuestions() {
-//        if (questionNumber <= (int) numberOfQuestions) {
+//        if (questionNumber <= numberOfQuestions) {
             questionNumberText.setText(String.valueOf(questionNumber));
             quizReference.child("Questions").child(String.valueOf(questionNumber)).addValueEventListener(new ValueEventListener() {
                 @Override
@@ -132,9 +133,9 @@ public class QuizAnswerActivity extends AppCompatActivity {
             });
 //        }
 //        else {
-//            // todo Statistics Activity to show the information of the quiz and save it in firebase
-//            Intent intent = new Intent(QuizAnswerActivity.this, Statistics.class);
-//            intent.putExtra("correctAnswer", String.valueOf(sum));
+//            // Open Statistics Activity to show the information of the quiz and save it in firebase
+//            Intent intent = new Intent(QuizAnswerActivity.this, QuizStatisticsActivity.class);
+//            intent.putExtra("correctAnswers", String.valueOf(sum));
 //            intent.putExtra("numberOfQuestions", String.valueOf(numberOfQuestions));
 //            startActivity(intent);
 //            finish();

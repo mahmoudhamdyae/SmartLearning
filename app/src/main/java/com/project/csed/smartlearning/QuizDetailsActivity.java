@@ -15,7 +15,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class QuizDetailsActivity extends AppCompatActivity {
     Button modifyQuiz;
-    String quizDate;
+    String quizDate, courseName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +26,7 @@ public class QuizDetailsActivity extends AppCompatActivity {
         // in order to get quiz date.
         Intent intent = getIntent();
         quizDate = intent.getStringExtra("quizDate");
+        courseName = intent.getStringExtra("courseName");
 
         modifyQuiz = findViewById(R.id.quiz_modify_button);
         modifyQuiz.setOnClickListener(new View.OnClickListener() {
@@ -34,12 +35,12 @@ public class QuizDetailsActivity extends AppCompatActivity {
                 // Open quiz modify activity
                 Intent intent = new Intent(QuizDetailsActivity.this, QuizModifyActivity.class);
                 intent.putExtra("quizDate", quizDate);
+                intent.putExtra("courseName", courseName);
                 startActivity(intent);
             }
         });
 
-        // todo change course1
-        DatabaseReference quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child("course1").child("Quizzes").child(quizDate);
+        DatabaseReference quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseName).child("Quizzes").child(quizDate);
         quizReference.child("number").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

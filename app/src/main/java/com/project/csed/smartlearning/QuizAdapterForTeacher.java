@@ -25,10 +25,12 @@ public class QuizAdapterForTeacher extends RecyclerView.Adapter<QuizAdapterForTe
 
     private List<Quiz> quizList;
     private Context context;
+    private String courseName;
 
-    public QuizAdapterForTeacher(List<Quiz> quizList, Context context) {
+    public QuizAdapterForTeacher(List<Quiz> quizList, Context context, String courseName) {
         this.quizList = quizList;
         this.context = context;
+        this.courseName = courseName;
     }
 
     @NonNull
@@ -50,6 +52,7 @@ public class QuizAdapterForTeacher extends RecyclerView.Adapter<QuizAdapterForTe
                 // Open quiz details activity
                 Intent intent = new Intent(context, QuizDetailsActivity.class);
                 intent.putExtra("quizDate", quiz.getDate());
+                intent.putExtra("courseName", courseName);
                 context.startActivity(intent);
             }
         });
@@ -107,8 +110,7 @@ public class QuizAdapterForTeacher extends RecyclerView.Adapter<QuizAdapterForTe
         notifyItemRemoved(position);
 
         // Remove the quiz from database
-        // todo change course1
-        final DatabaseReference quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(/*courseName*/"course1").child("Quizzes").child(quiz.getDate());
+        final DatabaseReference quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseName).child("Quizzes").child(quiz.getDate());
         quizReference.setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

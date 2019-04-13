@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -97,8 +96,7 @@ public class CourseActivity extends AppCompatActivity {
         chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // todo open chat activity
-
+                // Open chat activity
                 Intent intent1=new Intent(CourseActivity.this,ChatActivity.class);
                 intent1.putExtra("name",user.getUserName());
                 intent1.putExtra("coursename",courseName);

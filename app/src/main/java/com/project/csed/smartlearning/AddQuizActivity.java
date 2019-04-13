@@ -42,15 +42,13 @@ public class AddQuizActivity extends AppCompatActivity {
         // Examine the intent that was used to launch this activity,
         // in order to get course name and quiz number.
         Intent intent = getIntent();
-        // todo The same problem here
-        courseName = intent.getStringExtra("courseName");
+        courseName = intent.getStringExtra("course_name");
 
         // Change the app bar to show course name
         setTitle(courseName);
 
         // Get Quizzes number
-        // todo Change course1
-        quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(/*courseName*/"course1").child("Quizzes");
+        quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseName).child("Quizzes");
         quizReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -146,6 +144,20 @@ public class AddQuizActivity extends AppCompatActivity {
                 option2 = option2EditText.getText().toString().trim();
                 option3 = option3EditText.getText().toString().trim();
                 option4 = option4EditText.getText().toString().trim();
+                switch(answerInt){
+                    case 1:
+                        answer = option1;
+                        break;
+                    case 2:
+                        answer = option2;
+                        break;
+                    case 3:
+                        answer = option3;
+                        break;
+                    case 4:
+                        answer = option4;
+                        break;
+                }
                 if (!TextUtils.isEmpty(question) && !TextUtils.isEmpty(option1) && !TextUtils.isEmpty(option2)
                         && !TextUtils.isEmpty(option3) && !TextUtils.isEmpty(option4))
                     addQuestion();

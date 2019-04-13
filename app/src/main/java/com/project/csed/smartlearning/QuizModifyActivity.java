@@ -26,7 +26,7 @@ public class QuizModifyActivity extends AppCompatActivity {
     EditText questionEditText, option1EditText, option2EditText, option3EditText, option4EditText;
     RadioGroup radioGroup;
 
-    String quizDate;
+    String quizDate, courseName;
     int questionNumber = 1;
 //    long numberOfQuestions = 0;
 
@@ -46,9 +46,9 @@ public class QuizModifyActivity extends AppCompatActivity {
         // in order to get quiz date.
         Intent intent = getIntent();
         quizDate = intent.getStringExtra("quizDate");
+        courseName = intent.getStringExtra("courseName");
 
-        // todo change course1
-        quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child("course1").child("Quizzes").child(quizDate);
+        quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseName).child("Quizzes").child(quizDate);
         quizReference.child("number").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
