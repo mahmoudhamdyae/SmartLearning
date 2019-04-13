@@ -99,5 +99,6 @@
     <!-- Quiz Modify Activity -->
     <string name="quiz_modify_next_question_button">Next question</string>
     <string name="quiz_modify_no_more_questions_toast">There is no more questions</string>
+    <string name="inputMessage">Input</string>
 
 </resources>

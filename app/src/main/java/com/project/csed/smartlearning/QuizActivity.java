@@ -49,7 +49,7 @@ public class QuizActivity extends AppCompatActivity {
         // in order to get course name.
         Intent intent = getIntent();
         // todo There is a problem here, it does not get course name
-        courseName = intent.getStringExtra("courseName");
+        courseName = intent.getStringExtra("course_name");
 
         // Change the app bar to show course name
         setTitle(courseName);

@@ -73,6 +73,10 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
 
         // Remove the course from database
 
+
+        // this Two Lines Delete the chat from fireBase
+        DatabaseReference mChatDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Rooms").child(courseModel.getCourseName());
+        mChatDatabaseReference.removeValue();
         // Remove from users table (students)
         DatabaseReference mCourseDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseModel.getCourseName());
         mCourseDatabaseReference.child("Students").addValueEventListener(new ValueEventListener() {
@@ -95,6 +99,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
 
         // Remove from courses table
         mCourseDatabaseReference.removeValue();
+
 
         Toast.makeText(context, R.string.course_deleted_successfully_toast, Toast.LENGTH_SHORT).show();
     }
