@@ -72,7 +72,7 @@
 
     <!-- Quiz Activity -->
     <string name="quiz_activity_quiz_number">Quiz Number : </string>
-    <string name="empty_quizzes_title">This Course doesn\'t have any quizzes yet</string>
+    <string name="empty_quizzes_title">This course doesn\'t have any quizzes yet</string>
     <string name="empty_quizzes_subtitle">Add a quiz from + button</string>
 
     <!-- Quiz Adapter For Teacher -->
@@ -102,4 +102,8 @@
     <string name="quiz_modify_no_more_questions_toast">There is no more questions</string>
     <string name="inputMessage">Input</string>
 
+    <!-- Materials Activity -->
+    <string name="materials_empty_view_title">This course doesn\'t have any materials yet</string>
+    <string name="materials_empty_view_subtitle">Add any material from + button</string>
+    <string name="material_added_toast">Uploading finished</string>
 </resources>

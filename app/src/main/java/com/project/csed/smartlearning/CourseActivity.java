@@ -45,9 +45,6 @@ public class CourseActivity extends AppCompatActivity {
             }
         });
 
-
-
-
         // Examine the intent that was used to launch this activity,
         // in order to get course name.
         Intent intent = getIntent();
@@ -89,7 +86,11 @@ public class CourseActivity extends AppCompatActivity {
         materials.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // todo open materials activity
+                // Open materials activity
+                Intent intent = new Intent(CourseActivity.this, MaterialActivity.class);
+                intent.putExtra("course_name", courseName);
+                intent.putExtra("userType", userType);
+                startActivity(intent);
             }
         });
 

@@ -142,43 +142,24 @@ public class SignUpActivity extends AppCompatActivity {
                                         userProfile.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                                             @Override
                                             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> uploadTask) {
-                                                if (uploadTask.isSuccessful()){
-                                                    String downloadUrl = mStorageRef.getDownloadUrl().toString();
-
-                                                    User user = new User(userName, email, password, type, userId, downloadUrl);
-                                                    databaseReference.child(mAuth.getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<Void> task) {
-                                                            progressDialog.dismiss();
-                                                            if (task.isSuccessful()){
-                                                                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                                                                startActivity(intent);
-                                                                finish();
-                                                            }else
-                                                                Toast.makeText(SignUpActivity.this, "Error : " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    });
-                                                }
-                                                else
+                                                if (!uploadTask.isSuccessful())
                                                     Toast.makeText(SignUpActivity.this, "Error : " + uploadTask.getException(), Toast.LENGTH_SHORT).show();
                                             }
                                         });
                                     }
-                                    else {
-                                        User user = new User(userName, email, password, type, userId);
-                                        databaseReference.child(mAuth.getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                progressDialog.dismiss();
-                                                if (task.isSuccessful()){
-                                                    Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-                                                    startActivity(intent);
-                                                    finish();
-                                                }else
-                                                    Toast.makeText(SignUpActivity.this, "Error : " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-                                    }
+                                    User user = new User(userName, email, password, type, userId);
+                                    databaseReference.child(mAuth.getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            progressDialog.dismiss();
+                                            if (task.isSuccessful()){
+                                                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                            }else
+                                                Toast.makeText(SignUpActivity.this, "Error : " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 } else {
                                     progressDialog.dismiss();
                                     // If sign in fails, display a message to the user.
@@ -191,9 +172,11 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (data == null)
+            return;
         if (requestCode == PICK_IMAGE){
-            imageUri = data.getData();
-            profileImage.setImageURI(imageUri);
+                imageUri = data.getData();
+                profileImage.setImageURI(imageUri);
         }
     }
 }

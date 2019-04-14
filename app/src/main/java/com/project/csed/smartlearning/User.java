@@ -6,20 +6,9 @@ public class User {
     private String password;
     private String type;
     private String userId;
-    private String imageUrl;
 
     public User(){}
 
-    public User(String userName, String email, String password, String type, String userId, String imageUrl){
-        this.userName = userName;
-        this.email = email;
-        this.password = password;
-        this.type = type;
-        this.userId = userId;
-        this.imageUrl = imageUrl;
-    }
-
-    // Constructor if the user did not choose an image
     public User(String userName, String email, String password, String type, String userId){
         this.userName = userName;
         this.email = email;
@@ -63,12 +52,4 @@ public class User {
     public String getUserId(){return userId;}
 
     public void setUserId(String userId){ this.userId = userId;}
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 }
