@@ -42,11 +42,25 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CourseHolder courseHolder, int i) {
+    public void onBindViewHolder(@NonNull final CourseHolder courseHolder, int i) {
         final CourseModel courseModel = courseAdapterList.get(i);
         courseHolder.courseName.setText(courseModel.getCourseName());
-        courseHolder.studentNo.setText(courseModel.getStudentNo());
         courseHolder.year.setText(courseModel.getYearDate());
+
+        //get students no.
+        final FirebaseDatabase databasecount=FirebaseDatabase.getInstance();
+        DatabaseReference mystudentRef=databasecount.getReference().child("Courses").child(courseModel.getCourseName()).child("Students");
+        mystudentRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot Snapshot) {
+                String studentNo = "StudentNo: " + Snapshot.getChildrenCount();
+                courseHolder.studentNo.setText(studentNo);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
         courseHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

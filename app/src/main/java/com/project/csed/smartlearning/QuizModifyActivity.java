@@ -88,7 +88,7 @@ public class QuizModifyActivity extends AppCompatActivity {
         });
 
         // todo same problem here, can not get number of questions
-//        quizReference.child("Questions").child(String.valueOf(questionNumber)).addListenerForSingleValueEvent(new ValueEventListener() {
+//        quizReference.child("Questions").addListenerForSingleValueEvent(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 //                numberOfQuestions = dataSnapshot.getChildrenCount();

@@ -122,31 +122,8 @@ public class MainActivity extends AppCompatActivity {
                 courseList.clear();
                 for (DataSnapshot dataSnapshot1: dataSnapshot.child("Courses").getChildren()) {
                     final CourseModel courseModel = dataSnapshot1.getValue(CourseModel.class);
-//                    courseModel.setStudentNo((courseModel.getStudents().length) + "");
                     courseList.add(courseModel);
                     courseAdapter.notifyDataSetChanged();
-
-                    //get students no.
-//                    final long[] StudentNumber = {0};
-                    final FirebaseDatabase databasecount=FirebaseDatabase.getInstance();
-                    DatabaseReference mystudentRef=databasecount.getReference().child("Courses").child(courseModel.getCourseName()).child("Students");
-                    mystudentRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot Snapshot) {
-
-                            courseList.remove(courseModel);
-                            // put studnet no here to RecyclerView
-                            courseModel.setStudentNo("StudentNo: "+Snapshot.getChildrenCount() );
-//                            final CourseModel courseModel = new CourseModel(name,StudentNumber[0] + "", year, user.getUserName());
-                            courseList.add(courseModel);
-                            courseAdapter.notifyDataSetChanged();
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
 
                     // If there is no course set empty view
                     if (courseAdapter.getItemCount() == 0){
@@ -220,22 +197,7 @@ public class MainActivity extends AppCompatActivity {
                                                         , Toast.LENGTH_SHORT).show();
                                             else{
                                                 // The course name does not exist
-                                                //todo we should put here the student number when we finish ==> Done
-                                                // to get Number Of the sudent when saveButton
-                                                final long[] StudentNumber = {0};
-                                                final FirebaseDatabase databasecount=FirebaseDatabase.getInstance();
-                                                DatabaseReference mystudentRef=databasecount.getReference().child("Courses").child(name).child("Students");
-                                                mystudentRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                    @Override
-                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                        StudentNumber[0] = dataSnapshot.getChildrenCount();
-                                                    }
-                                                    @Override
-                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                                                    }
-                                                });
-                                                //
-                                                final CourseModel courseModel = new CourseModel(name,""+StudentNumber[0], year, user.getUserName());
+                                                final CourseModel courseModel = new CourseModel(name, year, user.getUserName());
                                                 mCourseDatabaseReference.child(name).setValue(courseModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
@@ -289,7 +251,6 @@ public class MainActivity extends AppCompatActivity {
                 courseList.clear();
                 for (DataSnapshot dataSnapshot1: dataSnapshot.child("Courses").getChildren()) {
                     final CourseModel courseModel = dataSnapshot1.getValue(CourseModel.class);
-                    courseModel.setStudentNo(dataSnapshot.getChildren() + "");
                     courseList.add(courseModel);
                     courseAdapterForStudent.notifyDataSetChanged();
 

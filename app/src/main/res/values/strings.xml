@@ -26,6 +26,7 @@
     <string name="fillhere_signuplogin_error">Field Can\'t be empty</string>
 
     <!-- Main Activity -->
+    <string name="studentNo">StudentNo : </string>
     <string name="action_sign_out">Sign Out</string>
     <string name="main_activity_course_created_successfully_toast">Course Created Successfully</string>
     <string name="main_activity_empty_course_name_toast">Write the Course name</string>
