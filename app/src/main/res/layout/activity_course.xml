@@ -79,5 +79,24 @@
             android:textSize="25sp" />
     </android.support.v7.widget.CardView>
 
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/private_chat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        card_view:cardCornerRadius="4dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center_horizontal"
+            android:padding="5dp"
+            android:layout_marginTop="20dp"
+            android:text="Private chat"
+            android:textSize="25sp" />
+    </android.support.v7.widget.CardView>
+
 
 </LinearLayout>

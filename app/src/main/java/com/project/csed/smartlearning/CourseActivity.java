@@ -17,7 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class CourseActivity extends AppCompatActivity {
-    CardView quizzes, addStudent, materials, chat;
+    CardView quizzes, addStudent, materials, chat,privateChat;
     String courseName, userType;
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
@@ -57,6 +57,7 @@ public class CourseActivity extends AppCompatActivity {
         addStudent = findViewById(R.id.add_student);
         materials = findViewById(R.id.materials);
         chat = findViewById(R.id.chat);
+        privateChat=findViewById(R.id.private_chat);
 
         userType = intent.getStringExtra("user_type");
         if (userType.equals("Student"))
@@ -105,6 +106,17 @@ public class CourseActivity extends AppCompatActivity {
                 startActivity(intent1);
             }
         });
+
+        privateChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Open chat activity
+                Intent i=new Intent(CourseActivity.this,AllUsersList.class);
+
+                startActivity(i);
+            }
+        });
+
     }
 
     @Override

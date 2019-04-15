@@ -22,6 +22,8 @@
         <activity android:name=".CourseSearchActivity" />
         <activity android:name=".AddStudentActivity" />
         <activity android:name=".CourseActivity" />
+        <activity android:name=".AllUsersList" />
+        <activity android:name=".OneToOneChatActivity" />
         <activity android:name=".MainActivity" />
         <activity
             android:name=".Splash"
