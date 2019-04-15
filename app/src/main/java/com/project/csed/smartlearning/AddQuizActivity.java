@@ -29,7 +29,6 @@ public class AddQuizActivity extends AppCompatActivity {
     String question, option1, option2, option3, option4, answer;
     int answerInt = 0;
     int questionNumber = 1;
-    long quizNumber;
     String courseName, dateString;
 
     DatabaseReference quizReference;
@@ -48,23 +47,23 @@ public class AddQuizActivity extends AppCompatActivity {
         setTitle(courseName);
 
         // Get Quizzes number
+        final long[] quizNumber = new long[1];
         quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseName).child("Quizzes");
         quizReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                quizNumber = dataSnapshot.getChildrenCount();
+                quizNumber[0] = dataSnapshot.getChildrenCount();
+                Quiz quiz = new Quiz((int) (quizNumber[0]) + 1, dateString);
+                quizReference.child(dateString).setValue(quiz);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
 
-        // Add Quiz number quizNumber to Database
         Date date = new Date();
         dateString = String.valueOf(date);
-        // todo problem here - quizNumber is always the default value
-        Quiz quiz = new Quiz((int) (quizNumber) + 1, dateString);
-        quizReference.child(dateString).setValue(quiz);
+
 
         addAnotherQuestion = findViewById(R.id.add_another_question);
         finish = findViewById(R.id.finish);

@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,7 +18,6 @@ public class QuizAnswerActivity extends AppCompatActivity {
 
     String quizDate, answer, courseName;
     int questionNumber = 1, sum = 0;
-//    final long[] numberOfQuestions = {0};
 
     DatabaseReference quizReference;
 
@@ -55,17 +53,18 @@ public class QuizAnswerActivity extends AppCompatActivity {
         option4Text = findViewById(R.id.option4);
 
         // todo same problem here, can not get number of questions
+//        final long[] questNo = new long[1];
 //        quizReference.child("Questions").addListenerForSingleValueEvent(new ValueEventListener() {
 //            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                numberOfQuestions[0] = dataSnapshot.getChildrenCount();
+//            public void onDataChange(@NonNull DataSnapshot Snapshot) {
+//                questNo[0] = Snapshot.getChildrenCount();
 //            }
 //            @Override
 //            public void onCancelled(@NonNull DatabaseError databaseError) {
 //            }
 //        });
 //
-//        Toast.makeText(this, String.valueOf(numberOfQuestions[0]), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, String.valueOf(questNo[0]), Toast.LENGTH_SHORT).show();
         readQuestions();
 
         option1Text.setOnClickListener(new View.OnClickListener() {

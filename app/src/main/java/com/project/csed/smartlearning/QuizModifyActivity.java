@@ -17,6 +17,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 public class QuizModifyActivity extends AppCompatActivity {
@@ -86,18 +87,21 @@ public class QuizModifyActivity extends AppCompatActivity {
                 mQuestionHasChanged = true;
             }
         });
+        //todo crash at onClick Next Question Button "after last question"
+        final int[] questNo = new int[1];
+        Query qRefQuery = quizReference.child("Questions");
+        qRefQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                questNo[0] =  (int)dataSnapshot.getChildrenCount();
+                Toast.makeText(QuizModifyActivity.this, String.valueOf(questNo[0]), Toast.LENGTH_SHORT).show();
+            }
 
-        // todo same problem here, can not get number of questions
-//        quizReference.child("Questions").addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                numberOfQuestions = dataSnapshot.getChildrenCount();
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//            }
-//        });
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
         readQuestion();
 
         nextQuestion.setText(R.string.quiz_modify_next_question_button);
