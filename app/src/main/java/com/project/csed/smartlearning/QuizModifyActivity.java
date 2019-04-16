@@ -28,8 +28,7 @@ public class QuizModifyActivity extends AppCompatActivity {
     RadioGroup radioGroup;
 
     String quizDate, courseName;
-    int questionNumber = 1;
-//    long numberOfQuestions = 0;
+    int questionNumber = 1, numberOfQuestions = 0;
 
     /**
      * Boolean flag that keeps track of whether the question has been edited (true) or not (false)
@@ -87,22 +86,20 @@ public class QuizModifyActivity extends AppCompatActivity {
                 mQuestionHasChanged = true;
             }
         });
-        //todo crash at onClick Next Question Button "after last question"
+
         final int[] questNo = new int[1];
         Query qRefQuery = quizReference.child("Questions");
         qRefQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 questNo[0] =  (int)dataSnapshot.getChildrenCount();
-                Toast.makeText(QuizModifyActivity.this, String.valueOf(questNo[0]), Toast.LENGTH_SHORT).show();
+                numberOfQuestions = questNo[0];
+                readQuestion();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
-        readQuestion();
 
         nextQuestion.setText(R.string.quiz_modify_next_question_button);
         nextQuestion.setOnClickListener(new View.OnClickListener() {
@@ -143,7 +140,7 @@ public class QuizModifyActivity extends AppCompatActivity {
     }
 
     private void readQuestion(){
-//        if (questionNumber <= (int) numberOfQuestions) {
+        if (questionNumber <= numberOfQuestions) {
             quizReference.child("Questions").child(String.valueOf(questionNumber)).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -168,12 +165,11 @@ public class QuizModifyActivity extends AppCompatActivity {
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                 }
             });
-//        }
-//        else {
-//            Toast.makeText(QuizModifyActivity.this, (int) numberOfQuestions, Toast.LENGTH_SHORT).show();
-//            Toast.makeText(QuizModifyActivity.this, R.string.quiz_modify_no_more_questions_toast, Toast.LENGTH_SHORT).show();
-//            finish();
-//        }
+        }
+        else {
+            Toast.makeText(QuizModifyActivity.this, R.string.quiz_modify_no_more_questions_toast, Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     private void modifyQuiz(){

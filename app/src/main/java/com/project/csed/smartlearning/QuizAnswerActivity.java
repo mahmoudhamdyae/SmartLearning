@@ -17,7 +17,7 @@ public class QuizAnswerActivity extends AppCompatActivity {
     private TextView questionNumberText, questionText, option1Text, option2Text, option3Text, option4Text;
 
     String quizDate, answer, courseName;
-    int questionNumber = 1, sum = 0;
+    int questionNumber = 1, sum = 0, numberOfQuestions = 0;
 
     DatabaseReference quizReference;
 
@@ -53,19 +53,18 @@ public class QuizAnswerActivity extends AppCompatActivity {
         option4Text = findViewById(R.id.option4);
 
         // todo same problem here, can not get number of questions
-//        final long[] questNo = new long[1];
-//        quizReference.child("Questions").addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot Snapshot) {
-//                questNo[0] = Snapshot.getChildrenCount();
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//            }
-//        });
-//
-//        Toast.makeText(this, String.valueOf(questNo[0]), Toast.LENGTH_SHORT).show();
-        readQuestions();
+        final int[] questNo = new int[1];
+        quizReference.child("Questions").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot Snapshot) {
+                questNo[0] = (int) Snapshot.getChildrenCount();
+                numberOfQuestions = questNo[0];
+                readQuestions();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
 
         option1Text.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +104,7 @@ public class QuizAnswerActivity extends AppCompatActivity {
     }
 
     private void readQuestions() {
-//        if (questionNumber <= numberOfQuestions) {
+        if (questionNumber <= numberOfQuestions) {
             questionNumberText.setText(String.valueOf(questionNumber));
             quizReference.child("Questions").child(String.valueOf(questionNumber)).addValueEventListener(new ValueEventListener() {
                 @Override
@@ -131,15 +130,15 @@ public class QuizAnswerActivity extends AppCompatActivity {
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                 }
             });
-//        }
-//        else {
-//            // Open Statistics Activity to show the information of the quiz and save it in firebase
-//            Intent intent = new Intent(QuizAnswerActivity.this, QuizStatisticsActivity.class);
-//            intent.putExtra("correctAnswers", String.valueOf(sum));
-//            intent.putExtra("numberOfQuestions", String.valueOf(numberOfQuestions));
-//            startActivity(intent);
-//            finish();
-//        }
+        }
+        else {
+            // Open Statistics Activity to show the information of the quiz and save it in firebase
+            Intent intent = new Intent(QuizAnswerActivity.this, QuizStatisticsActivity.class);
+            intent.putExtra("correctAnswers", String.valueOf(sum));
+            intent.putExtra("numberOfQuestions", String.valueOf(numberOfQuestions));
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void checkAnswer(String optionSelected) {
