@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:background="@drawable/messageshap"
+        android:layout_width="wrap_content"
         android:orientation="vertical"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1">
 
 
@@ -18,35 +20,83 @@
         <TextView
 
             android:id="@+id/private_chat_message"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="25sp"
             android:textColor="@color/colorPrimaryDark"
             android:padding="10dp"
             android:text="message" />
+        <TextView
+            android:id="@+id/private_chat_sender"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_below="@+id/private_chat_message"
+            android:textColor="#D8328E"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:text="sent by" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/private_chat_sender"
-                android:layout_width="wrap_content"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:text="sent by" />
-
-            <TextView
-                android:id="@+id/private_chat_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="time" />
-        </LinearLayout>
-
-    </LinearLayout>
+        <TextView
+            android:id="@+id/private_chat_time"
+            android:layout_below="@+id/private_chat_sender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="8dp"
+            android:text="time" />
 
 
-</LinearLayout>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:background="@drawable/messageshapsender"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_weight="1">
+
+
+
+        <TextView
+
+            android:id="@+id/private_chat_message2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:padding="10dp"
+            android:text="message" />
+        <TextView
+            android:id="@+id/private_chat_sender2"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_below="@+id/private_chat_message2"
+            android:textColor="#D8328E"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:text="sent by" />
+
+        <TextView
+            android:id="@+id/private_chat_time2"
+            android:layout_below="@+id/private_chat_sender2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_weight="1"
+            android:text="time" />
+
+
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>
