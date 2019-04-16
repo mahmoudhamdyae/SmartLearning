@@ -120,7 +120,7 @@ public class OneToOneChatActivity extends AppCompatActivity {
 
 
         //get right date
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY hh:mm");
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm");
         date = dateFormat.format(new Date());
 
         send.setOnClickListener(new View.OnClickListener() {
