@@ -1,6 +1,7 @@
 package com.project.csed.smartlearning;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -22,6 +23,7 @@ public class CourseActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
     User user ;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,10 @@ public class CourseActivity extends AppCompatActivity {
                 user = snapshot.getValue(User.class);
                 if (user != null) {
                     Toast.makeText(CourseActivity.this, user.getUserName(), Toast.LENGTH_SHORT).show();
+                    sharedPreferences= getSharedPreferences("userinfo",MODE_PRIVATE);
+                    SharedPreferences.Editor editor =sharedPreferences.edit();
+                    editor.putString("username",user.getUserName());
+                    editor.commit();
                 }
             }
 
@@ -44,6 +50,7 @@ public class CourseActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+
 
         // Examine the intent that was used to launch this activity,
         // in order to get course name.
@@ -112,6 +119,7 @@ public class CourseActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Open chat activity
                 Intent i=new Intent(CourseActivity.this,AllUsersList.class);
+                i.putExtra("name",user.getUserName());
 
                 startActivity(i);
             }

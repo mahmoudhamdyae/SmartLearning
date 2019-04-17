@@ -81,6 +81,11 @@
     <string name="quiz_delete_dialog_cancel">Cancel</string>
     <string name="quiz_deleted_successfully_toast">Quiz deleted successfully</string>
 
+    <!-- Quiz Adapter For Student -->
+    <string name="quiz_degree">Degree : </string>
+    <string name="quiz_solved">Solved</string>
+    <string name="quiz_not_solved">Not Solved</string>
+
     <!-- Add Quiz Activity -->
     <string name="add_quiz_question_number_text_view">Question number: </string>
     <string name="add_quiz_question_hint">Question</string>
@@ -101,6 +106,9 @@
     <string name="quiz_modify_next_question_button">Next question</string>
     <string name="quiz_modify_no_more_questions_toast">There is no more questions</string>
     <string name="inputMessage">Input</string>
+
+    <!-- Quiz Statistics Activity -->
+    <string name="ok_button">OK</string>
 
     <!-- Materials Activity -->
     <string name="materials_empty_view_title">This course doesn\'t have any materials yet</string>
