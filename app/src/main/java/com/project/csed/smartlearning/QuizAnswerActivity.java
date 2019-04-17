@@ -16,7 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 public class QuizAnswerActivity extends AppCompatActivity {
     private TextView questionNumberText, questionText, option1Text, option2Text, option3Text, option4Text;
 
-    String quizDate, answer, courseName;
+    String quizDate, answer, courseName, quizNumber;
     int questionNumber = 1, sum = 0, numberOfQuestions = 0;
 
     DatabaseReference quizReference;
@@ -31,6 +31,7 @@ public class QuizAnswerActivity extends AppCompatActivity {
         Intent intent = getIntent();
         quizDate = intent.getStringExtra("quizDate");
         courseName = intent.getStringExtra("courseName");
+        quizNumber = intent.getStringExtra("quizNumber");
 
         // Change the app bar to show quiz number
         quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseName).child("Quizzes").child(quizDate);
@@ -52,7 +53,6 @@ public class QuizAnswerActivity extends AppCompatActivity {
         option3Text = findViewById(R.id.option3);
         option4Text = findViewById(R.id.option4);
 
-        // todo same problem here, can not get number of questions
         final int[] questNo = new int[1];
         quizReference.child("Questions").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -136,6 +136,9 @@ public class QuizAnswerActivity extends AppCompatActivity {
             Intent intent = new Intent(QuizAnswerActivity.this, QuizStatisticsActivity.class);
             intent.putExtra("correctAnswers", String.valueOf(sum));
             intent.putExtra("numberOfQuestions", String.valueOf(numberOfQuestions));
+            intent.putExtra("courseName", courseName);
+            intent.putExtra("quizDate", quizDate);
+            intent.putExtra("quizNumber", quizNumber);
             startActivity(intent);
             finish();
         }
