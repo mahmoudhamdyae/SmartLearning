@@ -3,7 +3,9 @@ package com.project.csed.smartlearning;
 public class PrivateMessagePOJO {
     String senderName,message,date;
 
-    public PrivateMessagePOJO(String date, String message,String senderName) {
+
+
+    public PrivateMessagePOJO(String senderName, String message, String date) {
         this.senderName = senderName;
         this.message = message;
         this.date = date;

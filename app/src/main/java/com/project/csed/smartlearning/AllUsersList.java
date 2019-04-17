@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -17,11 +18,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AllUsersList extends AppCompatActivity {
-    DatabaseReference root= FirebaseDatabase.getInstance().getReference();
-    DatabaseReference child1=root.child("Users").child(getUserId());
-    DatabaseReference child2=root.child("Users");
+    private static final String TAG = "AllUsersList";
+    DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference child2 = root.child("Users");
+    private String senderName;
 
     ArrayList<usersListPOJO> users = new ArrayList<>();
     ListView listView;
@@ -32,80 +35,60 @@ public class AllUsersList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_users_list);
 
-        getAllUsersUserNameAndEmail();
 
+
+     readData(new FirebaseCallback() {
+         @Override
+         public void onCallback(ArrayList<usersListPOJO> list) {
+
+             //at this point all data is added to users list and ready to show
+             showList();
+
+             //  loop users list to remove loged in user
+             for (int i = 0; i < users.size(); i++) {
+                 if (users.get(i).getUserId().equals(getUserId())) {
+                     //save sender name for later usage
+                     senderName = users.get(i).getName();
+                     users.remove(i);
+                 }
+             }
+
+
+
+
+
+
+             //open chat activity when user from list is clicked
+             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                 @Override
+                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                     Intent i = new Intent(AllUsersList.this, OneToOneChatActivity.class);
+                     i.putExtra("ReceiverName", users.get(position).getName());
+                     i.putExtra("ReceiverEmail", users.get(position).getEmail());
+                     i.putExtra("senderName", senderName);
+                     AllUsersList.this.startActivity(i);
+                 }
+             });
+
+         }
+     });
 
 
     }
 
-    private String getUserId()
+    private void readData(final FirebaseCallback firebaseCallback)
     {
-        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
-        return currentFirebaseUser.getUid();
-    }
-
-
-
-    private void showList()
-    {
-        userListAdapter myListAdapter = new userListAdapter(this, users);
-
-        // Get a reference to the ListView, and attach the adapter to the listView.
-         listView = (ListView) findViewById(R.id.fullUsersList);
-        listView.setAdapter(myListAdapter);
-    }
-
-
-
-    private void getReceiverUserAndEmail()
-    {
-
-    }
-
-    private void getAllUsersUserNameAndEmail()
-    {
-
-        //get all users from DB to show them in list
         child2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren())
-                {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-                        users.add(new usersListPOJO(ds.child("userName").getValue().toString()
-                                ,ds.child("email").getValue().toString(),ds.child("userId").getValue().toString()));
-
-
-                    //  loop users list to remove loged in user
-                    //TODO fix it
-                    for (int i=0 ;i<users.size();i++)
-                    {
-                        if (users.get(i).getUserId()==getUserId())
-                        {
-                            users.remove(i);
-                        }
-                    }
-
-
-
+                    users.add(new usersListPOJO(ds.child("userName").getValue().toString()
+                            , ds.child("email").getValue().toString(), ds.child("userId").getValue().toString()));
                 }
-
+                firebaseCallback.onCallback(users);
                 //showing the data in the list
-                showList();
 
-                //open chat activity when user is selected from list
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                        Intent i=new Intent(AllUsersList.this,OneToOneChatActivity.class);
-
-                        i.putExtra("ReceiverName",  users.get(position).getName());
-                        i.putExtra("ReceiverEmail",  users.get(position).getEmail());
-                        AllUsersList.this.startActivity(i);
-
-                    }
-                });
             }
 
             @Override
@@ -113,5 +96,28 @@ public class AllUsersList extends AppCompatActivity {
 
             }
         });
+
+
+
     }
+    private void showList() {
+        userListAdapter myListAdapter = new userListAdapter(this, users);
+
+        // Get a reference to the ListView, and attach the adapter to the listView.
+        listView = (ListView) findViewById(R.id.fullUsersList);
+        listView.setAdapter(myListAdapter);
+    }
+
+
+
+
+    private interface FirebaseCallback {
+        void onCallback(ArrayList<usersListPOJO> list);
+    }
+
+    private String getUserId() {
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        return currentFirebaseUser.getUid();
+    }
+
 }

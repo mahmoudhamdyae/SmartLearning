@@ -1,12 +1,15 @@
 package com.project.csed.smartlearning;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -34,17 +37,18 @@ import java.util.List;
 public class OneToOneChatActivity extends AppCompatActivity {
 
     DatabaseReference root= FirebaseDatabase.getInstance().getReference();
-    DatabaseReference child1=root.child("Users").child(getUserId());
-    DatabaseReference child2,child3,child4;
-    String senderName="medhat shalaby";
+    DatabaseReference child2;
+     String senderName="medhat shalaby";
     String senderEmail,date;
     FloatingActionButton send;
-    ListView listView;
     ArrayList<PrivateMessagePOJO> messageList=new ArrayList<>();
     TextInputEditText message;
     String ReceiverName;
-    PrivateMessageAdapter myPrivateMessageAdapter;
     private  ChildEventListener childEventListener;
+     newPrivateMessageAdapter adapter;
+    private RecyclerView privateMessageRecyclerView;
+
+
 
 
     @Override
@@ -52,31 +56,34 @@ public class OneToOneChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_one_to_one_chat);
 
+
+        //get right date
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+        date = dateFormat.format(new Date());
+
         //Send Button
         send=findViewById(R.id.fab);
         // edit text where message been typed
         message=findViewById(R.id.privateMessageEditText);
 
-        //initialize adapter and connect to list
-        myPrivateMessageAdapter = new PrivateMessageAdapter(this, messageList);
-        listView =findViewById(R.id.list_of_one_on_one_messages);
-        listView.setAdapter(myPrivateMessageAdapter);
+        initRecyclerView();
 
         //Retreive receiver data from previous activity
         Intent i=getIntent();
          ReceiverName=i.getStringExtra("ReceiverName");
+        senderName=i.getStringExtra("senderName");
+
+
+
         //String ReceiverEmail=i.getStringExtra("ReceiverEmail");
         setTitle("You are now chatting with "+ReceiverName);
 
 
         //Get sender data (the logged in user)
-        GetsenderUserName(new FirebaseCallback() {
-            @Override
-            public void OnCallback(String interfaceSenderName) {
-                senderName=interfaceSenderName;
 
 
 
+        //  TODO show courses of loged in user
 
                 //loop through message need and add messages to the adapter
                 child2=  root.child("PrivateMessage").child(senderName+"+"+ReceiverName);
@@ -85,14 +92,8 @@ public class OneToOneChatActivity extends AppCompatActivity {
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
                         {
-
-
-
-
-                                PrivateMessagePOJO privateMessagePOJO = (dataSnapshot.getValue(PrivateMessagePOJO.class));
-                                 myPrivateMessageAdapter.add(privateMessagePOJO);
-
-
+                                messageList.add(dataSnapshot.getValue(PrivateMessagePOJO.class));
+                                 adapter.notifyDataSetChanged();
                         }
 
                     }
@@ -113,20 +114,10 @@ public class OneToOneChatActivity extends AppCompatActivity {
                 child2.addChildEventListener(childEventListener);
 
 
-            }
-        });
-
-
-
-
-        //get right date
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm");
-        date = dateFormat.format(new Date());
-
+            //save and show message when send is pressed
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
                 //make send button unclickable of no text in chat edittext
                 if( message.length() == 0 || message.equals("") || message == null)
@@ -140,7 +131,7 @@ public class OneToOneChatActivity extends AppCompatActivity {
                     //EditText is not empty
                     send.setEnabled(true);
                     //push message to DB
-                    PrivateMessagePOJO messagePOJO=new PrivateMessagePOJO(date,message.getText().toString(),senderName);
+                    PrivateMessagePOJO messagePOJO=new PrivateMessagePOJO(senderName,message.getText().toString(),date);
                     root.child("PrivateMessage").child(senderName+"+"+ReceiverName).push().setValue(messagePOJO);
                     root.child("PrivateMessage").child(ReceiverName+"+"+senderName).push().setValue(messagePOJO);
 
@@ -150,36 +141,40 @@ public class OneToOneChatActivity extends AppCompatActivity {
                 }
 
                 send.setEnabled(true);
-
-
-
             }
         });
 
-
-
-    }
-
-
-    private void GetsenderUserName(final FirebaseCallback firebaseCallback)
-    {
-        child1.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                senderName=dataSnapshot.child("userName").getValue().toString();
-              //  senderEmail=dataSnapshot.child("email").getValue().toString();
-
-                firebaseCallback.OnCallback(senderName);
             }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
 
-    }
-    //because on data change executes after the return and returns null
-    private interface FirebaseCallback {
-    void OnCallback(String interfaceSenderName);
+    private void initRecyclerView() {
+        //initialize adapter and connect to RecyclerView
+        privateMessageRecyclerView = findViewById(R.id.one_to_one_chat_recyclerView);
+
+        //override onBindViewHolder to  change view color depending on sender and receiver
+        adapter=new newPrivateMessageAdapter(getApplicationContext(),messageList){
+            @Override
+            public void onBindViewHolder(@NonNull PrivateMessageViewHolder privateMessageViewHolder, int i) {
+                messageList.get(i);
+
+                //if the sender of message is the logged in user make the view white and else blue
+            if (  messageList.get(i).senderName.equals(senderName))
+            {
+                privateMessageViewHolder.itemView.setBackgroundColor(Color.parseColor("#f5f2d0"));
+            }
+            else
+            {
+                privateMessageViewHolder.itemView.setBackgroundColor(Color.parseColor("#8cb8ff"));
+            }
+                privateMessageViewHolder.privateMessage.setText(  messageList.get(i).getMessage());
+                privateMessageViewHolder.privateSender.setText(  messageList.get(i).getSenderName());
+                privateMessageViewHolder.privateDate.setText(  messageList.get(i).getDate());
+
+            }
+        };
+
+        //test
+        privateMessageRecyclerView.setAdapter(adapter);
+        privateMessageRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
     }
 
 

@@ -5,7 +5,18 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context=".OneToOneChatActivity">
-<android.support.design.widget.FloatingActionButton
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/one_to_one_chat_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_above="@+id/privateMessageEditText"
+       ></android.support.v7.widget.RecyclerView>
+
+
+    <android.support.design.widget.FloatingActionButton
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:clickable="true"
@@ -28,19 +39,8 @@ tools:context=".OneToOneChatActivity">
     android:id="@+id/privateMessageEditText"
 
     />
-<ListView
-    android:id="@+id/list_of_one_on_one_messages"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentTop="true"
-    android:layout_above="@id/fab"
-    android:dividerHeight="16dp"
-    android:divider="@android:color/transparent"
-    android:layout_marginBottom="16dp"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-</ListView>
+
 
 
 
