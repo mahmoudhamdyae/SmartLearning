@@ -159,15 +159,28 @@ public class OneToOneChatActivity extends AppCompatActivity {
                 //if the sender of message is the logged in user make the view white and else blue
             if (  messageList.get(i).senderName.equals(senderName))
             {
-                privateMessageViewHolder.itemView.setBackgroundColor(Color.parseColor("#f5f2d0"));
+               privateMessageViewHolder.itemView.setBackgroundColor(Color.parseColor("#f5f2d0"));
+                //
+               // privateMessageViewHolder.privateSenderRight.setTextColor(getResources().getColor(android.R.color.holo_purple));
+                privateMessageViewHolder.otherUserLayout.setVisibility(View.GONE);
+                privateMessageViewHolder.logedInuserLayout.setVisibility(View.VISIBLE);
+                //
             }
             else
             {
                 privateMessageViewHolder.itemView.setBackgroundColor(Color.parseColor("#8cb8ff"));
+             //   privateMessageViewHolder.privateSender.setTextColor(getResources().getColor(android.R.color.holo_red_light));
+                privateMessageViewHolder.otherUserLayout.setVisibility(View.VISIBLE);
+                privateMessageViewHolder.logedInuserLayout.setVisibility(View.GONE);
             }
                 privateMessageViewHolder.privateMessage.setText(  messageList.get(i).getMessage());
                 privateMessageViewHolder.privateSender.setText(  messageList.get(i).getSenderName());
                 privateMessageViewHolder.privateDate.setText(  messageList.get(i).getDate());
+                //
+                privateMessageViewHolder.privateMessageRight.setText(  messageList.get(i).getMessage());
+                privateMessageViewHolder.privateSenderRight.setText(  messageList.get(i).getSenderName());
+                privateMessageViewHolder.privateDateRight.setText(  messageList.get(i).getDate());
+                //
 
             }
         };

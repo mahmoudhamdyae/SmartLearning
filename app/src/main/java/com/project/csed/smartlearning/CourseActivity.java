@@ -117,9 +117,10 @@ public class CourseActivity extends AppCompatActivity {
         privateChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Open chat activity
+                // Open private chat activity with list of only course members and pass course name to next activity
                 Intent i=new Intent(CourseActivity.this,AllUsersList.class);
-                i.putExtra("name",user.getUserName());
+           //     i.putExtra("name",user.getUserName());
+                i.putExtra("courseName",courseName);
 
                 startActivity(i);
             }

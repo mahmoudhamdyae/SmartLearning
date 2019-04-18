@@ -57,12 +57,24 @@ public class newPrivateMessageAdapter extends RecyclerView.Adapter<newPrivateMes
 
     public class    PrivateMessageViewHolder extends RecyclerView.ViewHolder{
         public TextView privateSender,privateMessage,privateDate;
+        public TextView privateSenderRight,privateMessageRight,privateDateRight;
+        public LinearLayout logedInuserLayout,otherUserLayout;
 
         public PrivateMessageViewHolder(@NonNull View itemView) {
             super(itemView);
+            //view on left side for other person and view on right side for loged in user
+            //view for other person
             privateMessage=itemView.findViewById(R.id.private_chat_message);
             privateSender=itemView.findViewById(R.id.private_chat_sender);
             privateDate=itemView.findViewById(R.id.private_chat_time);
+            otherUserLayout=itemView.findViewById(R.id.otherUserLinearLayour);
+
+            //view for loged in user
+            privateMessageRight=itemView.findViewById(R.id.private_chat_message_right);
+            privateSenderRight=itemView.findViewById(R.id.private_chat_sender_right);
+            privateDateRight=itemView.findViewById(R.id.private_chat_time_right);
+            logedInuserLayout=itemView.findViewById(R.id.logedInUserLinearLayour);
+            //test
 
         }
 

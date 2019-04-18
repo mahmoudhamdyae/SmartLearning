@@ -1,6 +1,7 @@
 package com.project.csed.smartlearning;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,8 @@ public class userListAdapter extends ArrayAdapter<usersListPOJO> {
             listItemView = LayoutInflater.from(getContext()).inflate(
                     R.layout.row_design_of_users_list, parent, false);
         }
+
+
 
         // Get the {@link AndroidFlavor} object located at this position in the list
         usersListPOJO currentUser = getItem(position);
