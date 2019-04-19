@@ -36,9 +36,10 @@ import java.util.List;
 
 public class OneToOneChatActivity extends AppCompatActivity {
 
+    private static final String TAG = "saxx";
     DatabaseReference root= FirebaseDatabase.getInstance().getReference();
     DatabaseReference child2;
-     String senderName="medhat shalaby";
+     String senderName;
     String senderEmail,date;
     FloatingActionButton send;
     ArrayList<PrivateMessagePOJO> messageList=new ArrayList<>();
@@ -66,14 +67,16 @@ public class OneToOneChatActivity extends AppCompatActivity {
         // edit text where message been typed
         message=findViewById(R.id.privateMessageEditText);
 
-        initRecyclerView();
+
 
         //Retreive receiver data from previous activity
         Intent i=getIntent();
          ReceiverName=i.getStringExtra("ReceiverName");
         senderName=i.getStringExtra("senderName");
 
+        initRecyclerView();
 
+        Log.i(TAG,senderName);
 
         //String ReceiverEmail=i.getStringExtra("ReceiverEmail");
         setTitle("You are now chatting with "+ReceiverName);
@@ -83,7 +86,7 @@ public class OneToOneChatActivity extends AppCompatActivity {
 
 
 
-        //  TODO show courses of loged in user
+
 
                 //loop through message need and add messages to the adapter
                 child2=  root.child("PrivateMessage").child(senderName+"+"+ReceiverName);
@@ -159,7 +162,7 @@ public class OneToOneChatActivity extends AppCompatActivity {
                 //if the sender of message is the logged in user make the view white and else blue
             if (  messageList.get(i).senderName.equals(senderName))
             {
-               privateMessageViewHolder.itemView.setBackgroundColor(Color.parseColor("#f5f2d0"));
+              // privateMessageViewHolder.itemView.setBackgroundColor(Color.parseColor("#f5f2d0"));
                 //
                // privateMessageViewHolder.privateSenderRight.setTextColor(getResources().getColor(android.R.color.holo_purple));
                 privateMessageViewHolder.otherUserLayout.setVisibility(View.GONE);
@@ -168,7 +171,7 @@ public class OneToOneChatActivity extends AppCompatActivity {
             }
             else
             {
-                privateMessageViewHolder.itemView.setBackgroundColor(Color.parseColor("#8cb8ff"));
+               // privateMessageViewHolder.itemView.setBackgroundColor(Color.parseColor("#8cb8ff"));
              //   privateMessageViewHolder.privateSender.setTextColor(getResources().getColor(android.R.color.holo_red_light));
                 privateMessageViewHolder.otherUserLayout.setVisibility(View.VISIBLE);
                 privateMessageViewHolder.logedInuserLayout.setVisibility(View.GONE);
