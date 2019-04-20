@@ -43,6 +43,7 @@ public class QuizStudentsAdapter extends RecyclerView.Adapter<QuizStudentsAdapte
         User user = users.get(position);
         quizStudentsHolder.StudentName.setText(user.getUserName());
         quizStudentsHolder.emailAddress.setText(user.getEmail());
+        quizStudentsHolder.quizDegree.setText(user.getDegree());
 
         String userId = user.getUserId();
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference()
@@ -68,7 +69,7 @@ public class QuizStudentsAdapter extends RecyclerView.Adapter<QuizStudentsAdapte
     }
 
     public class QuizStudentsHolder extends RecyclerView.ViewHolder{
-        TextView StudentName,emailAddress;
+        TextView StudentName,emailAddress, quizDegree;
         CheckBox SelectStudent;
         LinearLayout linearLayout;
         CircleImageView profileImage;
@@ -79,6 +80,7 @@ public class QuizStudentsAdapter extends RecyclerView.Adapter<QuizStudentsAdapte
             emailAddress = itemView.findViewById(R.id.emailAddress);
             linearLayout = itemView.findViewById(R.id.AddStudentrow);
             profileImage = itemView.findViewById(R.id.profile_image);
+            quizDegree = itemView.findViewById(R.id.quiz_degree);
 
             SelectStudent = itemView.findViewById(R.id.SelectStudent);
             SelectStudent.setVisibility(View.GONE);

@@ -56,6 +56,7 @@
     <!-- AddStudentActivity -->
     <string name="search_studentname">Search by student name or email&#8230;</string>
     <string name="AddStudent_activity_Student_Added_Toast">Selected students added to the course</string>
+    <string name="degree_text">Degree : </string>
 
     <!-- Course Search Activity -->
     <string name="course_search">Enter course name</string>
@@ -101,10 +102,17 @@
 
     <!-- Quiz Details Activity -->
     <string name="quiz_details_modify_quiz_button">Modify quiz</string>
+    <string name="quiz_details_no_one_solved_this_quiz">No student solved this quiz yet</string>
+    <string name="quiz_details_students_who_solve_this_quiz">Students who solved this quiz</string>
 
     <!-- Quiz Modify Activity -->
     <string name="quiz_modify_next_question_button">Next question</string>
     <string name="quiz_modify_no_more_questions_toast">There is no more questions</string>
+    <string name="quiz_modify_no_questions_toast">There is no questions to modify</string>
+    <string name="quiz_modify_add_question_button">Add Question</string>
+
+    <string name="quiz_modify_menu_delete">Delete Question</string>
+
     <string name="inputMessage">Input</string>
 
     <!-- Quiz Statistics Activity -->

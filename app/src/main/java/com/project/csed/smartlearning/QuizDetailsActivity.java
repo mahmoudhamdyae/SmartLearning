@@ -8,7 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,8 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuizDetailsActivity extends AppCompatActivity {
-    Button modifyQuiz;
+    Button modifyQuiz, addQuestion;
     String quizDate, courseName;
+    String name, email, userId, degree;
+    TextView text;
+    QuizStudentsAdapter quizStudentsAdapter;
 
     List<User> usersList = new ArrayList<>();
 
@@ -30,11 +33,24 @@ public class QuizDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_details);
 
+        quizStudentsAdapter = new QuizStudentsAdapter(QuizDetailsActivity.this, usersList);
+        final RecyclerView recyclerView = findViewById(R.id.recyclerView);
+
+        text = findViewById(R.id.text);
+
         // Examine the intent that was used to launch this activity,
         // in order to get quiz date.
         Intent intent = getIntent();
         quizDate = intent.getStringExtra("quizDate");
         courseName = intent.getStringExtra("courseName");
+
+        addQuestion = findViewById(R.id.add_question);
+        addQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addQuestionFun();
+            }
+        });
 
         modifyQuiz = findViewById(R.id.quiz_modify_button);
         modifyQuiz.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +68,7 @@ public class QuizDetailsActivity extends AppCompatActivity {
         quizReference.child("number").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String title = "Quiz number " + String.valueOf(dataSnapshot.getValue());
+                String title = "Quiz number " + dataSnapshot.getValue();
                 // Change the app bar to show quiz number
                 setTitle(title);
             }
@@ -61,9 +77,6 @@ public class QuizDetailsActivity extends AppCompatActivity {
             }
         });
 
-        QuizStudentsAdapter quizStudentsAdapter = new QuizStudentsAdapter(QuizDetailsActivity.this, usersList);
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-
         // Get Users id
         DatabaseReference getIdRef = FirebaseDatabase.getInstance().getReference().child("Courses")
                 .child(courseName).child("Quizzes").child(quizDate).child("Students");
@@ -71,30 +84,28 @@ public class QuizDetailsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (final DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
-                    final String userId = dataSnapshot1.getKey();
+                    userId = dataSnapshot1.getKey();
+                    degree = dataSnapshot1.getValue().toString();
+
                     // Get user data
-
-//                    User user1 = new User("nameeeee", "Emailllll");
-//                    usersList.add(user1);
-
                     DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
                     userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
-                            String name = dataSnapshot2.child("userName").getValue().toString();
-                            String email = dataSnapshot2.child("email").getValue().toString();
-                            Toast.makeText(QuizDetailsActivity.this, name, Toast.LENGTH_SHORT).show();
-                            Toast.makeText(QuizDetailsActivity.this, email, Toast.LENGTH_SHORT).show();
-//                            User user1 = new User(name, email);
-                            // todo next two lines does not work
-                            User user1 = new User("nameeeee", "Emailllll");
-                            usersList.add(user1);
+                            name = dataSnapshot2.child("userName").getValue().toString();
+                            email = dataSnapshot2.child("email").getValue().toString();
+
+                            User user = new User(name, email, degree, userId);
+                            usersList.add(user);
+                            quizStudentsAdapter.notifyDataSetChanged();
+
+                            recyclerView.setVisibility(View.VISIBLE);
+                            text.setText(R.string.quiz_details_students_who_solve_this_quiz);
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
                         }
                     });
-
                 }
             }
             @Override
@@ -104,5 +115,13 @@ public class QuizDetailsActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(QuizDetailsActivity.this));
         recyclerView.setAdapter(quizStudentsAdapter);
+    }
+
+    private void addQuestionFun() {
+        Intent intent = new Intent(QuizDetailsActivity.this, AddQuizActivity.class);
+        intent.putExtra("addQuestion", "addQuestion");
+        intent.putExtra("course_name", courseName);
+        intent.putExtra("quizDate", quizDate);
+        startActivity(intent);
     }
 }

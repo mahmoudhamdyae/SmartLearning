@@ -100,7 +100,7 @@ public class AddStudentAdapter extends RecyclerView.Adapter<AddStudentAdapter.Ad
     public int getItemCount() { return StudentList.size();}
     public class AddStudentHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        TextView StudentName,emailAddress;
+        TextView StudentName,emailAddress, quizDegree, degreeText;
         CheckBox SelectStudent;
         LinearLayout linearLayout;
         ItemClickListener itemClickListener;
@@ -113,6 +113,13 @@ public class AddStudentAdapter extends RecyclerView.Adapter<AddStudentAdapter.Ad
             SelectStudent = itemView.findViewById(R.id.SelectStudent);
             linearLayout = itemView.findViewById(R.id.AddStudentrow);
             profileImage = itemView.findViewById(R.id.profile_image);
+
+            degreeText = itemView.findViewById(R.id.degree_text);
+            degreeText.setVisibility(View.GONE);
+
+            quizDegree = itemView.findViewById(R.id.quiz_degree);
+            quizDegree.setVisibility(View.GONE);
+
             SelectStudent.setOnClickListener(this);
         }
         public void setItemClickListener(ItemClickListener ic)

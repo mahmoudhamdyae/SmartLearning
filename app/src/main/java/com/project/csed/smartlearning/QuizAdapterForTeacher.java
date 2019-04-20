@@ -117,5 +117,7 @@ public class QuizAdapterForTeacher extends RecyclerView.Adapter<QuizAdapterForTe
                 Toast.makeText(context, R.string.quiz_deleted_successfully_toast, Toast.LENGTH_SHORT).show();
             }
         });
+
+        // todo fix quizzes numbers
     }
 }

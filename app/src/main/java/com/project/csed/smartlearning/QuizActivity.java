@@ -68,6 +68,7 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(QuizActivity.this, AddQuizActivity.class);
                 intent.putExtra("course_name", courseName);
+                intent.putExtra("addQuestion", "addQuiz");
                 startActivity(intent);
             }
         });

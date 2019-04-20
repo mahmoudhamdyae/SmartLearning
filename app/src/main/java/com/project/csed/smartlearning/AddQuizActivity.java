@@ -1,6 +1,5 @@
 package com.project.csed.smartlearning;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,6 +29,8 @@ public class AddQuizActivity extends AppCompatActivity {
     int answerInt = 0;
     int questionNumber = 1;
     String courseName, dateString;
+    final long[] quizNumber = new long[1];
+    final long[] numberOfQuestions = new long[1];
 
     DatabaseReference quizReference;
 
@@ -40,30 +41,62 @@ public class AddQuizActivity extends AppCompatActivity {
 
         // Examine the intent that was used to launch this activity,
         // in order to get course name and quiz number.
-        Intent intent = getIntent();
-        courseName = intent.getStringExtra("course_name");
-
-        // Change the app bar to show course name
-        setTitle(courseName);
+        courseName = getIntent().getStringExtra("course_name");
 
         // Get Quizzes number
-        final long[] quizNumber = new long[1];
         quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseName).child("Quizzes");
         quizReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 quizNumber[0] = dataSnapshot.getChildrenCount();
-                Quiz quiz = new Quiz((int) (quizNumber[0]) + 1, dateString);
-                quizReference.child(dateString).setValue(quiz);
+
+                if (getIntent().getStringExtra("addQuestion").equals("addQuestion")) {
+                    // Add Question
+                    final String s = getIntent().getStringExtra("quizDate");
+                    // Get number of questions
+                    quizReference.child(s).child("Questions").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot1) {
+                            numberOfQuestions[0] = dataSnapshot1.getChildrenCount();
+                            addAnotherQuestion.setVisibility(View.GONE);
+                            finish.setText(R.string.quiz_modify_add_question_button);
+                            questionNumber = (int) numberOfQuestions[0] + 1;
+                            dateString = s;
+                            questionNumberTextView.setText(String.valueOf(questionNumber));
+
+                            // Change the app bar to show quiz number
+                            quizReference.child(dateString).child("number").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    String title = "Quiz number " + dataSnapshot.getValue();
+                                    setTitle(title);
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                }
+                            });
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        }
+                    });
+                }
+                else{
+                    // Add Quiz
+                    Date date = new Date();
+                    dateString = String.valueOf(date);
+                    Quiz quiz = new Quiz((int) (quizNumber[0]) + 1, dateString);
+                    quizReference.child(dateString).setValue(quiz);
+
+                    // Change the app bar to show quiz number
+                    String title = "Quiz number " + (quizNumber[0] + 1);
+                    setTitle(title);
+                }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-
-        Date date = new Date();
-        dateString = String.valueOf(date);
-
 
         addAnotherQuestion = findViewById(R.id.add_another_question);
         finish = findViewById(R.id.finish);
@@ -158,9 +191,14 @@ public class AddQuizActivity extends AppCompatActivity {
                         break;
                 }
                 if (!TextUtils.isEmpty(question) && !TextUtils.isEmpty(option1) && !TextUtils.isEmpty(option2)
-                        && !TextUtils.isEmpty(option3) && !TextUtils.isEmpty(option4))
+                        && !TextUtils.isEmpty(option3) && !TextUtils.isEmpty(option4)){
                     addQuestion();
-                finish();
+                    finish();
+                }
+                else if (getIntent().getStringExtra("addQuestion").equals("addQuestion"))
+                    Toast.makeText(AddQuizActivity.this, R.string.add_quiz_empty_fields_toast, Toast.LENGTH_SHORT).show();
+                else
+                    finish();
             }
         });
     }

@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -52,7 +54,7 @@ public class QuizModifyActivity extends AppCompatActivity {
         quizReference.child("number").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String title = "Quiz number " + String.valueOf(dataSnapshot.getValue());
+                String title = "Quiz number " + dataSnapshot.getValue();
                 // Change the app bar to show quiz number
                 setTitle(title);
             }
@@ -94,6 +96,8 @@ public class QuizModifyActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 questNo[0] =  (int)dataSnapshot.getChildrenCount();
                 numberOfQuestions = questNo[0];
+                if (numberOfQuestions == 1)
+                    nextQuestion.setVisibility(View.GONE);
                 readQuestion();
             }
             @Override
@@ -108,6 +112,8 @@ public class QuizModifyActivity extends AppCompatActivity {
                 if (validate()){
                     modifyQuiz();
                     questionNumber++;
+                    if (questionNumber == numberOfQuestions)
+                        nextQuestion.setVisibility(View.GONE);
                     readQuestion();
                 }
                 else
@@ -167,7 +173,10 @@ public class QuizModifyActivity extends AppCompatActivity {
             });
         }
         else {
-            Toast.makeText(QuizModifyActivity.this, R.string.quiz_modify_no_more_questions_toast, Toast.LENGTH_SHORT).show();
+            if (numberOfQuestions == 0)
+                Toast.makeText(QuizModifyActivity.this, R.string.quiz_modify_no_questions_toast, Toast.LENGTH_SHORT).show();
+            else
+                Toast.makeText(QuizModifyActivity.this, R.string.quiz_modify_no_more_questions_toast, Toast.LENGTH_SHORT).show();
             finish();
         }
     }
@@ -215,4 +224,23 @@ public class QuizModifyActivity extends AppCompatActivity {
             return false;
         }
     };
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_quiz_modify, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.delete_question) {
+            deleteQuestion();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteQuestion(){
+        // todo delete question and fix question numbers
+    }
 }

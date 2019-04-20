@@ -6,6 +6,7 @@ public class User {
     private String password;
     private String type;
     private String userId;
+    private String degree;
 
     public User(){}
 
@@ -17,9 +18,12 @@ public class User {
         this.userId = userId;
     }
 
-    public User(String userName, String email){
+    // Constructor for students who solved the quiz
+    public User(String userName, String email, String degree, String userId){
         this.userName = userName;
         this.email = email;
+        this.degree = degree;
+        this.userId = userId;
     }
 
     public String getUserName() {
@@ -57,4 +61,12 @@ public class User {
     public String getUserId(){return userId;}
 
     public void setUserId(String userId){ this.userId = userId;}
+
+    public String getDegree() {
+        return degree;
+    }
+
+    public void setDegree(String degree) {
+        this.degree = degree;
+    }
 }
