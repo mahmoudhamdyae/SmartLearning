@@ -110,8 +110,10 @@
     <string name="quiz_modify_no_more_questions_toast">There is no more questions</string>
     <string name="quiz_modify_no_questions_toast">There is no questions to modify</string>
     <string name="quiz_modify_add_question_button">Add Question</string>
+    <string name="quiz_modify_question_deleted_successfully">Question deleted successfully</string>
 
     <string name="quiz_modify_menu_delete">Delete Question</string>
+    <string name="question_delete_dialog_msg">Are you sure you want to delete this question</string>
 
     <string name="inputMessage">Input</string>
 

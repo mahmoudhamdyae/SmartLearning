@@ -1,5 +1,7 @@
 package com.project.csed.smartlearning;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -234,13 +238,71 @@ public class QuizModifyActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.delete_question) {
-            deleteQuestion();
+            // Create an AlertDialog.Builder and set the message, and click listeners
+            // for the positive and negative buttons on the dialog.
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.question_delete_dialog_msg);
+            builder.setPositiveButton(R.string.quiz_delete_dialog_delete, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User clicked the "Delete" button, so delete the Question.
+//                    deleteQuestion();
+                }
+            });
+            builder.setNegativeButton(R.string.quiz_delete_dialog_cancel, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User clicked the "Cancel" button, so dismiss the dialog
+                    if (dialog != null) {
+                        dialog.dismiss();
+                    }
+                }
+            });
+            // Create and show the AlertDialog
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void deleteQuestion(){
-        // todo delete question and fix question numbers
+        final DatabaseReference questionReference = FirebaseDatabase.getInstance().getReference().child("Courses")
+                .child(courseName).child("Quizzes").child(quizDate).child("Questions");
+
+        // Delete question
+        questionReference.child(String.valueOf(questionNumber)).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(QuizModifyActivity.this, R.string.quiz_modify_question_deleted_successfully, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // todo there is a problem here
+        // Fix next questions numbers
+        questionReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+                    Question question1 = dataSnapshot1.getValue(Question.class);
+
+                    int newNumber = question1.getNumber();
+                    if (newNumber > questionNumber){
+                        // Add new question
+                        question1.setNumber(newNumber - 1);
+                        questionReference.child(String.valueOf(newNumber - 1)).setValue(question1);
+                        // Delete the question
+                        questionReference.child(String.valueOf(newNumber)).setValue(null);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+        // View next question
+        numberOfQuestions--;
+        if (questionNumber == numberOfQuestions)
+            nextQuestion.setVisibility(View.GONE);
+        readQuestion();
     }
 }

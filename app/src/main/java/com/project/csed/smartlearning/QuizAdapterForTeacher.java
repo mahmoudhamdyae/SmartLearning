@@ -16,8 +16,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -83,8 +86,8 @@ public class QuizAdapterForTeacher extends RecyclerView.Adapter<QuizAdapterForTe
                     builder.setMessage(R.string.quiz_delete_dialog_msg);
                     builder.setPositiveButton(R.string.quiz_delete_dialog_delete, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            // User clicked the "Delete" button, so delete the Course.
-                            delete(getAdapterPosition());
+                            // User clicked the "Delete" button, so delete the Quiz.
+                            deleteQuiz(getAdapterPosition());
                         }
                     });
                     builder.setNegativeButton(R.string.quiz_delete_dialog_cancel, new DialogInterface.OnClickListener() {
@@ -103,21 +106,41 @@ public class QuizAdapterForTeacher extends RecyclerView.Adapter<QuizAdapterForTe
         }
     }
 
-    private void delete (int position){
+    private void deleteQuiz(int position){
         //removes the row from UI
-        final Quiz quiz = quizList.get(position);
+        final Quiz quiz1 = quizList.get(position);
         quizList.remove(position);
         notifyItemRemoved(position);
 
+        // todo there is a problem here
+        // Fix quizzes numbers
+        final int numberOfDeletedQuiz = quiz1.getNumber();
+
+        final DatabaseReference quizReference = FirebaseDatabase.getInstance().getReference()
+                .child("Courses").child(courseName).child("Quizzes");
+//        quizReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+//                    Quiz quiz2 = dataSnapshot1.getValue(Quiz.class);
+//
+//                    int number = quiz2.getNumber();
+//                    if (number > numberOfDeletedQuiz){
+//                        quizReference.child(quiz2.getDate()).child("number").setValue(String.valueOf(number - 1));
+//                    }
+//                }
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//            }
+//        });
+
         // Remove the quiz from database
-        final DatabaseReference quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseName).child("Quizzes").child(quiz.getDate());
-        quizReference.setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
+        quizReference.child(quiz1.getDate()).setValue(null).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 Toast.makeText(context, R.string.quiz_deleted_successfully_toast, Toast.LENGTH_SHORT).show();
             }
         });
-
-        // todo fix quizzes numbers
     }
 }
