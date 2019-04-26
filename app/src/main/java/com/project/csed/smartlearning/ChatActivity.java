@@ -73,7 +73,8 @@ public class ChatActivity extends AppCompatActivity {
                 // Read the input field and push a new instance
                 // of ChatMessage to the Firebase database
                 inputmessage = input.getText().toString();
-                if (inputmessage.isEmpty() || inputmessage.equals(" ") )
+//                if message contains nothing or only spaces
+                if (inputmessage.isEmpty() || inputmessage.equals(" ") || inputmessage.trim().length()==0)
                 {
                     //done Nothing
                 }else {
