@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "1059735946958-97q9j98s8i014sbdhcpbn9bm6rfk2q7o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.project.csed.smartlearning",
+            "certificate_hash": "a668971221ea68564fb1f368a181f7e0299bbd9e"
+          }
+        },
+        {
           "client_id": "1059735946958-s3ur2gojviav9bta9l9p9v0k5okhhdjl.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -33,20 +41,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "1059735946958-s3ur2gojviav9bta9l9p9v0k5okhhdjl.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

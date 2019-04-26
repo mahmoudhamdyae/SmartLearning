@@ -17,7 +17,13 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -37,6 +43,7 @@ public class MaterialActivity extends AppCompatActivity {
     List<String> materialList = new ArrayList<>();
 
     StorageReference mStorageRef;
+    DatabaseReference mDataRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +66,7 @@ public class MaterialActivity extends AppCompatActivity {
         setTitle(courseName);
 
         mStorageRef = FirebaseStorage.getInstance().getReference().child("materials").child(courseName);
+        mDataRef = FirebaseDatabase.getInstance().getReference().child("Materials").child(courseName);
 
         userType = intent.getStringExtra("userType");
 
@@ -68,9 +76,36 @@ public class MaterialActivity extends AppCompatActivity {
             subtitle.setVisibility(View.GONE);
         }
 
-        // todo read materials
+        materialsAdapter = new MaterialsAdapter(this, materialList, courseName, userType);
 
-        materialsAdapter = new MaterialsAdapter(this, materialList);
+        // Read materials
+        mDataRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                materialList.clear();
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                    String materialFullName = dataSnapshot1.getValue(String.class);
+                    String materialName = materialFullName.substring(0, materialFullName.length() - 4);
+
+                    materialList.add(materialName);
+                    materialsAdapter.notifyDataSetChanged();
+
+                    // If there is no material set empty view
+                    if (materialsAdapter.getItemCount() == 0){
+                        recyclerView.setVisibility(View.GONE);
+                        emptyView.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        recyclerView.setVisibility(View.VISIBLE);
+                        emptyView.setVisibility(View.GONE);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
         recyclerView.setLayoutManager(new LinearLayoutManager(MaterialActivity.this));
         recyclerView.setAdapter(materialsAdapter);
 
@@ -98,7 +133,6 @@ public class MaterialActivity extends AppCompatActivity {
 
         if (requestCode == PICK_FILE && resultCode == RESULT_OK){
             final ProgressDialog progressDialog = new ProgressDialog(this);
-            progressDialog.setMessage("Processing your request, please wait...");
             progressDialog.show();
 
             Uri file = data.getData();
@@ -114,12 +148,26 @@ public class MaterialActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                     if (task.isSuccessful()) {
-                        progressDialog.dismiss();
-                        Toast.makeText(MaterialActivity.this, R.string.material_added_toast, Toast.LENGTH_SHORT).show();
+                        mDataRef.push().setValue(name).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(MaterialActivity.this, R.string.material_added_toast, Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                     else
                         Toast.makeText(MaterialActivity.this, "Error : " + task.getException(), Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
 
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    // progress percentage
+                    double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+
+                    // percentage in progress dialog
+                    progressDialog.setMessage("Uploading " + ((int) progress) + "%...");
                 }
             });
         }
