@@ -48,6 +48,7 @@
     <string name="course_add_student">Add Student</string>
     <string name="course_materials">Materials</string>
     <string name="course_chat">Chat</string>
+    <string name="course_private_chat">Private chat</string>
 
     <string name="action_delete">Delete</string>
     <string name="action_students">Students</string>
@@ -132,4 +133,9 @@
     <string name="material_delete_dialog_msg">Are you sure you want to delete this material ?</string>
     <string name="material_delete_dialog_delete">Delete</string>
     <string name="material_delete_dialog_cancel">Cancel</string>
+
+    <!-- Chat Activity -->
+    <string name="select_user_to_chat_with_text_view">Select user to chat with</string>
+    <string name="type_something_to_send_toast">Type something to send</string>
+    <string name="message_sent_toast">Message sent</string>
 </resources>

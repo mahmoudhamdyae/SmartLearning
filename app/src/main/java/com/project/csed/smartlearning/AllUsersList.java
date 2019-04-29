@@ -1,20 +1,15 @@
 package com.project.csed.smartlearning;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,10 +17,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class AllUsersList extends AppCompatActivity {
-    private static final String TAG = "AllUsersListt";
     DatabaseReference root = FirebaseDatabase.getInstance().getReference();
     DatabaseReference child2,child3,child4;
 
@@ -187,7 +180,7 @@ public class AllUsersList extends AppCompatActivity {
         userListAdapter myListAdapter = new userListAdapter(this, users) ;
 
         // Get a reference to the ListView, and attach the adapter to the listView.
-        listView = (ListView) findViewById(R.id.fullUsersList);
+        listView = findViewById(R.id.fullUsersList);
         listView.setAdapter(myListAdapter);
 
     }
@@ -203,8 +196,7 @@ public class AllUsersList extends AppCompatActivity {
 
 
     private String getUserId() {
-        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        return currentFirebaseUser.getUid();
+        return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
     private void getSenderName(final FirebaseCallback2 firebaseCallback2)

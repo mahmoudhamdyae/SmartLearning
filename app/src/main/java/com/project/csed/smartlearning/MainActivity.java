@@ -33,7 +33,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG ="MainActivity" ;
     Button Addbutton;
     RecyclerView recyclerView;
     View emptyView;

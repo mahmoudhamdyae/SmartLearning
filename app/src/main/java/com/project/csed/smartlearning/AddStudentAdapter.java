@@ -55,7 +55,6 @@ public class AddStudentAdapter extends RecyclerView.Adapter<AddStudentAdapter.Ad
                     @Override
                     public void onSuccess(Uri uri) {
                         RequestOptions placeholderOption = new RequestOptions();
-                        placeholderOption.placeholder(R.drawable.default_image);
                         Glide.with(context).setDefaultRequestOptions(placeholderOption).load(uri).into(studentHolder.profileImage);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
