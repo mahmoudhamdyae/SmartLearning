@@ -44,7 +44,7 @@ public class AddQuizActivity extends AppCompatActivity {
         courseName = getIntent().getStringExtra("course_name");
 
         // Get Quizzes number
-        quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseName).child("Quizzes");
+        quizReference = FirebaseDatabase.getInstance().getReference().child("Quizzes").child(courseName);
         quizReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

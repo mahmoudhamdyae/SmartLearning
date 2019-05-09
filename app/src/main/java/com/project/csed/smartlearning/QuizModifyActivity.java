@@ -54,7 +54,7 @@ public class QuizModifyActivity extends AppCompatActivity {
         quizDate = intent.getStringExtra("quizDate");
         courseName = intent.getStringExtra("courseName");
 
-        quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseName).child("Quizzes").child(quizDate);
+        quizReference = FirebaseDatabase.getInstance().getReference().child("Quizzes").child(courseName).child(quizDate);
         quizReference.child("number").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -265,8 +265,8 @@ public class QuizModifyActivity extends AppCompatActivity {
     }
 
     private void deleteQuestion(){
-        final DatabaseReference questionReference = FirebaseDatabase.getInstance().getReference().child("Courses")
-                .child(courseName).child("Quizzes").child(quizDate).child("Questions");
+        final DatabaseReference questionReference = FirebaseDatabase.getInstance().getReference().child("Quizzes")
+                .child(courseName).child(quizDate).child("Questions");
 
         // Delete question
         questionReference.child(String.valueOf(questionNumber)).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {

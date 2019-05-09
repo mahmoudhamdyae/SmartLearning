@@ -34,7 +34,7 @@ public class QuizAnswerActivity extends AppCompatActivity {
         quizNumber = intent.getStringExtra("quizNumber");
 
         // Change the app bar to show quiz number
-        quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseName).child("Quizzes").child(quizDate);
+        quizReference = FirebaseDatabase.getInstance().getReference().child("Quizzes").child(courseName).child(quizDate);
         quizReference.child("number").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

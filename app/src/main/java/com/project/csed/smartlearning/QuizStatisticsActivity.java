@@ -32,8 +32,7 @@ public class QuizStatisticsActivity extends AppCompatActivity {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         // Save student degree in database
-        DatabaseReference quizRef = FirebaseDatabase.getInstance().getReference().child("Courses")
-                .child(courseName).child("Quizzes").child(quizDate);
+        DatabaseReference quizRef = FirebaseDatabase.getInstance().getReference().child("Quizzes").child(courseName).child(quizDate);
         quizRef.child("Students").child(userId).setValue(correctAnswers);
 
         // View Degree

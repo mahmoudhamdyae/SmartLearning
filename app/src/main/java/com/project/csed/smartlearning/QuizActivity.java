@@ -92,7 +92,7 @@ public class QuizActivity extends AppCompatActivity {
 
     // Read Quizzes from database
     private void readQuizzes (){
-        DatabaseReference quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseName).child("Quizzes");
+        DatabaseReference quizReference = FirebaseDatabase.getInstance().getReference().child("Quizzes").child(courseName);
         quizReference.orderByChild("number").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
