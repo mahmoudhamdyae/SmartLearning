@@ -87,7 +87,6 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
 
         // Remove the course from database
 
-
         // this Two Lines Delete the chat from fireBase
         DatabaseReference mChatDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Rooms").child(courseModel.getCourseName());
         mChatDatabaseReference.removeValue();

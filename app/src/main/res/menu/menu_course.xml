@@ -2,10 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/students"
-        android:title="@string/action_students" />
-
-    <item
         android:id="@+id/course_details"
         android:title="@string/action_course_details" />
 

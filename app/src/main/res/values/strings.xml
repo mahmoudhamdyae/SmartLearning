@@ -31,8 +31,9 @@
     <string name="main_activity_course_created_successfully_toast">Course Created Successfully</string>
     <string name="main_activity_empty_course_name_toast">Write the Course name</string>
     <string name="main_activity_choose_another_course_name_toast">Choose a different course name</string>
-    <string name="empty_coursess_title">You don\'t have any courses yet</string>
+    <string name="empty_courses_title">You don\'t have any courses yet</string>
     <string name="empty_courses_subtitle">Add your course from + button</string>
+    <string name="course_dialog_title">Enter The Course Name</string>
 
     <!-- Course Dialog -->
     <string name="course_dialog_name_edit_text_hint">Enter Course Name</string>
@@ -53,6 +54,12 @@
     <string name="action_delete">Delete</string>
     <string name="action_students">Students</string>
     <string name="action_course_details">Course details</string>
+
+    <!-- Course Detils Dialog -->
+    <string name="course_details_course_name">Course Name: </string>
+    <string name="course_details_teacher_name">Teacher Name: </string>
+    <string name="course_details_year">Year: </string>
+    <string name="course_details_number_of_students">Number of students: </string>
 
     <!-- AddStudentActivity -->
     <string name="search_studentname">Search by student name or email&#8230;</string>
