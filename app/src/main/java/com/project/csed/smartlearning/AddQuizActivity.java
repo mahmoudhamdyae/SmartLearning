@@ -17,7 +17,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class AddQuizActivity extends AppCompatActivity {
 
@@ -83,8 +85,12 @@ public class AddQuizActivity extends AppCompatActivity {
                 }
                 else{
                     // Add Quiz
+
+                    // Get current time
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd LLL, yyyy h:mm a", Locale.getDefault());
                     Date date = new Date();
-                    dateString = String.valueOf(date);
+                    dateString = dateFormat.format(date);
+
                     Quiz quiz = new Quiz((int) (quizNumber[0]) + 1, dateString);
                     quizReference.child(dateString).setValue(quiz);
 
