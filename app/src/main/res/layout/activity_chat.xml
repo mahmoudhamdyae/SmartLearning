@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layoutDirection="ltr"
     tools:context=".ChatActivity">
 
     <android.support.design.widget.FloatingActionButton
@@ -14,10 +15,10 @@
         android:id="@+id/fab"
         android:tint="@android:color/black"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
         app:fabSize="mini"
         android:layout_alignParentRight="true"
-        android:focusable="true" />
+        android:focusable="true"
+        android:layout_alignParentEnd="true" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
