@@ -33,7 +33,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG ="MainActivity" ;
     Button Addbutton;
     RecyclerView recyclerView;
     View emptyView;
@@ -41,16 +40,12 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mCourseDatabaseReference;
     private DatabaseReference usersReference;
 
-
-
     List<CourseModel> courseList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
 
         Addbutton = findViewById(R.id.addbtn);
         recyclerView = findViewById(R.id.recyclerView);
@@ -64,14 +59,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
 
-                switch (newState) {
-                    case RecyclerView.SCROLL_STATE_IDLE:
-                        Addbutton.setVisibility(View.VISIBLE);
-                        break;
-                    default:
-                        Addbutton.setVisibility(View.GONE);
-                        break;
-                }
+                if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                    Addbutton.setVisibility(View.VISIBLE);
+                else
+                    Addbutton.setVisibility(View.GONE);
                 super.onScrollStateChanged(recyclerView, newState);
             }
             @Override
@@ -157,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                 // Create a AlertDialog Builder.
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
                 // Set title, icon, can not cancel properties.
-                alertDialogBuilder.setTitle("Enter The Course Name");
+                alertDialogBuilder.setTitle(R.string.course_dialog_title);
                 alertDialogBuilder.setIcon(R.drawable.ic_launcher_background);
                 alertDialogBuilder.setCancelable(true);
                 // Init popup dialog view and it's ui controls.

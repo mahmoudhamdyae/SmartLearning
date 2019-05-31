@@ -1,15 +1,24 @@
 package com.project.csed.smartlearning;
 
 import android.app.Activity;
-import android.graphics.Color;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class userListAdapter extends ArrayAdapter<usersListPOJO> {
 
@@ -46,7 +55,7 @@ public class userListAdapter extends ArrayAdapter<usersListPOJO> {
         // Get the {@link AndroidFlavor} object located at this position in the list
         usersListPOJO currentUser = getItem(position);
 
-        // Find the TextView in the list_item.xml layout with the ID version_name
+        // Find the TextView in the row_design_of_users_list.xml layout with the ID version_name
         TextView nameTextView =  listItemView.findViewById(R.id.textView100);
         // Get the version name from the current AndroidFlavor object and
         // set this text on the name TextView
@@ -58,11 +67,25 @@ public class userListAdapter extends ArrayAdapter<usersListPOJO> {
         // set this text on the number TextView
         emailTextView.setText(currentUser.getEmail());
 
-//        // Find the ImageView in the list_item.xml layout with the ID list_item_icon
-//        ImageView iconView = (ImageView) listItemView.findViewById(R.id.list_item_icon);
-//        // Get the image resource ID from the current AndroidFlavor object and
-//        // set the image to iconView
-//        iconView.setImageResource(currentAndroidFlavor.getImageResourceId());
+        // Find the ImageView in the list_item.xml layout with the ID list_item_icon
+        final CircleImageView profileImage = listItemView.findViewById(R.id.profile_image);
+        // Get the image resource ID from the current AndroidFlavor object and
+        // set the image to profileImage
+        String userId = currentUser.getUserId();
+        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference()
+                .child("images/" + userId + ".jpg");
+        mStorageRef.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        RequestOptions placeholderOption = new RequestOptions();
+                        Glide.with(getContext()).setDefaultRequestOptions(placeholderOption).load(uri).into(profileImage);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+            }
+        });
 
         // Return the whole list item layout (containing 2 TextViews and an ImageView)
         // so that it can be shown in the ListView

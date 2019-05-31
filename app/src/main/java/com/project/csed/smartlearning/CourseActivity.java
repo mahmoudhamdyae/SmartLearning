@@ -2,12 +2,16 @@ package com.project.csed.smartlearning;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -136,14 +140,58 @@ public class CourseActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.students:
-                // todo open students activity
-                return true;
-            case R.id.course_details:
-                // todo open course details activity
-                return true;
+        if (item.getItemId() == R.id.course_details) {
+            // Open course details dialog
+            courseDetailsDialog();
+            return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void courseDetailsDialog() {
+        // Create AlertDialog and show.
+        LayoutInflater layoutInflater = LayoutInflater.from(CourseActivity.this);
+        View popupInputDialogView = layoutInflater.inflate(R.layout.course_details_dialog, null);
+        // Create a AlertDialog Builder.
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(CourseActivity.this);
+        // Set title, icon, can not cancel properties.
+        alertDialogBuilder.setTitle(R.string.action_course_details);
+        alertDialogBuilder.setCancelable(true);
+        // Init popup dialog view and it's ui controls.
+
+        // Set the inflated layout view object to the AlertDialog builder.
+        alertDialogBuilder.setView(popupInputDialogView);
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+        alertDialogBuilder.setView(popupInputDialogView);
+
+        final TextView courseNameText = popupInputDialogView.findViewById(R.id.course_name);
+        final TextView teacherNameText = popupInputDialogView.findViewById(R.id.teacher_name);
+        final TextView yearText = popupInputDialogView.findViewById(R.id.year);
+        final TextView numberOfStudentsText = popupInputDialogView.findViewById(R.id.number_of_students);
+
+        DatabaseReference courseRef = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseName);
+        courseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                CourseModel courseModel = dataSnapshot.getValue(CourseModel.class);
+                courseNameText.setText(courseModel.getCourseName());
+                teacherNameText.setText(courseModel.getTeacherName());
+                yearText.setText(courseModel.getYearDate());
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+        courseRef.child("Students").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot Snapshot) {
+                numberOfStudentsText.setText(String.valueOf(Snapshot.getChildrenCount()));
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 }

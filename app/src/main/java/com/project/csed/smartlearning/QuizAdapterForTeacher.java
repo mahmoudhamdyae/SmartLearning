@@ -116,8 +116,7 @@ public class QuizAdapterForTeacher extends RecyclerView.Adapter<QuizAdapterForTe
         // Fix quizzes numbers
         final int numberOfDeletedQuiz = quiz1.getNumber();
 
-        final DatabaseReference quizReference = FirebaseDatabase.getInstance().getReference()
-                .child("Courses").child(courseName).child("Quizzes");
+        final DatabaseReference quizReference = FirebaseDatabase.getInstance().getReference().child("Quizzes").child(courseName);
 //        quizReference.addValueEventListener(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

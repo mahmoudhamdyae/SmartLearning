@@ -17,7 +17,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class AddQuizActivity extends AppCompatActivity {
 
@@ -44,7 +46,7 @@ public class AddQuizActivity extends AppCompatActivity {
         courseName = getIntent().getStringExtra("course_name");
 
         // Get Quizzes number
-        quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseName).child("Quizzes");
+        quizReference = FirebaseDatabase.getInstance().getReference().child("Quizzes").child(courseName);
         quizReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -83,8 +85,12 @@ public class AddQuizActivity extends AppCompatActivity {
                 }
                 else{
                     // Add Quiz
+
+                    // Get current time
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd LLL, yyyy h:mm a", Locale.getDefault());
                     Date date = new Date();
-                    dateString = String.valueOf(date);
+                    dateString = dateFormat.format(date);
+
                     Quiz quiz = new Quiz((int) (quizNumber[0]) + 1, dateString);
                     quizReference.child(dateString).setValue(quiz);
 

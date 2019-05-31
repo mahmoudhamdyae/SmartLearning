@@ -67,6 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
         card_view:cardCornerRadius="4dp">
 
         <TextView
@@ -84,7 +85,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
         card_view:cardCornerRadius="4dp">
 
         <TextView
@@ -93,10 +93,7 @@
             android:background="?android:attr/selectableItemBackground"
             android:gravity="center_horizontal"
             android:padding="5dp"
-            android:layout_marginTop="20dp"
-            android:text="Private chat"
+            android:text="@string/course_private_chat"
             android:textSize="25sp" />
     </android.support.v7.widget.CardView>
-
-
 </LinearLayout>

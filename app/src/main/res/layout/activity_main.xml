@@ -36,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
-            android:text="@string/empty_coursess_title"
+            android:text="@string/empty_courses_title"
             android:textAppearance="?android:textAppearanceMedium" />
 
         <TextView

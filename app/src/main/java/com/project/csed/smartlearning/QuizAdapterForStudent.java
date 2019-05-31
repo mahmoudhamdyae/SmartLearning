@@ -58,8 +58,8 @@ public class QuizAdapterForStudent extends RecyclerView.Adapter<QuizAdapterForSt
 
         // Find if this quiz is solved or not
         final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Courses")
-                .child(courseName).child("Quizzes").child(quiz.getDate()).child("Students");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Quizzes")
+                .child(courseName).child(quiz.getDate()).child("Students");
 
         ref.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

@@ -64,7 +64,7 @@ public class QuizDetailsActivity extends AppCompatActivity {
             }
         });
 
-        DatabaseReference quizReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseName).child("Quizzes").child(quizDate);
+        DatabaseReference quizReference = FirebaseDatabase.getInstance().getReference().child("Quizzes").child(courseName).child(quizDate);
         quizReference.child("number").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -78,8 +78,8 @@ public class QuizDetailsActivity extends AppCompatActivity {
         });
 
         // Get Users id
-        DatabaseReference getIdRef = FirebaseDatabase.getInstance().getReference().child("Courses")
-                .child(courseName).child("Quizzes").child(quizDate).child("Students");
+        DatabaseReference getIdRef = FirebaseDatabase.getInstance().getReference().child("Quizzes")
+                .child(courseName).child(quizDate).child("Students");
         getIdRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

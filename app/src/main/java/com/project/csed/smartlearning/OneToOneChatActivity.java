@@ -1,7 +1,6 @@
 package com.project.csed.smartlearning;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -10,29 +9,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
 
 public class OneToOneChatActivity extends AppCompatActivity {
 
@@ -127,7 +117,7 @@ public class OneToOneChatActivity extends AppCompatActivity {
                 {
                     //EditText is empty
                     send.setEnabled(false);
-                    Toast.makeText(OneToOneChatActivity.this, "Type something to send", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OneToOneChatActivity.this, R.string.type_something_to_send_toast, Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
@@ -140,7 +130,7 @@ public class OneToOneChatActivity extends AppCompatActivity {
 
 
                     message.setText("");
-                    Toast.makeText(OneToOneChatActivity.this, "Message sent", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(OneToOneChatActivity.this, R.string.message_sent_toast, Toast.LENGTH_SHORT).show();
                 }
 
                 send.setEnabled(true);
@@ -192,14 +182,4 @@ public class OneToOneChatActivity extends AppCompatActivity {
         privateMessageRecyclerView.setAdapter(adapter);
         privateMessageRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
     }
-
-
-    private String getUserId()
-    {
-        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser() ;
-        return currentFirebaseUser.getUid();
-    }
-
-
-
 }
