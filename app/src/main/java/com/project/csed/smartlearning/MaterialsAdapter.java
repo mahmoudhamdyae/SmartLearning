@@ -32,7 +32,6 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 public class MaterialsAdapter extends RecyclerView.Adapter<MaterialsAdapter.MaterialHolder> {

@@ -85,9 +85,8 @@ public class MaterialActivity extends AppCompatActivity {
                 materialList.clear();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
                     String materialFullName = dataSnapshot1.getValue(String.class);
-                    String materialName = materialFullName.substring(0, materialFullName.length() - 4);
-
-                    materialList.add(materialName);
+                    materialFullName = materialFullName.substring(0, materialFullName.length() - 4);
+                    materialList.add(materialFullName);
                     materialsAdapter.notifyDataSetChanged();
 
                     // If there is no material set empty view
@@ -141,6 +140,9 @@ public class MaterialActivity extends AppCompatActivity {
             int cut = nameOfFile.lastIndexOf('/');
             if (cut != -1) {
                 nameOfFile = nameOfFile.substring(cut + 1);
+            }
+            if (!(nameOfFile.contains(".pdf") || nameOfFile.contains(".PDF"))) {
+                nameOfFile += ".pdf";
             }
             final String name = nameOfFile;
 
