@@ -38,7 +38,7 @@ public class QuizAnswerActivity extends AppCompatActivity {
         quizReference.child("number").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String title = "Quiz number " + String.valueOf(dataSnapshot.getValue());
+                String title = "Quiz number " + dataSnapshot.getValue();
                 setTitle(title);
             }
             @Override

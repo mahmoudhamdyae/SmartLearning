@@ -141,9 +141,6 @@ public class MaterialActivity extends AppCompatActivity {
             if (cut != -1) {
                 nameOfFile = nameOfFile.substring(cut + 1);
             }
-            if (!(nameOfFile.contains(".pdf") || nameOfFile.contains(".PDF"))) {
-                nameOfFile += ".pdf";
-            }
             final String name = nameOfFile;
 
             mStorageRef.child(name).putFile(file).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {

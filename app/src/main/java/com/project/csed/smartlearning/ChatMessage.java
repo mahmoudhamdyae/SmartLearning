@@ -3,6 +3,7 @@ package com.project.csed.smartlearning;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class ChatMessage {
 
@@ -17,7 +18,7 @@ public class ChatMessage {
 
         // Initialize to current time
 
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm", Locale.getDefault());
         messageTime = dateFormat.format(new Date());
 
 

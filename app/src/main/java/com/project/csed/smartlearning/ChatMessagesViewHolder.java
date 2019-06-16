@@ -6,9 +6,6 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import static com.project.csed.smartlearning.ChatActivity.usernamefromfirebase;
-
-
 public class ChatMessagesViewHolder extends RecyclerView.ViewHolder {
     public TextView userName, message_text, message_time;
     public RelativeLayout relativeLayout;

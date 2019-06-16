@@ -47,21 +47,27 @@ public class AddStudentAdapter extends RecyclerView.Adapter<AddStudentAdapter.Ad
         studentHolder.StudentName.setText(user.getUserName());
         studentHolder.emailAddress.setText(user.getEmail());
 
-        String userId = user.getUserId();
-        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference()
-                .child("images/" + userId + ".jpg");
-        mStorageRef.getDownloadUrl()
-                .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        RequestOptions placeholderOption = new RequestOptions();
-                        Glide.with(context).setDefaultRequestOptions(placeholderOption).load(uri).into(studentHolder.profileImage);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
+        Thread mainThread = new Thread(new Runnable() {
             @Override
-            public void onFailure(@NonNull Exception exception) {
+            public void run() {
+                String userId = user.getUserId();
+                StorageReference mStorageRef = FirebaseStorage.getInstance().getReference()
+                        .child("images/" + userId + ".jpg");
+                mStorageRef.getDownloadUrl()
+                        .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                RequestOptions placeholderOption = new RequestOptions();
+                                Glide.with(context).setDefaultRequestOptions(placeholderOption).load(uri).into(studentHolder.profileImage);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                    }
+                });
             }
         });
+        mainThread.start();
 
         studentHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override

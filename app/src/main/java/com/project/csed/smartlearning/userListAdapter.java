@@ -53,7 +53,7 @@ public class userListAdapter extends ArrayAdapter<usersListPOJO> {
 
 
         // Get the {@link AndroidFlavor} object located at this position in the list
-        usersListPOJO currentUser = getItem(position);
+        final usersListPOJO currentUser = getItem(position);
 
         // Find the TextView in the row_design_of_users_list.xml layout with the ID version_name
         TextView nameTextView =  listItemView.findViewById(R.id.textView100);
@@ -71,21 +71,27 @@ public class userListAdapter extends ArrayAdapter<usersListPOJO> {
         final CircleImageView profileImage = listItemView.findViewById(R.id.profile_image);
         // Get the image resource ID from the current AndroidFlavor object and
         // set the image to profileImage
-        String userId = currentUser.getUserId();
-        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference()
-                .child("images/" + userId + ".jpg");
-        mStorageRef.getDownloadUrl()
-                .addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        RequestOptions placeholderOption = new RequestOptions();
-                        Glide.with(getContext()).setDefaultRequestOptions(placeholderOption).load(uri).into(profileImage);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
+        Thread mainThread = new Thread(new Runnable() {
             @Override
-            public void onFailure(@NonNull Exception exception) {
+            public void run() {
+                String userId = currentUser.getUserId();
+                StorageReference mStorageRef = FirebaseStorage.getInstance().getReference()
+                        .child("images/" + userId + ".jpg");
+                mStorageRef.getDownloadUrl()
+                        .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                RequestOptions placeholderOption = new RequestOptions();
+                                Glide.with(getContext()).setDefaultRequestOptions(placeholderOption).load(uri).into(profileImage);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                    }
+                });
             }
         });
+        mainThread.start();
 
         // Return the whole list item layout (containing 2 TextViews and an ImageView)
         // so that it can be shown in the ListView
