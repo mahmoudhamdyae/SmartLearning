@@ -92,7 +92,7 @@ public class CourseSearchAdapter extends ArrayAdapter<CourseModel> implements Fi
             final ArrayList<CourseModel> nlist = new ArrayList<>(count);
 
             CourseModel filterableObject ;
-
+            // compare each course name to see if it contains the the entered search keyword
             for (int i = 0; i < count; i++) {
                 filterableObject = list.get(i);
                 if (filterableObject.getCourseName().toLowerCase().contains(filterString)) {
@@ -100,6 +100,7 @@ public class CourseSearchAdapter extends ArrayAdapter<CourseModel> implements Fi
                 }
             }
 
+            //only return courses which contain the entered keyword
             results.values = nlist;
             results.count = nlist.size();
 
@@ -108,6 +109,7 @@ public class CourseSearchAdapter extends ArrayAdapter<CourseModel> implements Fi
 
         @SuppressWarnings("unchecked")
         @Override
+        //only show courses which contain the entered keyword in the list view
         protected void publishResults(CharSequence constraint, FilterResults results) {
             filteredData = (ArrayList<CourseModel>) results.values;
             notifyDataSetChanged();

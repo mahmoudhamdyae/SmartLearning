@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
         final FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
+        //open login activity if user is not logged in
         if (mAuth.getCurrentUser() == null) {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
@@ -90,13 +91,14 @@ public class MainActivity extends AppCompatActivity {
             // Reading Data Once
             usersReference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
+                //check node "type" in the database for the logged in id and open teacher or student activity depending on result
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     User user = dataSnapshot.getValue(User.class);
                     if (user.getType().equals("Teacher")) {
-                        Toast.makeText(MainActivity.this, "This is Teacher Main Activity", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "This is Teacher Main Activity"+"\n Welcome back "+user.getUserName(), Toast.LENGTH_SHORT).show();
                         teacherActivity(user);
                     } else if (user.getType().equals("Student")) {
-                        Toast.makeText(MainActivity.this, "This is Student Main Activity", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "This is Student Main Activity"+"\n Welcome back "+user.getUserName(), Toast.LENGTH_SHORT).show();
                         studentActivity();
                     }
                 }
@@ -111,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         // RecyclerView
         final CourseAdapter courseAdapter = new CourseAdapter(courseList, MainActivity.this);
 
-        // Read courses from database
+        // Read courses of the logged in user from database and show it the in recyclerView
         usersReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -121,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                     courseList.add(courseModel);
                     courseAdapter.notifyDataSetChanged();
 
-                    // If there is no course set empty view
+                    // If there are no courses hide the recycler and show text saying that you have no courses
                     if (courseAdapter.getItemCount() == 0){
                         recyclerView.setVisibility(View.GONE);
                         emptyView.setVisibility(View.VISIBLE);
@@ -165,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
                 final EditText coursename = popupInputDialogView.findViewById(R.id.coursename);
                 final Spinner courseyear = popupInputDialogView.findViewById(R.id.year);
                 List<String> spinnerList = new ArrayList<>();
+                //TODO add course subjects
                 spinnerList.add("1");
                 spinnerList.add("2");
                 spinnerList.add("3");
@@ -187,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
                                     userNameQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            //check in database if the entered course name already exists (all courses not just the logged in user courses)
                                             if(dataSnapshot.getChildrenCount() > 0)
                                                 // The course name existed
                                                 Toast.makeText(MainActivity.this, R.string.main_activity_choose_another_course_name_toast
@@ -194,10 +198,12 @@ public class MainActivity extends AppCompatActivity {
                                             else{
                                                 // The course name does not exist
                                                 final CourseModel courseModel = new CourseModel(name, year, user.getUserName());
+                                                //mCourseDatabaseReference refers to node courses
                                                 mCourseDatabaseReference.child(name).setValue(courseModel).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         if (task.isSuccessful()){
+                                                            //add course also in the node of the logged in user (teacher)
                                                             alertDialog.dismiss();
                                                             Toast.makeText(MainActivity.this, R.string.main_activity_course_created_successfully_toast, Toast.LENGTH_SHORT).show();
                                                             usersReference.child("Courses").child(name).setValue(courseModel);
@@ -222,6 +228,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+                //hide alert dialog on cancel click
                 cancelbtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -231,6 +238,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //set data to show in recycler view as vertical linear layout
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         recyclerView.setAdapter(courseAdapter);
     }
@@ -280,12 +288,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        //inflate the menu which contains signout item on action bar
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        //on signout click , close the activity and start login activity
         if (item.getItemId() == R.id.sign_out_item) {
                 FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));

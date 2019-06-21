@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +26,7 @@ public class QuizAdapterForStudent extends RecyclerView.Adapter<QuizAdapterForSt
     private List<Quiz> quizList;
     private Context context;
     private String courseName;
+    Boolean solvedBefore=false;
 
     public QuizAdapterForStudent(List<Quiz> quizList, Context context, String courseName) {
         this.quizList = quizList;
@@ -48,11 +50,21 @@ public class QuizAdapterForStudent extends RecyclerView.Adapter<QuizAdapterForSt
         quizHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, QuizAnswerActivity.class);
-                intent.putExtra("quizDate", quiz.getDate());
-                intent.putExtra("courseName", courseName);
-                intent.putExtra("quizNumber", String.valueOf(quiz.getNumber()));
-                context.startActivity(intent);
+                // make quiz unclickable if the student already answered it
+                //TODO  store solvedBefore value in firebase so user won't be able to solve quiz again if he restarts app
+                if (solvedBefore)
+                {
+                    Toast.makeText(context, "You already solved this quiz", Toast.LENGTH_SHORT).show();
+                }else
+                {
+                    Intent intent = new Intent(context, QuizAnswerActivity.class);
+                    intent.putExtra("quizDate", quiz.getDate());
+                    intent.putExtra("courseName", courseName);
+                    intent.putExtra("quizNumber", String.valueOf(quiz.getNumber()));
+                    context.startActivity(intent);
+                    solvedBefore=true;
+                }
+
             }
         });
 
@@ -95,6 +107,10 @@ public class QuizAdapterForStudent extends RecyclerView.Adapter<QuizAdapterForSt
             degree = itemView.findViewById(R.id.degree);
             degreeText = itemView.findViewById(R.id.degree_text);
             linearLayout = itemView.findViewById(R.id.linearLayout);
+
+
+
+
         }
     }
 }

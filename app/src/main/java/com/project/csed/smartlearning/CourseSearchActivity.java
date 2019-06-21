@@ -40,6 +40,7 @@ public class CourseSearchActivity extends AppCompatActivity {
 
         ChildEventListener mChildEventListener = new ChildEventListener() {
             @Override
+            //add all courses in the database to the list
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                 CourseModel courseModel = dataSnapshot.getValue(CourseModel.class);
                 list.add(courseModel);
@@ -54,6 +55,7 @@ public class CourseSearchActivity extends AppCompatActivity {
         adapter = new CourseSearchAdapter(this, list);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
+            //search in list by the entered keyword and show "No match found" if entered word is not in any course name
             public boolean onQueryTextSubmit(String query) {
                 if(list.contains(query)){
                     adapter.getFilter().filter(query);

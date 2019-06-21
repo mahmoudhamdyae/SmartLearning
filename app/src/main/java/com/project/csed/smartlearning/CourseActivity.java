@@ -42,7 +42,7 @@ public class CourseActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot snapshot) {
                 user = snapshot.getValue(User.class);
                 if (user != null) {
-                    Toast.makeText(CourseActivity.this, user.getUserName(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(CourseActivity.this, user.getUserName(), Toast.LENGTH_SHORT).show();
                     sharedPreferences= getSharedPreferences("userinfo",MODE_PRIVATE);
                     SharedPreferences.Editor editor =sharedPreferences.edit();
                     editor.putString("username",user.getUserName());

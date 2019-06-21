@@ -64,7 +64,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
         courseHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Launch Course Activity
+                // Launch pressed view (course) activity
                 Intent intent = new Intent(context, CourseActivity.class);
                 intent.putExtra("course_name", courseModel.getCourseName());
                 intent.putExtra("user_type", "Teacher");
