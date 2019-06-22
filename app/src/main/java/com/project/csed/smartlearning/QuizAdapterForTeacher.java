@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,7 +50,7 @@ public class QuizAdapterForTeacher extends RecyclerView.Adapter<QuizAdapterForTe
         final Quiz quiz = quizList.get(i);
         quizHolder.quizName.setText(String.valueOf(quiz.getNumber()));
         quizHolder.quizDate.setText(quiz.getDate());
-        quizHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
+        quizHolder.constraintlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Open quiz details activity
@@ -69,14 +70,14 @@ public class QuizAdapterForTeacher extends RecyclerView.Adapter<QuizAdapterForTe
     public class  QuizHolder extends RecyclerView.ViewHolder{
         TextView quizName, quizDate;
         ImageView delete;
-        LinearLayout linearLayout;
+        ConstraintLayout constraintlayout;
 
         public QuizHolder(@NonNull View itemView) {
             super(itemView);
             quizName = itemView.findViewById(R.id.quiz_name);
             quizDate = itemView.findViewById(R.id.quiz_date);
             delete = itemView.findViewById(R.id.quiz_delete);
-            linearLayout = itemView.findViewById(R.id.linearLayout);
+            constraintlayout = itemView.findViewById(R.id.constraintlayout);
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

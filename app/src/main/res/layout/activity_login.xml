@@ -84,22 +84,43 @@
             android:layout_marginLeft="50dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="50dp"
-            android:background="@drawable/button_selector"
             android:text="@string/login_login_button"
-            android:textColor="@color/textwhite"
-            android:textSize="16sp" />
+            style="@style/MyButtonStyle"
+         />
 
-        <Button
+       <!-- <Button
             android:id="@+id/signup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
             android:layout_marginTop="30dp"
             android:layout_marginRight="50dp"
-            android:background="@drawable/button_selector"
             android:text="@string/login_sign_up_button"
-            android:textColor="@color/textwhite"
-            android:textSize="16sp" />
+            style="@style/MyButtonStyle"
+            />-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_marginTop="100dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/don_t_have_an_account"
+                android:textColor="#80000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:onClick="signup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sign_up"
+                android:textColor="#3F51B5"
+                android:paddingLeft="5dp"
+                android:textSize="16sp" />
+        </LinearLayout>
 
 
     </LinearLayout>

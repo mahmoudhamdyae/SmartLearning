@@ -2,6 +2,7 @@ package com.project.csed.smartlearning;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import android.support.v7.app.AlertDialog;
@@ -33,7 +35,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button Addbutton;
+    FloatingActionButton Addbutton;
+
     RecyclerView recyclerView;
     View emptyView;
 
@@ -46,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        setTitle(R.string.myCourses);
         Addbutton = findViewById(R.id.addbtn);
         recyclerView = findViewById(R.id.recyclerView);
 
@@ -60,9 +63,9 @@ public class MainActivity extends AppCompatActivity {
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
 
                 if (newState == RecyclerView.SCROLL_STATE_IDLE)
-                    Addbutton.setVisibility(View.VISIBLE);
+                    Addbutton.show();
                 else
-                    Addbutton.setVisibility(View.GONE);
+                   Addbutton.hide();
                 super.onScrollStateChanged(recyclerView, newState);
             }
             @Override

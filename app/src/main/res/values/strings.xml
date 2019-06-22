@@ -46,7 +46,7 @@
 
     <!-- Course Activity -->
     <string name="course_quizzes">Quizzes</string>
-    <string name="course_add_student">Add Student</string>
+    <string name="course_add_student">Add student</string>
     <string name="course_materials">Materials</string>
     <string name="course_chat">Chat</string>
     <string name="course_private_chat">Private chat</string>
@@ -146,4 +146,9 @@
     <string name="select_user_to_chat_with_text_view">Select user to chat with</string>
     <string name="type_something_to_send_toast">Type something to send</string>
     <string name="message_sent_toast">Message sent</string>
+    <string name="don_t_have_an_account">Don’t have an account ?</string>
+    <string name="sign_up">Sign up.</string>
+    <string name="myCourses">My Courses</string>
+    <string name="quizzes">Quizzes</string>
+    <string name="quiz_name">Quiz Name</string>
 </resources>

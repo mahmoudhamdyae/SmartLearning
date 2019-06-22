@@ -2,6 +2,7 @@ package com.project.csed.smartlearning;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class QuizActivity extends AppCompatActivity {
 
-    Button addButton;
+    FloatingActionButton addButton;
     RecyclerView recyclerView;
     View emptyView;
     TextView subtitle;
@@ -56,7 +57,7 @@ public class QuizActivity extends AppCompatActivity {
 
         // Student is not allowed to add quizzes
         if (userType.equals("Student")) {
-            addButton.setVisibility(View.GONE);
+            addButton.hide();
             subtitle.setVisibility(View.GONE);
             studentActivity();
         }

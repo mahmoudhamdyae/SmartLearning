@@ -28,7 +28,6 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         Button login = findViewById(R.id.login);
-        Button signUp = findViewById(R.id.signup);
         emailTextView = findViewById(R.id.email);
         passwordTextView = findViewById(R.id.password);
 
@@ -49,15 +48,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // If the user pressed signUp button
-        signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(LoginActivity.this, SignUpActivity.class);
-                finish();
-                startActivity(intent);
-            }
-        });
+
     }
 
     private void logIn(String email, String password) {
@@ -78,5 +69,13 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Error : " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    //when signup edit text is clicked
+    public void signup(View view) {
+        Intent intent=new Intent(LoginActivity.this, SignUpActivity.class);
+        finish();
+        startActivity(intent);
+
     }
 }
