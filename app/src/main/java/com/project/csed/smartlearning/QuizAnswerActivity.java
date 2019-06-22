@@ -1,10 +1,12 @@
 package com.project.csed.smartlearning;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -15,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class QuizAnswerActivity extends AppCompatActivity {
     private TextView questionNumberText, questionText, option1Text, option2Text, option3Text, option4Text;
+    private Button nextQuestion;
 
     String quizDate, answer, courseName, quizNumber;
     int questionNumber = 1, sum = 0, numberOfQuestions = 0;
@@ -52,6 +55,7 @@ public class QuizAnswerActivity extends AppCompatActivity {
         option2Text = findViewById(R.id.option2);
         option3Text = findViewById(R.id.option3);
         option4Text = findViewById(R.id.option4);
+        nextQuestion = findViewById(R.id.next_question_button);
 
         final int[] questNo = new int[1];
         quizReference.child("Questions").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -69,41 +73,88 @@ public class QuizAnswerActivity extends AppCompatActivity {
         option1Text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAnswer(option1Text.getText().toString());
+                makeAnswersUncClickable();
+                if (checkAnswer(option1Text.getText().toString()))
+                    option1Text.setBackgroundColor(Color.GREEN);
+                else {
+                    option1Text.setBackgroundColor(Color.RED);
+                    setColorForRightAnswer();
+                }
                 questionNumber++;
-                readQuestions();
+                nextQuestion.setVisibility(View.VISIBLE);
             }
         });
 
         option2Text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAnswer(option2Text.getText().toString());
+                makeAnswersUncClickable();
+                if (checkAnswer(option2Text.getText().toString()))
+                    option2Text.setBackgroundColor(Color.GREEN);
+                else {
+                    option2Text.setBackgroundColor(Color.RED);
+                    setColorForRightAnswer();
+                }
                 questionNumber++;
-                readQuestions();
+                nextQuestion.setVisibility(View.VISIBLE);
             }
         });
 
         option3Text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAnswer(option3Text.getText().toString());
+                makeAnswersUncClickable();
+                if (checkAnswer(option3Text.getText().toString()))
+                    option3Text.setBackgroundColor(Color.GREEN);
+                else {
+                    option3Text.setBackgroundColor(Color.RED);
+                    setColorForRightAnswer();
+                }
                 questionNumber++;
-                readQuestions();
+                nextQuestion.setVisibility(View.VISIBLE);
             }
         });
 
         option4Text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAnswer(option4Text.getText().toString());
+                makeAnswersUncClickable();
+                if (checkAnswer(option4Text.getText().toString()))
+                    option4Text.setBackgroundColor(Color.GREEN);
+                else {
+                    option4Text.setBackgroundColor(Color.RED);
+                    setColorForRightAnswer();
+                }
                 questionNumber++;
+                nextQuestion.setVisibility(View.VISIBLE);
+            }
+        });
+
+        nextQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 readQuestions();
+                nextQuestion.setVisibility(View.INVISIBLE);
             }
         });
     }
 
     private void readQuestions() {
+        // Return color of the texts
+        option1Text.setBackgroundColor(Color.GRAY);
+        option2Text.setBackgroundColor(Color.GRAY);
+        option3Text.setBackgroundColor(Color.GRAY);
+        option4Text.setBackgroundColor(Color.GRAY);
+
+        // Make the text clickable again
+        option1Text.setClickable(true);
+        option2Text.setClickable(true);
+        option3Text.setClickable(true);
+        option4Text.setClickable(true);
+
+        if (questionNumber == numberOfQuestions)
+            nextQuestion.setText(R.string.add_quiz_finish_button);
+
         if (questionNumber <= numberOfQuestions) {
             questionNumberText.setText(String.valueOf(questionNumber));
             quizReference.child("Questions").child(String.valueOf(questionNumber)).addValueEventListener(new ValueEventListener() {
@@ -144,9 +195,35 @@ public class QuizAnswerActivity extends AppCompatActivity {
         }
     }
 
-    private void checkAnswer(String optionSelected) {
+    /**
+     *
+     * @param optionSelected is the answer that the student chose
+     * @return true if the answer is right, false if it is wrong
+     */
+    private boolean checkAnswer(String optionSelected) {
         if (optionSelected.equals(answer)){
             sum++;
+            return true;
         }
+        else
+            return false;
+    }
+
+    private void makeAnswersUncClickable() {
+        option1Text.setClickable(false);
+        option2Text.setClickable(false);
+        option3Text.setClickable(false);
+        option4Text.setClickable(false);
+    }
+
+    private void setColorForRightAnswer() {
+        if (option1Text.getText().toString().equals(answer))
+            option1Text.setBackgroundColor(Color.GREEN);
+        else if (option2Text.getText().toString().equals(answer))
+            option2Text.setBackgroundColor(Color.GREEN);
+        else if (option3Text.getText().toString().equals(answer))
+            option3Text.setBackgroundColor(Color.GREEN);
+        else if (option4Text.getText().toString().equals(answer))
+            option4Text.setBackgroundColor(Color.GREEN);
     }
 }

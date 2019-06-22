@@ -26,7 +26,6 @@ public class QuizAdapterForStudent extends RecyclerView.Adapter<QuizAdapterForSt
     private List<Quiz> quizList;
     private Context context;
     private String courseName;
-    Boolean solvedBefore=false;
 
     public QuizAdapterForStudent(List<Quiz> quizList, Context context, String courseName) {
         this.quizList = quizList;
@@ -47,24 +46,32 @@ public class QuizAdapterForStudent extends RecyclerView.Adapter<QuizAdapterForSt
         final Quiz quiz = quizList.get(i);
         quizHolder.quizNumber.setText(String.valueOf(quiz.getNumber()));
         quizHolder.quizDate.setText(quiz.getDate());
+
+        // make quiz unclickable if the student already answered it
         quizHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // make quiz unclickable if the student already answered it
-                //TODO  store solvedBefore value in firebase so user won't be able to solve quiz again if he restarts app
-                if (solvedBefore)
-                {
-                    Toast.makeText(context, "You already solved this quiz", Toast.LENGTH_SHORT).show();
-                }else
-                {
-                    Intent intent = new Intent(context, QuizAnswerActivity.class);
-                    intent.putExtra("quizDate", quiz.getDate());
-                    intent.putExtra("courseName", courseName);
-                    intent.putExtra("quizNumber", String.valueOf(quiz.getNumber()));
-                    context.startActivity(intent);
-                    solvedBefore=true;
-                }
+                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Quizzes")
+                        .child(courseName).child(quiz.getDate()).child("Students");
 
+                ref.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists())
+                            Toast.makeText(context, R.string.you_already_solved_this_quiz_toast, Toast.LENGTH_SHORT).show();
+                        else {
+                            Intent intent = new Intent(context, QuizAnswerActivity.class);
+                            intent.putExtra("quizDate", quiz.getDate());
+                            intent.putExtra("courseName", courseName);
+                            intent.putExtra("quizNumber", String.valueOf(quiz.getNumber()));
+                            context.startActivity(intent);
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
             }
         });
 
@@ -107,10 +114,6 @@ public class QuizAdapterForStudent extends RecyclerView.Adapter<QuizAdapterForSt
             degree = itemView.findViewById(R.id.degree);
             degreeText = itemView.findViewById(R.id.degree_text);
             linearLayout = itemView.findViewById(R.id.linearLayout);
-
-
-
-
         }
     }
 }

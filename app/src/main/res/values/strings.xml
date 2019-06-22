@@ -55,7 +55,7 @@
     <string name="action_students">Students</string>
     <string name="action_course_details">Course details</string>
 
-    <!-- Course Detils Dialog -->
+    <!-- Course Details Dialog -->
     <string name="course_details_course_name">Course Name: </string>
     <string name="course_details_teacher_name">Teacher Name: </string>
     <string name="course_details_year">Year: </string>
@@ -94,6 +94,7 @@
     <string name="quiz_degree">Degree : </string>
     <string name="quiz_solved">Solved</string>
     <string name="quiz_not_solved">Not Solved</string>
+    <string name="you_already_solved_this_quiz_toast">You already solved this quiz</string>
 
     <!-- Add Quiz Activity -->
     <string name="add_quiz_question_number_text_view">Question number: </string>
