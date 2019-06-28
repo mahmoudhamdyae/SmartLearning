@@ -123,12 +123,12 @@ public class ChatActivity extends AppCompatActivity {
                                             int position,
                                             final ChatMessage chatMessage) {
 
-                // ده بيعرض الناس التانيه
+                // message view for other users
                 viewHolder.userName.setText(chatMessage.getMessageUser());
                 viewHolder.message_text.setText(chatMessage.getMessageText());
                 viewHolder.message_time.setText(chatMessage.getMessageTime() + "");
 
-                // this for me
+                // message view for logged in user
                 viewHolder.userNamesender.setText(chatMessage.getMessageUser());
                 viewHolder.message_textsender.setText(chatMessage.getMessageText());
                 viewHolder.message_timesender.setText(chatMessage.getMessageTime() + "");

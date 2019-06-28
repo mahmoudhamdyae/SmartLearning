@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainRelative"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+
+    >
 
     <RelativeLayout
         android:id="@+id/messageid"
@@ -20,23 +23,15 @@
         >
 
         <TextView
+            android:textSize="12sp"
             android:id="@+id/message_user"
-            android:text="Receiver name"
+            tools:text="Receiver name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:textStyle="normal|bold" />
-
-        <TextView
-            android:id="@+id/message_time"
-            android:text="message time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/message_text"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true" />
+          />
 
         <TextView
             android:id="@+id/message_text"
@@ -46,14 +41,26 @@
             android:layout_below="@+id/message_user"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginTop="5dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/message_time"
+            tools:text="message time"
+            android:textSize="12sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/message_text"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true" />
+
+
 
 
     </RelativeLayout>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/messageidsender"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -70,6 +77,7 @@
         android:visibility="visible">
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/message_usersender"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -79,26 +87,28 @@
             android:layout_alignParentTop="true"
             android:textStyle="normal|bold" />
 
-        <TextView
-            android:id="@+id/message_timesender"
-            android:layout_width="wrap_content"
-            android:text="time message"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/message_textsender"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true" />
 
         <TextView
             android:id="@+id/message_textsender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="message sended"
+            tools:text="message sent"
             android:layout_below="@+id/message_usersender"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginTop="10dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/message_timesender"
+            android:layout_width="wrap_content"
+            tools:text="time message"
+            android:textSize="12sp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/message_textsender"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true" />
+
 
 
     </RelativeLayout>

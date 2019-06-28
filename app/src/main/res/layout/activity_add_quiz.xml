@@ -4,15 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
-    tools:context=".AddQuizActivity">
+    tools:context=".AddQuizActivity"
+    android:background="@drawable/white_transparent_2_bkg">
 
     <TextView
+        android:textColor="@color/textblack"
+        android:textSize="24sp"
+        android:padding="4dp"
         android:id="@+id/text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:text="@string/add_quiz_question_number_text_view" />
 
-    <TextView
+    <TextView android:textColor="@color/textblack"
+        android:textSize="24sp"
+        android:padding="4dp"
+        tools:text="1"
         android:id="@+id/question_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,6 +28,8 @@
         android:layout_toRightOf="@+id/text_view" />
 
     <EditText
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
         android:id="@+id/question"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,6 +38,9 @@
         android:inputType="text" />
 
     <EditText
+
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
         android:id="@+id/option1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,6 +49,8 @@
         android:inputType="text" />
 
     <EditText
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
         android:id="@+id/option2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,6 +59,9 @@
         android:inputType="text" />
 
     <EditText
+
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
         android:id="@+id/option3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,6 +70,8 @@
         android:inputType="text" />
 
     <EditText
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
         android:id="@+id/option4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -60,6 +80,9 @@
         android:inputType="text" />
 
     <TextView
+        android:textColor="@color/textblack"
+        android:textSize="24sp"
+        android:padding="4dp"
         android:id="@+id/right_answer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -68,6 +91,7 @@
         android:text="@string/add_quiz_right_answer" />
 
     <RadioGroup
+        android:layout_marginLeft="8dp"
         android:layout_below="@id/right_answer"
         android:id="@+id/radioGroup"
         android:layout_width="match_parent"
@@ -75,7 +99,8 @@
         <RadioButton
             android:id="@+id/option1_radio_button"
             android:text="@string/add_quiz_option_1_hint"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:gravity=""
             android:layout_height="wrap_content" />
         <RadioButton
             android:id="@+id/option2_radio_button"
@@ -83,6 +108,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <RadioButton
+
             android:id="@+id/option3_radio_button"
             android:text="@string/add_quiz_option_3_hint"
             android:layout_width="wrap_content"
@@ -95,6 +121,8 @@
     </RadioGroup>
 
     <Button
+        android:padding="8dp"
+        style="@style/MyButtonStyle"
         android:id="@+id/add_another_question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -102,6 +130,8 @@
         android:text="@string/add_quiz_add_another_question_button" />
 
     <Button
+        android:padding="8dp"
+        style="@style/MyButtonStyle"
         android:id="@+id/finish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

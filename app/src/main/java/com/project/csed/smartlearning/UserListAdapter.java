@@ -20,11 +20,11 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class userListAdapter extends ArrayAdapter<usersListPOJO> {
+public class UserListAdapter extends ArrayAdapter<usersListPOJO> {
 
 
 
-    public userListAdapter(Activity context, ArrayList<usersListPOJO> userList) {
+    public UserListAdapter(Activity context, ArrayList<usersListPOJO> userList) {
         // Here, we initialize the ArrayAdapter's internal storage for the context and the list.
         // the second argument is used when the ArrayAdapter is populating a single TextView.
         // Because this is a custom adapter for two TextViews and an ImageView, the adapter is not

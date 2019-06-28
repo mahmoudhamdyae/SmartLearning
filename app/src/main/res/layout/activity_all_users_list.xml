@@ -4,18 +4,62 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".AllUsersList">
+    tools:context=".AllUsersList"
+    >
+
+<LinearLayout
+    android:layout_margin="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
     <TextView
+        android:layout_marginTop="8dp"
+        android:textColor="@color/textblack"
         android:id="@+id/textView"
         android:textSize="25sp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="32dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/select_user_to_chat_with_text_view" />
 
+    <ImageView
+        android:id="@+id/chatIcon"
+        android:src="@drawable/chat_bubble"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+</LinearLayout>
+
+
     <ListView
+
         android:id="@+id/fullUsersList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></ListView>
+
+    <ImageView
+
+        android:layout_marginTop="200dp"
+        android:src="@drawable/no_students"
+android:visibility="gone"
+        android:id="@+id/noStudentsImage"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center_horizontal"
+        android:textSize="24sp"
+        android:gravity="center_horizontal"
+        />
+    <TextView
+        android:textColor="@color/textblack"
+        android:src="@drawable/no_students"
+        android:id="@+id/noStudentsText"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:gravity="center_horizontal"
+        android:text="@string/this_course_still_has_no_student" />
+
 </LinearLayout>

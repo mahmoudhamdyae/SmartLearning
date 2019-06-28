@@ -8,17 +8,20 @@
     tools:context=".ChatActivity">
 
     <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:src="@drawable/ic_send_black_24dp"
         android:id="@+id/fab"
-        android:tint="@android:color/black"
-        android:layout_alignParentBottom="true"
-        app:fabSize="mini"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="8dp"
+        android:clickable="true"
         android:focusable="true"
-        android:layout_alignParentEnd="true" />
+        android:padding="16dp"
+        android:src="@drawable/send_icon"
+        app:fabSize="mini" />
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
@@ -31,11 +34,12 @@
         android:layout_toStartOf="@id/fab">
 
         <EditText
+            android:id="@+id/input"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/inputMessage"
-            android:id="@+id/input"
+            android:layout_alignBottom="@+id/inputmessageh"
             android:autofillHints=""
+            android:hint="@string/inputMessage"
             android:inputType="" />
 
 

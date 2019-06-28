@@ -98,11 +98,11 @@
 
     <!-- Add Quiz Activity -->
     <string name="add_quiz_question_number_text_view">Question number: </string>
-    <string name="add_quiz_question_hint">Question</string>
-    <string name="add_quiz_option_1_hint">Option 1</string>
-    <string name="add_quiz_option_2_hint">Option 2</string>
-    <string name="add_quiz_option_3_hint">Option 3</string>
-    <string name="add_quiz_option_4_hint">Option 4</string>
+    <string name="add_quiz_question_hint">Enter Question</string>
+    <string name="add_quiz_option_1_hint">First Answer</string>
+    <string name="add_quiz_option_2_hint">Second Answer</string>
+    <string name="add_quiz_option_3_hint">Third Answer</string>
+    <string name="add_quiz_option_4_hint">Fourth Answer</string>
     <string name="add_quiz_add_another_question_button">Add another question</string>
     <string name="add_quiz_finish_button">Finish</string>
     <string name="add_quiz_right_answer">Choose the right answer</string>
@@ -151,4 +151,5 @@
     <string name="myCourses">My Courses</string>
     <string name="quizzes">Quizzes</string>
     <string name="quiz_name">Quiz Name</string>
+    <string name="this_course_still_has_no_student">This course still has no student</string>
 </resources>

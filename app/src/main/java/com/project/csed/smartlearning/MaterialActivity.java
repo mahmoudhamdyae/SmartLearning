@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,7 +33,7 @@ import java.util.List;
 
 public class MaterialActivity extends AppCompatActivity {
     private static final int PICK_FILE = 1;
-    Button addButton;
+    FloatingActionButton addButton;
     RecyclerView recyclerView;
     View emptyView;
     TextView subtitle;

@@ -36,7 +36,7 @@ public class OneToOneChatActivity extends AppCompatActivity {
     TextInputEditText message;
     String ReceiverName;
     private  ChildEventListener childEventListener;
-     newPrivateMessageAdapter adapter;
+     PrivateMessageAdapter adapter;
     private RecyclerView privateMessageRecyclerView;
 
 
@@ -49,7 +49,7 @@ public class OneToOneChatActivity extends AppCompatActivity {
 
 
         //get right date
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy hh:mm");
         date = dateFormat.format(new Date());
 
         //Send Button
@@ -144,7 +144,7 @@ public class OneToOneChatActivity extends AppCompatActivity {
         privateMessageRecyclerView = findViewById(R.id.one_to_one_chat_recyclerView);
 
         //override onBindViewHolder to  change view color depending on sender and receiver
-        adapter=new newPrivateMessageAdapter(getApplicationContext(),messageList){
+        adapter=new PrivateMessageAdapter(getApplicationContext(),messageList){
             @Override
             public void onBindViewHolder(@NonNull PrivateMessageViewHolder privateMessageViewHolder, int i) {
                 messageList.get(i);

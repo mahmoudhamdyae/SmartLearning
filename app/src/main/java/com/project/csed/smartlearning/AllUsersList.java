@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -19,14 +21,17 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 public class AllUsersList extends AppCompatActivity {
+
     DatabaseReference root = FirebaseDatabase.getInstance().getReference();
     DatabaseReference child2,child3,child4;
 
-    private String courseName,senderNamee;
+    private String courseName, senderName;
 
 
     ArrayList<usersListPOJO> users = new ArrayList<>();
     ListView listView;
+    private TextView HeaderText,noStudentsText;
+    ImageView noStudents,chatIcon;
 
 
     @Override
@@ -60,7 +65,7 @@ public class AllUsersList extends AppCompatActivity {
 
           public void onCallback(String sender) {
 
-              senderNamee=sender;
+              senderName =sender;
 
           }
       });
@@ -91,7 +96,7 @@ public class AllUsersList extends AppCompatActivity {
                              users.remove(i);
                          }
                          //remove teacher(course creator) if it's the same loged in person
-                         if (users.get(i).getName().equals(senderNamee)) {
+                         if (users.get(i).getName().equals(senderName)) {
 
                              users.remove(i);
                          }
@@ -109,7 +114,7 @@ public class AllUsersList extends AppCompatActivity {
                              i.putExtra("ReceiverName", users.get(position).getName());
                              // i.putExtra("ReceiverEmail", users.get(position).getEmail());
 
-                             i.putExtra("senderName", senderNamee);
+                             i.putExtra("senderName", senderName);
                              AllUsersList.this.startActivity(i);
                          }
                      });
@@ -177,12 +182,31 @@ public class AllUsersList extends AppCompatActivity {
     }
 
     private void showList() {
-        userListAdapter myListAdapter = new userListAdapter(this, users) ;
+        if (users.size()==0)
+        {
+            //Hide list and header and show text saying "no students in this course"
+            noStudents=findViewById(R.id.noStudentsImage);
+            noStudents.setVisibility(View.VISIBLE);
+            noStudentsText=findViewById(R.id.noStudentsText);
+            noStudentsText.setVisibility(View.VISIBLE);
+            listView=findViewById(R.id.fullUsersList);
+            listView.setVisibility(View.GONE);
+            HeaderText=findViewById(R.id.textView);
+            HeaderText.setVisibility(View.GONE);
+            chatIcon=findViewById(R.id.chatIcon);
+            chatIcon.setVisibility(View.GONE);
 
-        // Get a reference to the ListView, and attach the adapter to the listView.
-        listView = findViewById(R.id.fullUsersList);
-        listView.setAdapter(myListAdapter);
+        }
+        else {
 
+
+
+            UserListAdapter myListAdapter = new UserListAdapter(this, users);
+
+            // Get a reference to the ListView, and attach the adapter to the listView.
+            listView = findViewById(R.id.fullUsersList);
+            listView.setAdapter(myListAdapter);
+        }
     }
 
     private interface FirebaseCallback {
