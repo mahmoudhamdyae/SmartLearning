@@ -153,4 +153,5 @@
     <string name="quiz_name">Quiz Name</string>
     <string name="this_course_still_has_no_student">This course still has no student</string>
     <string name="select_account_type">Select account type</string>
+    <string name="list_of_students_who_slove_quiz">Degrees of students who solved the quiz</string>
 </resources>
