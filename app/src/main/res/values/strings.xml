@@ -152,4 +152,5 @@
     <string name="quizzes">Quizzes</string>
     <string name="quiz_name">Quiz Name</string>
     <string name="this_course_still_has_no_student">This course still has no student</string>
+    <string name="select_account_type">Select account type</string>
 </resources>

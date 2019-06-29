@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -17,7 +19,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="4dp"
             android:gravity="center"
             android:text="@string/app_name"
             android:textColor="@color/textblack"
@@ -32,28 +34,41 @@
             android:textColor="@color/textblack"
             android:textSize="15sp" />
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp">
+            android:layout_marginTop="20dp">
 
             <TextView
+                android:gravity="center_horizontal"
                 android:id="@id/text"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="@string/sign_up_choose_profile_image" />
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginRight="32dp"
+                android:text="@string/sign_up_choose_profile_image"
+                android:textColor="#990033"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginLeft="15dp"
-                android:layout_toEndOf="@+id/text"
-                android:layout_toRightOf="@+id/text"
-                android:src="@drawable/default_image" />
-        </RelativeLayout>
+                android:layout_marginStart="167dp"
+                android:layout_marginLeft="167dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/id_card"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text" />
+        </android.support.constraint.ConstraintLayout>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/user_name"
@@ -72,9 +87,9 @@
                 android:gravity="center_vertical"
                 android:hint="@string/sign_up_user_name_edit_text_hint"
                 android:inputType="textPersonName"
-                android:paddingBottom="20dp"
+                android:paddingBottom="16dp"
                 android:textColor="@color/textblack"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -94,9 +109,9 @@
                 android:gravity="center_vertical"
                 android:hint="@string/sign_up_email_edit_text_hint"
                 android:inputType="textEmailAddress"
-                android:paddingBottom="20dp"
+                android:paddingBottom="16dp"
                 android:textColor="@color/textblack"
-                android:textSize="16sp" />
+                android:textSize="12sp" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -116,20 +131,22 @@
                 android:gravity="center_vertical"
                 android:hint="@string/sign_up_password_edit_text_hint"
                 android:inputType="textPassword"
-                android:paddingBottom="20dp"
+                android:paddingBottom="16dp"
                 android:singleLine="true"
                 android:textColor="@color/textblack"
-                android:textSize="16sp"
+                android:textSize="12sp"
                 app:errorEnabled="true" />
         </android.support.design.widget.TextInputLayout>
 
 
         <TextView
+            android:textSize="18sp"
+            android:textColor="#990033"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/sign_up_teacher_or_student"
-            android:textColor="@color/textblack"
-            android:textSize="16sp" />
+            android:text="@string/select_account_type"
+            android:gravity="center_horizontal"
+          />
 
         <RadioGroup
             android:id="@+id/radioGroup"
@@ -146,7 +163,7 @@
                 android:layout_weight="1"
                 android:text="@string/sign_up_teacher_radio_button"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
             <RadioButton
                 android:id="@+id/studentrb"
@@ -155,7 +172,7 @@
                 android:layout_weight="1"
                 android:text="@string/sign_up_student_radio_button"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
         </RadioGroup>
 
         <Button

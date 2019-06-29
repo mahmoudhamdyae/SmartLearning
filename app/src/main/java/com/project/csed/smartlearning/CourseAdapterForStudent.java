@@ -5,12 +5,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +48,7 @@ public class CourseAdapterForStudent extends RecyclerView.Adapter<CourseAdapterF
         final CourseModel exampleCourse= courseForStudentList.get(i);
         studentCourseHolder.courseName.setText(exampleCourse.getCourseName());
         studentCourseHolder.teacherName.setText(exampleCourse.getTeacherName());
-        studentCourseHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
+        studentCourseHolder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Launch Course Activity
@@ -68,14 +68,14 @@ public class CourseAdapterForStudent extends RecyclerView.Adapter<CourseAdapterF
     public  class StudentCourseHolder extends RecyclerView.ViewHolder
     {
         TextView teacherName , courseName;
-        LinearLayout linearLayout;
+        ConstraintLayout constraintLayout;
         ImageView deletebutton;
 
         public StudentCourseHolder(@NonNull View itemView) {
             super(itemView);
             teacherName= itemView.findViewById(R.id.teacherName);
             courseName= itemView.findViewById(R.id.courseNameStudent);
-            linearLayout = itemView.findViewById(R.id.CourseRowidStudent);
+            constraintLayout = itemView.findViewById(R.id.CourseRowidStudent);
             deletebutton=itemView.findViewById(R.id.deletebunStudent);
             deletebutton.setOnClickListener(new View.OnClickListener() {
                 @Override

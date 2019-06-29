@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,7 +50,7 @@ public class QuizAdapterForStudent extends RecyclerView.Adapter<QuizAdapterForSt
         quizHolder.quizDate.setText(quiz.getDate());
 
         // make quiz unclickable if the student already answered it
-        quizHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
+        quizHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -89,6 +91,7 @@ public class QuizAdapterForStudent extends RecyclerView.Adapter<QuizAdapterForSt
                     quizHolder.degree.setText(dataSnapshot.getValue().toString());
                     quizHolder.degree.setVisibility(View.VISIBLE);
                     quizHolder.degreeText.setVisibility(View.VISIBLE);
+                    quizHolder.checkSign.setVisibility(View.VISIBLE);
                 }
             }
             @Override
@@ -104,8 +107,8 @@ public class QuizAdapterForStudent extends RecyclerView.Adapter<QuizAdapterForSt
 
     public class  QuizHolder extends RecyclerView.ViewHolder{
         TextView quizNumber, quizDate, solvedOrNot, degree, degreeText;
-        LinearLayout linearLayout;
-
+        CardView cardView;
+        ImageView checkSign;
         public QuizHolder(@NonNull View itemView) {
             super(itemView);
             quizNumber = itemView.findViewById(R.id.quiz_name);
@@ -113,7 +116,8 @@ public class QuizAdapterForStudent extends RecyclerView.Adapter<QuizAdapterForSt
             solvedOrNot = itemView.findViewById(R.id.solved_or_not);
             degree = itemView.findViewById(R.id.degree);
             degreeText = itemView.findViewById(R.id.degree_text);
-            linearLayout = itemView.findViewById(R.id.linearLayout);
+            cardView = itemView.findViewById(R.id.cardView);
+            checkSign=itemView.findViewById(R.id.checkImage);
         }
     }
 }
