@@ -37,7 +37,7 @@
 
     <!-- Course Dialog -->
     <string name="course_dialog_name_edit_text_hint">Enter Course Name</string>
-    <string name="course_dialog_year_text_view">Course Year</string>
+    <string name="course_dialog_year_text_view">Select course year</string>
     <string name="course_dialog_save_button">Save</string>
     <string name="course_dialog_cancel_button">Cancel</string>
     <string name="course_delete_dialog_msg">Are you sure you want to delete this course ?</string>
@@ -154,4 +154,5 @@
     <string name="this_course_still_has_no_student">This course still has no student</string>
     <string name="select_account_type">Select account type</string>
     <string name="list_of_students_who_slove_quiz">Degrees of students who solved the quiz</string>
+    <string name="add_new_course">Add New Course</string>
 </resources>

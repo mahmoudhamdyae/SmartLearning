@@ -153,8 +153,6 @@ public class MainActivity extends AppCompatActivity {
                 // Create a AlertDialog Builder.
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
                 // Set title, icon, can not cancel properties.
-                alertDialogBuilder.setTitle(R.string.course_dialog_title);
-                alertDialogBuilder.setIcon(R.drawable.ic_launcher_background);
                 alertDialogBuilder.setCancelable(true);
                 // Init popup dialog view and it's ui controls.
 

@@ -154,8 +154,6 @@ public class CourseActivity extends AppCompatActivity {
         View popupInputDialogView = layoutInflater.inflate(R.layout.course_details_dialog, null);
         // Create a AlertDialog Builder.
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(CourseActivity.this);
-        // Set title, icon, can not cancel properties.
-        alertDialogBuilder.setTitle(R.string.action_course_details);
         alertDialogBuilder.setCancelable(true);
         // Init popup dialog view and it's ui controls.
 
