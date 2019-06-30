@@ -98,10 +98,10 @@ public class MainActivity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     User user = dataSnapshot.getValue(User.class);
                     if (user.getType().equals("Teacher")) {
-                        Toast.makeText(MainActivity.this, "This is Teacher Main Activity"+"\n Welcome back "+user.getUserName(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Welcome back "+user.getUserName(), Toast.LENGTH_SHORT).show();
                         teacherActivity(user);
                     } else if (user.getType().equals("Student")) {
-                        Toast.makeText(MainActivity.this, "This is Student Main Activity"+"\n Welcome back "+user.getUserName(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Welcome back "+user.getUserName(), Toast.LENGTH_SHORT).show();
                         studentActivity();
                     }
                 }

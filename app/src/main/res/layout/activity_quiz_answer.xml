@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="8dp"
+    android:layout_gravity="center_vertical"
     tools:context=".QuizAnswerActivity">
 
     <LinearLayout
@@ -39,59 +40,62 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/option1"
             android:layout_width="match_parent"
-            android:layout_height="120dp">
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:background="@android:color/darker_gray"
+            android:gravity="center"
+            android:text="Option 1"
+            android:textSize="20sp"
+            android:textColor="@android:color/white" />
 
-            <TextView
-                android:id="@+id/option1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="8dp"
-                android:layout_weight="1"
-                android:background="@android:color/darker_gray"
-                android:gravity="center"
-                android:text="Option 1"
-                android:textColor="@android:color/white" />
-
-            <TextView
-                android:id="@+id/option2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="8dp"
-                android:layout_weight="1"
-                android:background="@android:color/darker_gray"
-                android:gravity="center"
-                android:text="Option 2"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/option2"
             android:layout_width="match_parent"
-            android:layout_height="120dp">
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:background="@android:color/darker_gray"
+            android:gravity="center"
+            android:text="Option 2"
+            android:textSize="20sp"
+            android:textColor="@android:color/white" />
 
-            <TextView
-                android:id="@+id/option3"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="8dp"
-                android:layout_weight="1"
-                android:background="@android:color/darker_gray"
-                android:gravity="center"
-                android:text="Option 3"
-                android:textColor="@android:color/white" />
+        <TextView
+            android:id="@+id/option3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:background="@android:color/darker_gray"
+            android:gravity="center"
+            android:text="Option 3"
+            android:textSize="20sp"
+            android:textColor="@android:color/white" />
 
-            <TextView
-                android:id="@+id/option4"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_margin="8dp"
-                android:layout_weight="1"
-                android:background="@android:color/darker_gray"
-                android:gravity="center"
-                android:text="Option 4"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/option4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:background="@android:color/darker_gray"
+            android:gravity="center"
+            android:text="Option 4"
+            android:textSize="20sp"
+            android:textColor="@android:color/white" />
+
     </LinearLayout>
 
     <Button
@@ -100,6 +104,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
         android:text="@string/quiz_modify_next_question_button"
+        android:background="@drawable/button_selector"
+        android:textColor="@color/textwhite"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
         android:visibility="gone" />
 
 </LinearLayout>
