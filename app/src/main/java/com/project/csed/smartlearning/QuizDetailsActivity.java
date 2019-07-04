@@ -1,18 +1,14 @@
 package com.project.csed.smartlearning;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -27,13 +23,12 @@ import java.util.List;
 public class QuizDetailsActivity extends AppCompatActivity {
     Button modifyQuiz, addQuestion;
     String quizDate, courseName;
-    String name, email, userId, degree;
+    String name, email, userId;
     TextView noOneSolvedThisQuizText,ListOfStudentText;
     QuizStudentsAdapter quizStudentsAdapter;
 
     List<User> usersList = new ArrayList<>();
     private RecyclerView recyclerView;
-    private float v;
     private ImageView sleepingImage;
 
     @Override
@@ -132,7 +127,7 @@ public class QuizDetailsActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (final DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     userId = dataSnapshot1.getKey();
-                    degree = dataSnapshot1.getValue().toString();
+                    final String degree = dataSnapshot1.getValue().toString();
 
                     // Get user data
                     DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
