@@ -21,6 +21,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -90,6 +92,12 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseHold
         // this Two Lines Delete the chat from fireBase
         DatabaseReference mChatDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Rooms").child(courseModel.getCourseName());
         mChatDatabaseReference.removeValue();
+        // Remove quizzes
+        DatabaseReference mQuizDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Quizzes").child(courseModel.getCourseName());
+        mQuizDatabaseReference.removeValue();
+        // Remove Materials from database
+        DatabaseReference mMaterialDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Materials").child(courseModel.getCourseName());
+        mMaterialDatabaseReference.removeValue();
         // Remove from users table (students)
         DatabaseReference mCourseDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Courses").child(courseModel.getCourseName());
         mCourseDatabaseReference.child("Students").addValueEventListener(new ValueEventListener() {

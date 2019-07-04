@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class AddQuizActivity extends AppCompatActivity {
-//zzz
+
     Button addAnotherQuestion, finish;
     TextView questionNumberTextView;
     EditText questionEditText, option1EditText, option2EditText, option3EditText, option4EditText;
@@ -50,7 +50,7 @@ public class AddQuizActivity extends AppCompatActivity {
         quizReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                quizNumber[0] = dataSnapshot.getChildrenCount();
+                quizNumber[0] = dataSnapshot.getChildrenCount() + 1;
 
                 if (getIntent().getStringExtra("addQuestion").equals("addQuestion")) {
                     // Add Question
@@ -87,15 +87,15 @@ public class AddQuizActivity extends AppCompatActivity {
                     // Add Quiz
 
                     // Get current time
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd LLL, yyyy h:mm a", Locale.getDefault());
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, dd LLL, yyyy H:mm:s", Locale.getDefault());
                     Date date = new Date();
                     dateString = dateFormat.format(date);
 
-                    Quiz quiz = new Quiz((int) (quizNumber[0]) + 1, dateString);
+                    Quiz quiz = new Quiz((int) (quizNumber[0]), dateString);
                     quizReference.child(dateString).setValue(quiz);
 
                     // Change the app bar to show quiz number
-                    String title = "Quiz number " + (quizNumber[0] + 1);
+                    String title = "Quiz number " + (quizNumber[0]);
                     setTitle(title);
                 }
             }
