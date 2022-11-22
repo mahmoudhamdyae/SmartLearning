@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".QuizStatisticsActivity">
+    tools:context=".ui.course.quiz.QuizStatisticsActivity">
 
     <TextView
         android:id="@+id/degree"

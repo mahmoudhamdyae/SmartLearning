@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="8dp"
-        tools:context=".LoginActivity">
+        tools:context=".ui.auth.LoginActivity">
 
         <TextView
             android:layout_width="match_parent"

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
-    tools:context=".AddQuizActivity"
+    tools:context=".ui.course.quiz.AddQuizActivity"
     android:background="@drawable/white_transparent_2_bkg">
 
     <TextView

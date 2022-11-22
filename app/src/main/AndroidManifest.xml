@@ -12,22 +12,22 @@
         android:roundIcon="@drawable/croped_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MaterialActivity"></activity>
-        <activity android:name=".QuizStatisticsActivity" />
-        <activity android:name=".ChatActivity" />
-        <activity android:name=".QuizAnswerActivity" />
-        <activity android:name=".QuizModifyActivity" />
-        <activity android:name=".QuizDetailsActivity" />
-        <activity android:name=".AddQuizActivity" />
-        <activity android:name=".QuizActivity" />
-        <activity android:name=".CourseSearchActivity" />
-        <activity android:name=".AddStudentActivity" />
-        <activity android:name=".CourseActivity" />
-        <activity android:name=".AllUsersList" />
-        <activity android:name=".OneToOneChatActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".ui.course.MaterialActivity"></activity>
+        <activity android:name=".ui.course.quiz.QuizStatisticsActivity" />
+        <activity android:name=".ui.course.chat.ChatActivity" />
+        <activity android:name=".ui.course.quiz.QuizAnswerActivity" />
+        <activity android:name=".ui.course.quiz.QuizModifyActivity" />
+        <activity android:name=".ui.course.quiz.QuizDetailsActivity" />
+        <activity android:name=".ui.course.quiz.AddQuizActivity" />
+        <activity android:name=".ui.course.quiz.QuizActivity" />
+        <activity android:name=".ui.course.CourseSearchActivity" />
+        <activity android:name=".ui.course.AddStudentActivity" />
+        <activity android:name=".ui.course.CourseActivity" />
+        <activity android:name=".ui.course.AllUsersList" />
+        <activity android:name=".ui.course.chat.OneToOneChatActivity" />
+        <activity android:name=".ui.course.MainActivity" />
         <activity
-            android:name=".Splash"
+            android:name=".ui.Splash"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,8 +35,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".SignUpActivity" />
+        <activity android:name=".ui.auth.LoginActivity" />
+        <activity android:name=".ui.auth.SignUpActivity" />
     </application>
 
 </manifest>

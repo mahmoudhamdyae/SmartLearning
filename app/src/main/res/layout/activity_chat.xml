@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layoutDirection="ltr"
-    tools:context=".ChatActivity">
+    tools:context=".ui.course.chat.ChatActivity">
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="8dp"
-    tools:context=".QuizAnswerActivity">
+    tools:context=".ui.course.quiz.QuizAnswerActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
