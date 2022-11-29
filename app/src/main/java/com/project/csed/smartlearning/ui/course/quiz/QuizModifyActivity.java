@@ -77,7 +77,7 @@ public class QuizModifyActivity extends AppCompatActivity {
         option2EditText = findViewById(R.id.option2);
         option3EditText = findViewById(R.id.option3);
         option4EditText = findViewById(R.id.option4);
-        radioGroup = findViewById(R.id.radioGroup);
+        radioGroup = findViewById(R.id.radio_group);
 
         // Setup OnTouchListeners on all the input fields, so we can determine if the user
         // has touched or modified them. This will let us know if there are unsaved changes

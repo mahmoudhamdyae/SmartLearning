@@ -104,7 +104,7 @@
         android:layout_gravity="bottom|center_horizontal"
         android:text="@string/quiz_modify_next_question_button"
         android:background="@drawable/button_selector"
-        android:textColor="@color/textwhite"
+        android:textColor="@color/text_white"
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
         android:visibility="gone" />

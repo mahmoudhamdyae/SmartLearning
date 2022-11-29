@@ -15,7 +15,7 @@
 
     <TextView
         android:layout_marginTop="8dp"
-        android:textColor="@color/textblack"
+        android:textColor="@color/text_black"
         android:id="@+id/textView"
         android:textSize="25sp"
         android:layout_width="wrap_content"
@@ -37,13 +37,13 @@
 
         android:id="@+id/fullUsersList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="match_parent"/>
 
     <ImageView
 
         android:layout_marginTop="200dp"
         android:src="@drawable/no_students"
-android:visibility="gone"
+        android:visibility="gone"
         android:id="@+id/noStudentsImage"
         android:layout_width="70dp"
         android:layout_height="70dp"
@@ -52,7 +52,7 @@ android:visibility="gone"
         android:gravity="center_horizontal"
         />
     <TextView
-        android:textColor="@color/textblack"
+        android:textColor="@color/text_black"
         android:src="@drawable/no_students"
         android:id="@+id/noStudentsText"
         android:visibility="gone"

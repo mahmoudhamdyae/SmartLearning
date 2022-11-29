@@ -115,7 +115,7 @@ public class AddQuizActivity extends AppCompatActivity {
         option2EditText = findViewById(R.id.option2);
         option3EditText = findViewById(R.id.option3);
         option4EditText = findViewById(R.id.option4);
-        radioGroup = findViewById(R.id.radioGroup);
+        radioGroup = findViewById(R.id.radio_group);
 
         questionNumberTextView.setText(String.valueOf(questionNumber));
 

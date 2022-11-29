@@ -24,12 +24,13 @@ import com.project.csed.smartlearning.R;
 import com.project.csed.smartlearning.models.Quiz;
 
 import java.util.List;
+import java.util.Objects;
 
 public class QuizAdapterForStudent extends RecyclerView.Adapter<QuizAdapterForStudent.QuizHolder> {
 
-    private List<Quiz> quizList;
-    private Context context;
-    private String courseName;
+    private final List<Quiz> quizList;
+    private final Context context;
+    private final String courseName;
 
     public QuizAdapterForStudent(List<Quiz> quizList, Context context, String courseName) {
         this.quizList = quizList;
@@ -41,8 +42,7 @@ public class QuizAdapterForStudent extends RecyclerView.Adapter<QuizAdapterForSt
     @Override
     public QuizHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View quizRow = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.quiz_row_for_student,viewGroup,false);
-        QuizHolder holder = new QuizHolder(quizRow);
-        return holder;
+        return new QuizHolder(quizRow);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class QuizAdapterForStudent extends RecyclerView.Adapter<QuizAdapterForSt
         quizHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Quizzes")
                         .child(courseName).child(quiz.getDate()).child("Students");
 
@@ -80,7 +80,7 @@ public class QuizAdapterForStudent extends RecyclerView.Adapter<QuizAdapterForSt
         });
 
         // Find if this quiz is solved or not
-        final String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final String userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Quizzes")
                 .child(courseName).child(quiz.getDate()).child("Students");
 
@@ -89,8 +89,8 @@ public class QuizAdapterForStudent extends RecyclerView.Adapter<QuizAdapterForSt
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     quizHolder.solvedOrNot.setText(R.string.quiz_solved);
-                    quizHolder.solvedOrNot.setTextColor(ContextCompat.getColor(context, R.color.textblack));
-                    quizHolder.degree.setText(dataSnapshot.getValue().toString());
+                    quizHolder.solvedOrNot.setTextColor(ContextCompat.getColor(context, R.color.text_black));
+                    quizHolder.degree.setText(Objects.requireNonNull(dataSnapshot.getValue()).toString());
                     quizHolder.degree.setVisibility(View.VISIBLE);
                     quizHolder.degreeText.setVisibility(View.VISIBLE);
                     quizHolder.checkSign.setVisibility(View.VISIBLE);
@@ -107,7 +107,7 @@ public class QuizAdapterForStudent extends RecyclerView.Adapter<QuizAdapterForSt
         return quizList.size();
     }
 
-    public class  QuizHolder extends RecyclerView.ViewHolder{
+    public static class  QuizHolder extends RecyclerView.ViewHolder{
         TextView quizNumber, quizDate, solvedOrNot, degree, degreeText;
         CardView cardView;
         ImageView checkSign;

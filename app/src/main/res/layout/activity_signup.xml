@@ -22,7 +22,7 @@
             android:layout_marginTop="4dp"
             android:gravity="center"
             android:text="@string/app_name"
-            android:textColor="@color/textblack"
+            android:textColor="@color/text_black"
             android:textSize="35sp"
             android:textStyle="bold" />
 
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/under_appname_intro_signupscreen"
-            android:textColor="@color/textblack"
+            android:textColor="@color/text_black"
             android:textSize="15sp" />
 
         <android.support.constraint.ConstraintLayout
@@ -88,7 +88,7 @@
                 android:hint="@string/sign_up_user_name_edit_text_hint"
                 android:inputType="textPersonName"
                 android:paddingBottom="16dp"
-                android:textColor="@color/textblack"
+                android:textColor="@color/text_black"
                 android:textSize="12sp" />
         </android.support.design.widget.TextInputLayout>
 
@@ -110,7 +110,7 @@
                 android:hint="@string/sign_up_email_edit_text_hint"
                 android:inputType="textEmailAddress"
                 android:paddingBottom="16dp"
-                android:textColor="@color/textblack"
+                android:textColor="@color/text_black"
                 android:textSize="12sp" />
         </android.support.design.widget.TextInputLayout>
 
@@ -133,7 +133,7 @@
                 android:inputType="textPassword"
                 android:paddingBottom="16dp"
                 android:singleLine="true"
-                android:textColor="@color/textblack"
+                android:textColor="@color/text_black"
                 android:textSize="12sp"
                 app:errorEnabled="true" />
         </android.support.design.widget.TextInputLayout>
@@ -184,7 +184,7 @@
             android:layout_marginRight="50dp"
             android:background="@drawable/button_selector"
             android:text="@string/sign_up_sign_up_button"
-            android:textColor="@color/textwhite"
+            android:textColor="@color/text_white"
             android:textSize="16sp" />
 
     </LinearLayout>
