@@ -8,16 +8,16 @@ android:layout_height="match_parent"
 tools:context=".ui.course.chat.OneToOneChatActivity">
 
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/one_to_one_chat_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
         android:layout_above="@+id/privateMessageEditText"
-       ></android.support.v7.widget.RecyclerView>
+       ></androidx.recyclerview.widget.RecyclerView>
 
 
-<android.support.design.widget.FloatingActionButton
+<com.google.android.material.floatingactionbutton.FloatingActionButton
   android:layout_width="50dp"
     android:layout_height="50dp"
     android:clickable="true"
@@ -30,10 +30,10 @@ tools:context=".ui.course.chat.OneToOneChatActivity">
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
  app:fabSize="mini">
-</android.support.design.widget.FloatingActionButton>
+</com.google.android.material.floatingactionbutton.FloatingActionButton>
 
 
-    <android.support.design.widget.TextInputEditText
+    <com.google.android.material.textfield.TextInputEditText
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:layout_toLeftOf="@id/fab"

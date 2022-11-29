@@ -10,7 +10,7 @@
     android:padding="20dp"
     tools:context=".ui.course.CourseActivity">
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/quizzes"
         card_view:cardBackgroundColor="@color/list_item_color"
@@ -40,9 +40,9 @@
             android:text="@string/course_quizzes"
             android:textSize="25sp"
             android:textColor="@color/text_black"/>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/add_student"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -73,9 +73,9 @@
             android:textColor="@color/text_black"
             android:textSize="25sp" />
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/materials"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -104,9 +104,9 @@
             android:paddingBottom="15dp"
             android:textColor="@color/text_black"
             android:textSize="25sp" />
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/chat"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -134,9 +134,9 @@
             android:textColor="@color/text_black"
             android:text="@string/course_chat"
             android:textSize="25sp" />
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/private_chat"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -164,5 +164,5 @@
             android:textColor="@color/text_black"
             android:textSize="25sp" />
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 </LinearLayout>

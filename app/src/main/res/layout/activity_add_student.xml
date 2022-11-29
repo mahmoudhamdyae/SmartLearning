@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="4dp"
     android:orientation="vertical"
+    android:padding="4dp"
     tools:context=".ui.course.AddStudentActivity">
 
     <LinearLayout
@@ -22,31 +22,31 @@
             android:inputType="textPersonName" />
 
         <ImageView
-            android:padding="4dp"
             android:id="@+id/searchstudentBu"
             android:layout_width="50dp"
             android:layout_height="60dp"
             android:background="?android:attr/selectableItemBackground"
             android:onClick="SearchButton"
+            android:padding="4dp"
             android:src="@drawable/search" />
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/AddrecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"
+        android:layout_weight="1" />
 
     <Button
-        style="@style/MyButtonStyle"
-        android:padding="8dp"
         android:id="@+id/addstudentBu"
+        style="@style/MyButtonStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="80dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="80dp"
         android:onClick="AddButton"
+        android:padding="8dp"
         android:text="@string/course_add_student" />
 </LinearLayout>
