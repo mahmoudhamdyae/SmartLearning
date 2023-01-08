@@ -13,4 +13,4 @@ and their understanding.
 Student users can enrol in courses, solve the quizzes, download course materials
 and chatting with his teacher and other students.
 
-[APK Download] (https://drive.google.com/file/d/1A2L_Sv-c52XLMmjw9ulRHfbiQAF2s5cW/view?usp=sharing)
+[APK Download](https://drive.google.com/file/d/1A2L_Sv-c52XLMmjw9ulRHfbiQAF2s5cW/view?usp=sharing)
